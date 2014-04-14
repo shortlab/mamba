@@ -1,0 +1,238 @@
+// Moose Includes
+#include "MambaApp.h"
+#include "Moose.h"
+#include "MambaApp.h"
+#include "Factory.h"
+#include "AppFactory.h"
+#include "ActionFactory.h"
+
+// Elk Includes
+
+#include "FluidMassEnergyBalanceModule.h"
+#include "HeatConductionModule.h"
+#include "NavierStokesModule.h"
+#include "MiscModule.h"
+
+// First come the kernel header files
+
+#include "ThermalDiffusion.h"
+#include "AdvectionForHeat.h"
+#include "PressureDarcy.h"
+#include "AdvectionForConcentration.h"
+#include "DiffusionForConcentration.h"
+#include "BoricAcidSinks.h"
+//#include "WaterSaturationTemperature.h"
+
+// Next come the auxilliary kernels
+
+#include "TortuosityAux.h"
+#include "PorosityAux.h"
+#include "WaterSaturationTemperatureAux.h"
+#include "SuperheatTempAux.h"
+#include "FluidVelocityAux.h"
+#include "PecletAux.h"
+#include "Precipitation_HBO2Aux.h"
+#include "BO3_SolubilityAux.h"
+
+// Next come the materials
+
+#include "CRUDMaterial.h"
+
+// Next come the boundary conditions
+
+#include "CRUDCladNeumannBC.h"
+#include "CRUDCladNeumannBCMultiApp.h"
+#include "CRUDCoolantNeumannBC.h"
+#include "CoupledTsatDirichletBC.h"
+#include "ChimneyEvaporationNeumannBC.h"
+#include "CRUDChimneyConcentrationMixedBC.h"
+
+//userobjects
+#include "WaterSteamEOS.h"
+
+// Finally, the postprocessors
+
+#include "NodalMaxValueFileIO.h"
+#include "AreaAverageBoron.h"
+
+/////////////////////////////////////////////////
+//           Hognose Include Files             //
+/////////////////////////////////////////////////
+
+#include "HognoseConduction.h"
+#include "HognoseDiffusionforConcentration.h"
+#include "HognoseTimeDerivativeConcentration.h"
+#include "HognoseOxideCreationKernel.h"
+#include "HognoseTimeDerivativeConduction.h"
+
+#include "HognoseMaterial.h"
+#include "HognoseDiffusivityforConcentration.h"
+#include "HognoseDerivativeDiffusivityforConcentration.h"
+
+#include "HognoseMetalOrOxide.h"
+#include "HognoseOxidationSink.h"
+#include "HognoseOxygenSuperSat.h"
+#include "HognoseOxygenMoleFraction.h"
+#include "HognoseOxideCreationAmount.h"
+#include "HognoseOxideInterfacePosition.h"
+#include "HognoseOxideStressField.h"
+#include "HognoseAllOxide.h"
+#include "HognoseStoichiometryDiffusivityFactor.h"
+#include "HognoseStressDiffusivityFactor.h"
+#include "HognosePhaseDiffusivityFactor.h"
+#include "HognoseOxidePhase.h"
+#include "HognoseElementalLocation.h"
+
+#include "HognoseDiffusionNeumannBC.h"
+#include "HognoseInnerCladNeumannBC.h"
+#include "HognoseCRUDCladOxygenDirichlet.h"
+
+// userobjects
+#include "HognoseOxideCreationSolutionModifier.h"
+#include "HognoseOxygenMoleFractionUserObject.h"
+
+// postprocessors
+#include "HognoseOxideThickness.h"
+#include "HognoseElementIntegralVariablePostprocessor.h"
+#include "NodalMinValue.h"
+#include "HognoseMinMaxRatioPostprocessor.h"
+#include "Hognose1DElementIntegralVariablePostprocessor.h"
+#include "ElementMaxValue.h"
+#include "HognoseDTPostprocessor.h"
+
+
+template<>
+InputParameters validParams<MambaApp>()
+{
+  InputParameters params = validParams<MooseApp>();
+  return params;
+}
+
+MambaApp::MambaApp(const std::string & name, InputParameters parameters) :
+    MooseApp(name, parameters)
+{
+  // Register all the user-created objects for incorporation and use
+  Moose::registerObjects(_factory);
+  Elk::FluidMassEnergyBalance::registerObjects(_factory);
+  Elk::HeatConduction::registerObjects(_factory);
+  Elk::NavierStokes::registerObjects(_factory);
+  Elk::Misc::registerObjects(_factory);
+  MambaApp::registerObjects(_factory);
+
+  // Associate Parser Syntax
+  Moose::associateSyntax(_syntax, _action_factory);
+  Elk::HeatConduction::associateSyntax(_syntax, _action_factory);
+  Elk::Misc::associateSyntax(_syntax, _action_factory);
+}
+
+void
+MambaApp::registerApps()
+{
+  registerApp(MambaApp);
+}
+
+void
+MambaApp::registerObjects(Factory & factory)
+{
+  // First come the kernels
+
+  // Our new advection-diffusion kernel that accepts an auxKernel's aqueous species diffusivity,
+  // the permeability material property, and the coupled pressure variable (of which the grad is taken)
+
+  registerKernel(AdvectionForConcentration);
+  registerKernel(DiffusionForConcentration);
+  registerKernel(BoricAcidSinks);
+//  registerAux(WaterSaturationTemperature);
+
+  // Our new Darcy flow kernel that accepts the permeability material property
+
+  registerKernel(PressureDarcy);
+
+  // Our new thermal diffusion kernel that accepts the k_cond (thermal conductivity) material property
+
+  registerKernel(ThermalDiffusion);
+  registerKernel(AdvectionForHeat);
+
+  // Next come the auxilliary kernels
+
+  registerAux(TortuosityAux);
+  registerAux(PorosityAux);
+  registerAux(WaterSaturationTemperatureAux);
+  registerAux(SuperheatTempAux);
+  registerAux(FluidVelocityAux);
+  registerAux(PecletAux);
+  registerAux(Precipitation_HBO2Aux);
+  registerAux(BO3_SolubilityAux);
+
+  // Next come the materials
+
+  // Register our new CRUD material class so we can use it.
+
+  registerMaterial(CRUDMaterial);
+
+  // Next come the boundary conditions
+
+  registerBoundaryCondition(CRUDCladNeumannBC);
+  registerBoundaryCondition(CRUDCladNeumannBCMultiApp);
+  registerBoundaryCondition(CRUDCoolantNeumannBC);
+  registerBoundaryCondition(CoupledTsatDirichletBC);
+  registerBoundaryCondition(ChimneyEvaporationNeumannBC);
+  registerBoundaryCondition(CRUDChimneyConcentrationMixedBC);
+
+  //userobjects
+  registerUserObject(WaterSteamEOS);
+
+  // Finally come the postprocessors
+  registerPostprocessor(NodalMaxValueFileIO);
+  registerPostprocessor(AreaAverageBoron);
+
+//////////////////////////////////////////////////////
+//           Hognose Object Registration            //
+//////////////////////////////////////////////////////
+
+  // Register kernels:
+  registerKernel(HognoseConduction);
+  registerKernel(HognoseDiffusionforConcentration);
+  registerKernel(HognoseTimeDerivativeConcentration);
+  // registerKernel(HognoseOxidationSink);
+  registerKernel(HognoseOxideCreationKernel);
+  registerKernel(HognoseTimeDerivativeConduction);
+
+  // Register materials:
+  registerMaterial(HognoseMaterial);
+  registerMaterial(HognoseDiffusivityforConcentration);
+  registerMaterial(HognoseDerivativeDiffusivityforConcentration);
+
+  // Register auxkernels:
+  registerAux(HognoseMetalOrOxide);
+  registerAux(HognoseOxygenSuperSat);
+  registerAux(HognoseOxygenMoleFraction);
+  registerAux(HognoseOxideCreationAmount);
+  registerAux(HognoseOxideInterfacePosition);
+  registerAux(HognoseOxideStressField);
+  registerAux(HognoseAllOxide);
+  registerAux(HognoseStoichiometryDiffusivityFactor);
+  registerAux(HognoseStressDiffusivityFactor);
+  registerAux(HognosePhaseDiffusivityFactor);
+  registerAux(HognoseOxidePhase);
+  registerAux(HognoseElementalLocation);
+
+  // Register Boundary Conditions:
+  registerBoundaryCondition(HognoseDiffusionNeumannBC);
+  registerBoundaryCondition(HognoseInnerCladNeumannBC);
+  registerBoundaryCondition(HognoseCRUDCladOxygenDirichlet);
+
+  // Register User Objects:
+  //registerUserObject(HognoseOxideCreationSolutionModifier);
+  //registerUserObject(HognoseOxygenMoleFractionUserObject);
+
+  // Finally come the postprocessors
+  registerPostprocessor(HognoseOxideThickness);
+  registerPostprocessor(HognoseElementIntegralVariablePostprocessor);
+  registerPostprocessor(NodalMinValue);
+  registerPostprocessor(HognoseMinMaxRatioPostprocessor);
+  registerPostprocessor(Hognose1DElementIntegralVariablePostprocessor);
+  registerPostprocessor(ElementMaxValue);
+  registerPostprocessor(HognoseDTPostprocessor);
+
+}

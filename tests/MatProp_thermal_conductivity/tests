@@ -1,0 +1,31 @@
+[Tests]
+  [./test_100_Parallel]
+    type = 'Exodiff'
+    input = 'MatProp_thermal_conductivity_0P_100S.i'
+    exodiff = 'out_0P_100S.e'
+  [../]
+
+  [./test_075_Parallel]
+    type = 'Exodiff'
+    input = 'MatProp_thermal_conductivity_25P_75S.i'
+    exodiff = 'out_25P_75S.e'
+  [../]
+
+  [./test_050_Parallel]
+    type = 'Exodiff'
+    input = 'MatProp_thermal_conductivity_50P_50S.i'
+    exodiff = 'out_50P_50S.e'
+  [../]
+
+  [./test_025_Parallel]
+    type = 'Exodiff'
+    input = 'MatProp_thermal_conductivity_75P_25S.i'
+    exodiff = 'out_75P_25S.e'
+  [../]
+
+  [./test_000_Parallel]
+    type = 'Exodiff'
+    input = 'MatProp_thermal_conductivity_100P_0S.i'
+    exodiff = 'out_100P_0S.e'
+  [../]
+[]

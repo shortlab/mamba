@@ -1,0 +1,7 @@
+[Tests]
+  [./test]
+    type = 'Exodiff'
+    input = 'ionic_diffusion.i'
+    exodiff = 'out.e'
+  [../]
+[]

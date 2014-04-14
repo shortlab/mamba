@@ -1,0 +1,14 @@
+K 10
+svn:ignore
+V 74
+out_50P_50S.e
+
+out_0P_100S.e
+
+out_100P_0S.e
+
+out_25P_75S.e
+
+out_75P_25S.e
+
+END

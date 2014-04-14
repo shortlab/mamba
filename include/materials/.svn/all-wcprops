@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/herd/!svn/ver/22556/trunk/mamba/include/materials
+END
+HognoseDiffusivityforConcentration.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/herd/!svn/ver/22556/trunk/mamba/include/materials/HognoseDiffusivityforConcentration.h
+END
+HognoseDerivativeDiffusivityforConcentration.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/herd/!svn/ver/21881/trunk/mamba/include/materials/HognoseDerivativeDiffusivityforConcentration.h
+END
+CRUDMaterial.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/herd/!svn/ver/20723/trunk/mamba/include/materials/CRUDMaterial.h
+END
+HognoseMaterial.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/herd/!svn/ver/21056/trunk/mamba/include/materials/HognoseMaterial.h
+END

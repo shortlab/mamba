@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/herd/!svn/ver/21190/trunk/mamba/tests/MatProp_ionic_diffusion
+END
+tests
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/herd/!svn/ver/16900/trunk/mamba/tests/MatProp_ionic_diffusion/tests
+END
+ionic_diffusion.i
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/herd/!svn/ver/21190/trunk/mamba/tests/MatProp_ionic_diffusion/ionic_diffusion.i
+END

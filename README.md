@@ -1,6 +1,6 @@
-Stork
+Mamba
 =====
 
-"Fork Stork" to create a new MOOSE-based application.
+"Fork Mamba" to create a new MOOSE-based application.
 
 For more information see: [http://mooseframework.com/create-an-app/](http://mooseframework.com/create-an-app/)

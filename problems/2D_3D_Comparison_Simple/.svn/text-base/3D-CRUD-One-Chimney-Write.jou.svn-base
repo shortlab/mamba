@@ -1,0 +1,3 @@
+#{crud_thickness_microns = 50}
+#{chimney_radius_microns = 5}
+#{chimney_density_m = 1.6e9}

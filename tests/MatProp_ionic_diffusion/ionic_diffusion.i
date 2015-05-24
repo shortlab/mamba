@@ -22,6 +22,12 @@
 []
 
 [AuxVariables]
+  [./Phase]
+# elemental if defined as following
+    order = FIRST
+    family = LAGRANGE
+  [../]
+
   [./FakeTortuosity]
     order = CONSTANT
     family = MONOMIAL
@@ -207,8 +213,9 @@ active = 'ThermalDiffusion'
     tortuosity = FakeTortuosity
     pressure = FakePressure
     porosity = FakePorosity
-    concentration = FakeConcentration
-    HBO2 = FakeHBO2
+#    concentration = FakeConcentration
+    psat = FakeHBO2
+    phase = FakeHBO2
   [../]
 []
 

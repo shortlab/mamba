@@ -37,8 +37,8 @@ public:
   virtual Real getValue();
 
 protected:
-  const PostprocessorValue & _total_boron;
-  const PostprocessorValue & _area;
+  PostprocessorValue & _total_boron;
+  PostprocessorValue & _area;
 
   bool _in_meters;
 };

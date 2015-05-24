@@ -155,12 +155,10 @@ active = 'ThermalDiffusion'
   [../]
 
   [./chimney_crud_temperature]
-    type = CoupledTsatDirichletBC
+    type = DirichletBC
     variable = crud_temperature
     boundary = 3
-    Tsat = FakeTsat
-    HBO2 = FakeHBO2
-    BO3 = FakeConcentration
+    value = 618.5
   [../]
 
   [./coolant_crud_temperature]
@@ -214,8 +212,10 @@ active = 'ThermalDiffusion'
     tortuosity = FakeTortuosity
     pressure = FakePressure
     porosity = FakePorosity
-    concentration = FakeConcentration
-    HBO2 = FakeHBO2
+ #   concentration = FakeConcentration
+ #   HBO2 = FakeHBO2
+    psat = FakeHBO2
+    phase = FakeHBO2
   [../]
 []
 
@@ -232,32 +232,19 @@ active = 'ThermalDiffusion'
 
 [Executioner]
   type = Steady
-#  type = Transient
-#  dt = 1e-4
-#  petsc_options = '-snes_mf_operator -ksp_monitor'
 
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
-
 
   l_max_its = 30
   l_tol = 1e-5
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-#  petsc_options_iname = '-pc_type'
-#  petsc_options_value = 'lu'
-
-  time_periods       = 'p1'
-  time_period_starts = '0'
-  time_period_ends   = '10e-4'
 []
 
 [Outputs]
-#  elemental_as_nodal = true
-#  output_initial = true
   file_base = out_0P_100S
   interval = 1
-#  xda = true
   exodus = true
   perf_log = true
 []

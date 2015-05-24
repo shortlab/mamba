@@ -369,7 +369,7 @@
 
 []
 
-[Output]
+[Outputs]
   linear_residuals = true
   file_base = out
   interval = 1

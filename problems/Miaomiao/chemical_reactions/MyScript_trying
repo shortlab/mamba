@@ -1,0 +1,41 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+line=$(sed -n '2p' temp.txt)
+echo $line
+xx=1
+x=2
+y=-3
+z=$(($x+$y))
+z=$(($z+1))
+echo ${z#-}
+if [ $xx -eq 1 ]
+then
+  echo "greater"
+else
+  echo "not"
+fi
+
+for i in $(seq -s ' ' 1e5 1e5 1.001e6);
+do 
+    echo nicework_$i hah >> test.txt $i
+done
+
+
+
+echo $liquidheight_new >> liquidheight.txt
+echo "subsub_5th.i starts"
+
+vaporheight=$(cat $SCRIPT_DIR/temp3.txt)
+~/Projects/mamba-dev/mamba-dev-opt -i subsub_5th.i Mesh/ymax=$vaporheight Postprocessors/vapor_height/thickness=$vaporheight
+rm temp3.txt
+cp subsub_5th.csv subsub_5th_Tcoolant_$value.txt
+
+python MyScript_Peak_Temp.py > temp4.txt
+Peak_Temp=$(cat $SCRIPT_DIR/temp4.txt)
+rm temp4.txt
+
+
+
+~/Projects/mamba-dev/mamba-dev-opt -i crud_chem_5th.i AuxKernels/aux_porosity/init_porosity=0.5 Materials/material_CRUD/CladHeatFluxIn=1000000.0 Outputs/file_base=crud_chem_0.5_45209_1e6_608_25_0shift BCs/temperature_up/T_coolant=608.15 BCs/temperature_up/h_convection_coolant=45209 BCs/pressure_up/value=15616.62527 AuxKernels/phase/Shift=0
+
+~/Projects/mamba-dev/mamba-dev-opt -i crud_chem_6th.i AuxKernels/phase/Shift=100 Outputs/file_base=6th_0.5_45209_6e5_608_50_100shift Materials/material_CRUD/CladHeatFluxIn=600000.0 Postprocessors/vapor_height/thickness=0.050 Postprocessors/liquid_height/thickness=0.050 Materials/material_CRUD/CRUDThickness=0.050 Executioner/dt=1e-2 Mesh/ymax=0.050 Mesh/nx=40 Mesh/ny=100

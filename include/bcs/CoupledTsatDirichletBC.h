@@ -39,8 +39,8 @@ protected:
 private:
 
   VariableValue & _Tsat_h2o;
-  VariableValue & _HBO2;
-  VariableValue & _C;
+//  VariableValue & _HBO2;
+//  VariableValue & _C;
 };
 
 #endif //COUPLEDTSATDIRICHLETBC_H

@@ -1,0 +1,6 @@
+#!/bin/bash
+for value in 1e6
+do
+   ~/trunk/mamba/mamba-opt -i master_copy.i Materials/CladHeatFluxIn=$value Postprocessors/V_exit/CladHeatFluxIn=$value Output/file_base=Steady_PT_2Phase_${value}
+done
+  

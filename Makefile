@@ -19,13 +19,16 @@ include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
 
 ################################## MODULES ####################################
+#CHEMICAL_REACTIONS   := yes
+#HEAT_CONDUCTION      := yes
+#MISC                 := yes
 ALL_MODULES := yes
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
 # dep apps
 APPLICATION_DIR    := $(CURRENT_DIR)
-APPLICATION_NAME   := mamba
+APPLICATION_NAME   := mamba-dev
 BUILD_EXEC         := yes
 DEP_APPS           := $(shell $(FRAMEWORK_DIR)/scripts/find_dep_apps.py $(APPLICATION_NAME))
 include            $(FRAMEWORK_DIR)/app.mk

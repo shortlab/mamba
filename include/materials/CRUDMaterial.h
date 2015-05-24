@@ -42,13 +42,18 @@ private:
   Real _pore_size_min_baseline;
   Real _pore_size_avg_baseline;
   Real _pore_size_max_baseline;
+  Real _r_inner;
+  Real _r_outer;
   Real _q_dot_in;
+  Real _h_convection;
 
   Real _mu_298K;
   Real _D_BO3_298K;
   Real _D_Li_298K;
+  Real _D_H_298K;
+  Real _D_OH_298K;
   Real _scaling_factor;
-  Real _t_crud;
+  Real _thickness;
   
   // Assumed constant thermal conductivities of solid phases
   Real _k_HBO2_baseline;
@@ -71,33 +76,52 @@ private:
 
   // Debugging flags
   Real _debug_materials;
+  Real _case;
   
   /**
    * This is the member reference that will hold the
    * computed values from this material class.
    */
+  MaterialProperty<Real> & _surfacetension;
+//  MaterialProperty<Real> & _phase;
   MaterialProperty<Real> & _k_cond;
   MaterialProperty<Real> & _pore_size_min;
   MaterialProperty<Real> & _pore_size_avg;
   MaterialProperty<Real> & _pore_size_max;
+  MaterialProperty<Real> & _r_inner_cell;
+  MaterialProperty<Real> & _r_outer_cell;
+  MaterialProperty<Real> & _h_convection_coeff;
   MaterialProperty<Real> & _permeability;
   MaterialProperty<Real> & _k_liquid;
   MaterialProperty<Real> & _k_solid;
   MaterialProperty<Real> & _mu_h2o;
   MaterialProperty<Real> & _rho_h2o;
   MaterialProperty<Real> & _h_fg_h2o;
+  MaterialProperty<Real> & _h_vapor;
   MaterialProperty<Real> & _cp_liquid;
+  MaterialProperty<Real> & _cp_vapor;
   MaterialProperty<Real> & _q_dot_clad;
   MaterialProperty<Real> & _D_BO3;
   MaterialProperty<Real> & _D_Li;
-//  MaterialProperty<Real> & _Tsat_h2o;
+  MaterialProperty<Real> & _D_H;
+  MaterialProperty<Real> & _D_OH;
+  MaterialProperty<Real> & _lgKw_H2O;
+  MaterialProperty<Real> & _lgKw_H3BO3;
+  MaterialProperty<Real> & _lgKw_H3BO3_2;
+  MaterialProperty<Real> & _lgKw_LiBO2;
+  MaterialProperty<Real> & _t_crud;
+  MaterialProperty<Real> & _conductivity;
+  MaterialProperty<Real> & _crud_porosity;
 
   VariableValue & _tortuosity;
   VariableValue & _T;
   VariableValue & _P;
-  VariableValue & _C;
+ // VariableValue & _C;
   VariableValue & _porosity;
-  VariableValue & _HBO2;
+  VariableValue & _phase;
+  VariableValue & _psat;
+  VariableValue & _Tsat;
+ // VariableValue & _HBO2;
 
 };
 

@@ -24,8 +24,8 @@ template<>
 InputParameters validParams<PecletAux>()
 {
   InputParameters params = validParams<AuxKernel>();
-  params.addRequiredCoupledVar("porosity", "The porosity of the CRUD for the advection-diffusion balance");
-  params.addRequiredCoupledVar("tortuosity", "The tortuosity of the CRUD for the advection-diffusion balance");
+  //params.addRequiredCoupledVar("porosity", "The porosity of the CRUD for the advection-diffusion balance");
+  //params.addRequiredCoupledVar("tortuosity", "The tortuosity of the CRUD for the advection-diffusion balance");
   params.addRequiredCoupledVar("pressure",
                                "The pressure of the fluid in the CRUD for the advection-diffusion balance");
   return params;
@@ -34,15 +34,15 @@ InputParameters validParams<PecletAux>()
 PecletAux::PecletAux(const std::string & name,
                      InputParameters parameters)
     :AuxKernel(name,parameters),
-     _porosity(coupledValue("porosity")),
-     _tortuosity(coupledValue("tortuosity")),
+    // _porosity(coupledValue("porosity")),
+    // _tortuosity(coupledValue("tortuosity")),
      _grad_P(coupledGradient("pressure")),
      _k_crud(getMaterialProperty<Real>("k_cond")),
      _permeability(getMaterialProperty<Real>("permeability")),
      _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
      _rho_h2o(getMaterialProperty<Real>("WaterDensity")),
      _cp_h2o(getMaterialProperty<Real>("WaterHeatCapacity")),
-     _d_for_PecletAux(getMaterialProperty<Real>("WaterViscosity"))
+     _t_crud(getMaterialProperty<Real>("crud_thickness"))
 {}
 
 Real
@@ -52,9 +52,10 @@ PecletAux::computeValue()
   // The Peclet number is (L*rho*Cp*v/k)
   
   return _rho_h2o[_qp]
-    * _tortuosity[_qp]
     * _cp_h2o[_qp]
-    * (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp]))  // Here we're using the superficial velocity
-    * (std::abs(_grad_P[_qp](0)) + std::abs(_grad_P[_qp](1)) + std::abs(_grad_P[_qp](2)))
-    / _k_crud[_qp];
+    * _t_crud[_qp]
+    * (_permeability[_qp] / _mu_h2o[_qp] )  // Here we're using the superficial velocity
+    * sqrt(pow(_grad_P[_qp](0),2)+pow(_grad_P[_qp](1),2)+pow(_grad_P[_qp](2),2)) / _k_crud[_qp];
+//    * (std::abs(_grad_P[_qp](0)) + std::abs(_grad_P[_qp](1)) + std::abs(_grad_P[_qp](2)))
+    
 }

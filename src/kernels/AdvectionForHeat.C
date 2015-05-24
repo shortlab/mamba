@@ -25,6 +25,7 @@ InputParameters validParams<AdvectionForHeat>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("porosity", "The porosity of the CRUD for the advection-diffusion balance");
+  params.addRequiredCoupledVar("tortuosity", "The tortuosity of the CRUD for the advection-diffusion balance");
   params.addRequiredCoupledVar("pressure", "The pressure of the fluid in the CRUD for the advection-diffusion balance");
   return params;
 }
@@ -33,6 +34,7 @@ AdvectionForHeat::AdvectionForHeat(const std::string & name,
                                                      InputParameters parameters)
     :Kernel(name,parameters),
      _porosity(coupledValue("porosity")),
+     _tortuosity(coupledValue("tortuosity")),
      _grad_P(coupledGradient("pressure")),
      _permeability(getMaterialProperty<Real>("permeability")),
      _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
@@ -43,9 +45,10 @@ AdvectionForHeat::AdvectionForHeat(const std::string & name,
 Real
 AdvectionForHeat::computeQpResidual()
 {
-  return -_test[_i][_qp]
+  return _test[_i][_qp]
     * _rho_h2o[_qp]
     * _cp_h2o[_qp]
+    * _tortuosity[_qp]
     * (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp]))
     * _grad_P[_qp]
     * _grad_u[_qp];
@@ -54,9 +57,10 @@ AdvectionForHeat::computeQpResidual()
 Real
 AdvectionForHeat::computeQpJacobian()
 {
-  return -_test[_i][_qp]
+  return _test[_i][_qp]
     * _rho_h2o[_qp]
     * _cp_h2o[_qp]
+    * _tortuosity[_qp]
     * (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp]))
     * _grad_P[_qp]
     * _grad_phi[_j][_qp];

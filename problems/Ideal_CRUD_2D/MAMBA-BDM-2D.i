@@ -494,7 +494,7 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
   [../]
 []
 
-[Output]
+[Outputs]
 #  elemental_as_nodal = true
 #  output_initial = true
   file_base = out_2D_{crud_thickness_microns}

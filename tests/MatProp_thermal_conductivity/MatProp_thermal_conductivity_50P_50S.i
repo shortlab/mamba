@@ -214,8 +214,10 @@ active = 'ThermalDiffusion'
     tortuosity = FakeTortuosity
     pressure = FakePressure
     porosity = FakePorosity
-    concentration = FakeConcentration
-    HBO2 = FakeHBO2
+ #   concentration = FakeConcentration
+ #   HBO2 = FakeHBO2
+    psat = FakeHBO2
+    phase = FakeHBO2
   [../]
 []
 

@@ -373,7 +373,7 @@ active = 'ThermalDiffusion PressureDarcy AdvectionForConcentration_BO3 Diffusion
 
 []
 
-[Output]
+[Outputs]
   linear_residuals = true
 #  elemental_as_nodal = true
 #  output_initial = true

@@ -45,6 +45,6 @@ protected:
   MaterialProperty<Real> & _permeability;
   MaterialProperty<Real> & _mu_h2o;
   VariableValue & _porosity;
-  VariableValue & _HBO2;
+//  VariableValue & _HBO2;
 };
 #endif //PRESSUREDARCY_H

@@ -1,0 +1,4 @@
+Error Message:
+
+Can't transfer a Postprocessor from a MultiApp to a Postprocessor in the Master!  This doesn't make sense because you would have multiple Postprocessors from each Sub-App feeding into just one Postprocessor in the Master!
+

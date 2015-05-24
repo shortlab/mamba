@@ -44,9 +44,11 @@ private:
 
   MaterialProperty<Real> & _k_cond;
   VariableValue & _HBO2;
+  VariableValue & _porosity;
   MaterialProperty<Real> & _rho_h2o;
   MaterialProperty<Real> & _h_fg_h2o;
   VariableGradient & _grad_T;
+  VariableValue & _vaporheatcond;
 };
 
 #endif //CHIMNEYEVAPORATIONNEUMANNBC_H

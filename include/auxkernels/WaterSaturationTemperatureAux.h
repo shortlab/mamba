@@ -40,7 +40,8 @@ public:
 protected:
   virtual Real computeValue();
 
-  VariableValue & _C;
+  VariableValue & _p;
+  std::vector<VariableValue *> _vals;
 
 };
 

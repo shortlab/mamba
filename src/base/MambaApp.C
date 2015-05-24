@@ -1,13 +1,15 @@
 // Moose Includes
 #include "MambaApp.h"
 #include "Moose.h"
-#include "MambaApp.h"
-#include "Factory.h"
 #include "AppFactory.h"
-#include "ActionFactory.h"
+
+// Modules
+#include "ChemicalReactionsApp.h"
+#include "HeatConductionApp.h"
+#include "MiscApp.h"
 
 // First come the kernel header files
-
+#include "CoeffTimeDerivative.h"
 #include "ThermalDiffusion.h"
 #include "AdvectionForHeat.h"
 #include "PressureDarcy.h"
@@ -16,15 +18,27 @@
 #include "BoricAcidSinks.h"
 //#include "WaterSaturationTemperature.h"
 
-// Next come the auxilliary kernels
+//Dirackernels
+#include "FrontSource.h"
 
+// Next come the auxilliary kernels
+#include "EnergyBalanceAux.h"
+#include "CapillaryPressureAux.h"
+#include "PhaseAux.h"
 #include "TortuosityAux.h"
 #include "PorosityAux.h"
+#include "WaterSaturationPressureAux.h"
 #include "WaterSaturationTemperatureAux.h"
 #include "SuperheatTempAux.h"
+#include "FluidVelocityAux.h"
 #include "PecletAux.h"
 #include "Precipitation_HBO2Aux.h"
 #include "BO3_SolubilityAux.h"
+#include "ConductivityFieldAux.h"
+#include "ECofLiBO2.h"
+#include "FluidMassFluxAux.h"
+#include "HeatConductionAux.h"
+#include "InterfaceVaporPressureAux.h"
 
 // Next come the materials
 
@@ -37,15 +51,33 @@
 #include "CRUDCoolantNeumannBC.h"
 #include "CoupledTsatDirichletBC.h"
 #include "ChimneyEvaporationNeumannBC.h"
+#include "ChimneyEnthalpyFlow.h"
 #include "CRUDChimneyConcentrationMixedBC.h"
+#include "ConditionLeftTemp.h"
+#include "ChimneyPressureDirichletBC.h"
+#include "OnOffChimneyEvaporationNeumannBC.h"
+#include "OnOffCoupledTsatDirichletBC.h"
+#include "ChimneyVaporVelocity.h"
+
+//Functions
+#include "PostprocessorFunction.h"
+#include "PPCombinationFunc.h"
+#include "EvaporationFunction.h"
+
+//#include "VarCombine.h"
 
 //userobjects
-#include "WaterSteamEOS.h"
+#include "TrackDiracFront.h"
 
 // Finally, the postprocessors
-
-#include "NodalMaxValueFileIO.h"
+#include "VaporHeight.h"
+#include "LiquidHeight.h"
+#include "VelocityExit.h"
 #include "AreaAverageBoron.h"
+#include "IntegratedSideFlux.h"
+#include "NodalMinValue.h"
+#include "WaterSideFluxAverage.h"
+#include "LiquidInterfaceVelocity.h"
 
 template<>
 InputParameters validParams<MambaApp>()
@@ -57,12 +89,25 @@ InputParameters validParams<MambaApp>()
 MambaApp::MambaApp(const std::string & name, InputParameters parameters) :
     MooseApp(name, parameters)
 {
+  srand(processor_id());
+
   // Register all the user-created objects for incorporation and use
   Moose::registerObjects(_factory);
+  ChemicalReactionsApp::registerObjects(_factory);
+  HeatConductionApp::registerObjects(_factory);
+  MiscApp::registerObjects(_factory);
   MambaApp::registerObjects(_factory);
 
   // Associate Parser Syntax
   Moose::associateSyntax(_syntax, _action_factory);
+  ChemicalReactionsApp::associateSyntax(_syntax, _action_factory);
+  HeatConductionApp::associateSyntax(_syntax, _action_factory);
+  MiscApp::associateSyntax(_syntax, _action_factory);
+  MambaApp::associateSyntax(_syntax, _action_factory);
+}
+
+MambaApp::~MambaApp()
+{
 }
 
 void
@@ -78,7 +123,7 @@ MambaApp::registerObjects(Factory & factory)
 
   // Our new advection-diffusion kernel that accepts an auxKernel's aqueous species diffusivity,
   // the permeability material property, and the coupled pressure variable (of which the grad is taken)
-
+  registerKernel(CoeffTimeDerivative);
   registerKernel(AdvectionForConcentration);
   registerKernel(DiffusionForConcentration);
   registerKernel(BoricAcidSinks);
@@ -93,15 +138,27 @@ MambaApp::registerObjects(Factory & factory)
   registerKernel(ThermalDiffusion);
   registerKernel(AdvectionForHeat);
 
-  // Next come the auxilliary kernels
+// Dirachkernels
+  registerDiracKernel(FrontSource);
 
+  // Next come the auxilliary kernels
+  registerAux(EnergyBalanceAux);
+  registerAux(CapillaryPressureAux);
+  registerAux(PhaseAux);
   registerAux(TortuosityAux);
   registerAux(PorosityAux);
+  registerAux(WaterSaturationPressureAux);
   registerAux(WaterSaturationTemperatureAux);
   registerAux(SuperheatTempAux);
+  registerAux(FluidVelocityAux);
   registerAux(PecletAux);
   registerAux(Precipitation_HBO2Aux);
   registerAux(BO3_SolubilityAux);
+  registerAux(ConductivityFieldAux);
+  registerAux(ECofLiBO2);
+  registerAux(FluidMassFluxAux);
+  registerAux(HeatConductionAux);
+  registerAux(InterfaceVaporPressureAux);
 
   // Next come the materials
 
@@ -116,12 +173,36 @@ MambaApp::registerObjects(Factory & factory)
   registerBoundaryCondition(CRUDCoolantNeumannBC);
   registerBoundaryCondition(CoupledTsatDirichletBC);
   registerBoundaryCondition(ChimneyEvaporationNeumannBC);
+  registerBoundaryCondition(ChimneyEnthalpyFlow);
   registerBoundaryCondition(CRUDChimneyConcentrationMixedBC);
+  registerBoundaryCondition(ConditionLeftTemp);
+  registerBoundaryCondition(ChimneyPressureDirichletBC);
+  registerBoundaryCondition(OnOffChimneyEvaporationNeumannBC);
+  registerBoundaryCondition(OnOffCoupledTsatDirichletBC);
+  registerBoundaryCondition(ChimneyVaporVelocity);
 
   //userobjects
-  registerUserObject(WaterSteamEOS);
+  registerUserObject(TrackDiracFront);
+
+
+  //Functions;
+  registerFunction(PostprocessorFunction);
+  registerFunction(PPCombinationFunc);
+  registerFunction(EvaporationFunction);
+ // registerPostprocessor(VarCombine);
 
   // Finally come the postprocessors
-  registerPostprocessor(NodalMaxValueFileIO);
+  registerPostprocessor(VaporHeight);
+  registerPostprocessor(LiquidHeight);
+  registerPostprocessor(VelocityExit);
   registerPostprocessor(AreaAverageBoron);
+  registerPostprocessor(IntegratedSideFlux);
+  registerPostprocessor(NodalMinValue);
+  registerPostprocessor(WaterSideFluxAverage);
+  registerPostprocessor(LiquidInterfaceVelocity);
+}
+
+void
+MambaApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
+{
 }

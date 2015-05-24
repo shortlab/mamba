@@ -44,6 +44,7 @@ protected:
    */
   
   VariableValue & _porosity;
+  VariableValue & _tortuosity;
   VariableGradient & _grad_P;
   MaterialProperty<Real> & _permeability;
   MaterialProperty<Real> & _mu_h2o;

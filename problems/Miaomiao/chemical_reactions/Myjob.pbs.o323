@@ -1,0 +1,295 @@
+
+
+*** Warning ***
+The PETSc option -snes_mf_operator should not be used directly in a MOOSE input file. Please set the solver type through "solve_type".
+at /home/mmjin/projects/moose/framework/src/base/FEProblem.C, line 3821
+
+
+*** WARNING: The following parameters were unused in your input file:
+AuxKernels/aux_LiBO2(s)/start_time
+Executioner/l_rel_tol
+Kernels/H+_precipitate/start_time
+Kernels/H3BO3_precipitate/start_time
+Kernels/Li+_precipitate/start_time
+Materials/material_CRUD/k_NiFe2O4_baseline
+*** WARNING
+Framework Information:
+Version:                 N/A
+PETSc Version:           3.4.3
+Current Time:            Sun Aug 17 18:45:11 2014
+Executable Timestamp:    Sun Aug 17 18:04:30 2014
+
+
+Parallelism:
+  Num Processors:        1
+  Num Threads:           1
+
+Mesh: 
+  Distribution:          serial
+  Mesh Dimension:        2
+  Spatial Dimension:     3
+  Nodes:                 
+    Total:               296154
+    Local:               296154
+  Elems:                 
+    Total:               379682
+    Local:               379682
+  Num Subdomains:        1
+  Num Partitions:        1
+
+Nonlinear System:
+  Num DOFs:              1776924
+  Num Local DOFs:        1776924
+  Variables:             { "crud_temperature" "crud_pressure" "Li+" "OH-" "H+" "H3BO3" } 
+  Finite Element Types:  "LAGRANGE" 
+  Approximation Orders:  "FIRST" 
+
+Auxiliary System:
+  Num DOFs:              3761362
+  Num Local DOFs:        3761362
+  Variables:             "InterfaceTrace" { "CapillaryPressure" "Unity" "Phase" "nodal_Psat_h2o" } "nodal_Tsat_h2o" 
+                           "conductivity" { "LiBO2(s)" "nodal_porosity" } "nodal_tortuosity" "ECofLiBO2" 
+                           
+  Finite Element Types:  "LAGRANGE" "MONOMIAL" "LAGRANGE" "MONOMIAL" "LAGRANGE" "MONOMIAL" "LAGRANGE" 
+                           
+  Approximation Orders:  "FIRST" "CONSTANT" "FIRST" "CONSTANT" "FIRST" "FIRST" "FIRST" 
+
+Execution Information:
+  Executioner:           Transient
+  TimeStepper:           IterationAdaptiveDT
+  Solver Mode:           Preconditioned JFNK
+
+
+Time Step  1, time = 0.01
+                dt = 0.01
+ 0 Nonlinear |R| = 5.602653e+01
+      0 Linear |R| = 5.602653e+01
+      1 Linear |R| = 1.682099e+01
+      2 Linear |R| = 2.022349e+00
+      3 Linear |R| = 2.017738e+00
+      4 Linear |R| = 2.010473e+00
+      5 Linear |R| = 1.079859e+00
+      6 Linear |R| = 6.442346e-01
+      7 Linear |R| = 2.464072e-01
+      8 Linear |R| = 1.257066e-01
+      9 Linear |R| = 5.128609e-02
+     10 Linear |R| = 3.049101e-02
+     11 Linear |R| = 1.634548e-02
+     12 Linear |R| = 8.337704e-03
+     13 Linear |R| = 3.865437e-03
+     14 Linear |R| = 2.417949e-03
+     15 Linear |R| = 7.017901e-04
+     16 Linear |R| = 3.772047e-04
+ 1 Nonlinear |R| = 5.043061e+01
+      0 Linear |R| = 5.043061e+01
+      1 Linear |R| = 1.538627e+01
+      2 Linear |R| = 1.825738e+00
+      3 Linear |R| = 1.822343e+00
+      4 Linear |R| = 1.822225e+00
+      5 Linear |R| = 1.126468e+00
+      6 Linear |R| = 6.400067e-01
+      7 Linear |R| = 1.823018e-01
+      8 Linear |R| = 7.147952e-02
+      9 Linear |R| = 6.181424e-02
+     10 Linear |R| = 4.853479e-02
+     11 Linear |R| = 1.716025e-02
+     12 Linear |R| = 4.275855e-03
+     13 Linear |R| = 3.841963e-03
+     14 Linear |R| = 3.127125e-03
+     15 Linear |R| = 2.571931e-03
+     16 Linear |R| = 6.728970e-04
+     17 Linear |R| = 5.105895e-04
+     18 Linear |R| = 2.098289e-04
+ 2 Nonlinear |R| = 4.539454e+01
+      0 Linear |R| = 4.539454e+01
+      1 Linear |R| = 1.411255e+01
+      2 Linear |R| = 1.580810e+00
+      3 Linear |R| = 1.578909e+00
+      4 Linear |R| = 1.573323e+00
+      5 Linear |R| = 1.131177e+00
+      6 Linear |R| = 7.112627e-01
+      7 Linear |R| = 2.207805e-01
+      8 Linear |R| = 7.518318e-02
+      9 Linear |R| = 7.456433e-02
+     10 Linear |R| = 6.213462e-02
+     11 Linear |R| = 4.696502e-02
+     12 Linear |R| = 1.399126e-02
+     13 Linear |R| = 1.119933e-02
+     14 Linear |R| = 7.763395e-03
+     15 Linear |R| = 4.561898e-03
+     16 Linear |R| = 1.861598e-03
+     17 Linear |R| = 9.459530e-04
+     18 Linear |R| = 4.167971e-04
+ 3 Nonlinear |R| = 4.086226e+01
+      0 Linear |R| = 4.086226e+01
+      1 Linear |R| = 1.250792e+01
+      2 Linear |R| = 1.501070e+00
+      3 Linear |R| = 1.499942e+00
+      4 Linear |R| = 1.490028e+00
+      5 Linear |R| = 1.163604e+00
+      6 Linear |R| = 7.822827e-01
+      7 Linear |R| = 2.941731e-01
+      8 Linear |R| = 1.016978e-01
+      9 Linear |R| = 9.731279e-02
+     10 Linear |R| = 7.992513e-02
+     11 Linear |R| = 7.008115e-02
+     12 Linear |R| = 2.820764e-02
+     13 Linear |R| = 1.908495e-02
+     14 Linear |R| = 1.004890e-02
+     15 Linear |R| = 4.457808e-03
+     16 Linear |R| = 2.690219e-03
+     17 Linear |R| = 1.385799e-03
+     18 Linear |R| = 7.510485e-04
+     19 Linear |R| = 2.215788e-04
+ 4 Nonlinear |R| = 3.678327e+01
+      0 Linear |R| = 3.678327e+01
+      1 Linear |R| = 1.110999e+01
+      2 Linear |R| = 1.363910e+00
+      3 Linear |R| = 1.363699e+00
+      4 Linear |R| = 1.351247e+00
+      5 Linear |R| = 1.026059e+00
+      6 Linear |R| = 7.568545e-01
+      7 Linear |R| = 3.051988e-01
+      8 Linear |R| = 1.539531e-01
+      9 Linear |R| = 1.062268e-01
+     10 Linear |R| = 9.178793e-02
+     11 Linear |R| = 5.458558e-02
+     12 Linear |R| = 4.284051e-02
+     13 Linear |R| = 2.249107e-02
+     14 Linear |R| = 1.184446e-02
+     15 Linear |R| = 4.013929e-03
+     16 Linear |R| = 2.300065e-03
+     17 Linear |R| = 1.811770e-03
+     18 Linear |R| = 9.927836e-04
+     19 Linear |R| = 5.218432e-04
+     20 Linear |R| = 2.246110e-04
+ 5 Nonlinear |R| = 3.311204e+01
+      0 Linear |R| = 3.311204e+01
+      1 Linear |R| = 1.019231e+01
+      2 Linear |R| = 1.242325e+00
+      3 Linear |R| = 1.242225e+00
+      4 Linear |R| = 1.233117e+00
+      5 Linear |R| = 1.040235e+00
+      6 Linear |R| = 8.436194e-01
+      7 Linear |R| = 3.632521e-01
+      8 Linear |R| = 1.703288e-01
+      9 Linear |R| = 1.542447e-01
+     10 Linear |R| = 1.355857e-01
+     11 Linear |R| = 7.388383e-02
+     12 Linear |R| = 5.099739e-02
+     13 Linear |R| = 3.362230e-02
+     14 Linear |R| = 2.361150e-02
+     15 Linear |R| = 8.391645e-03
+     16 Linear |R| = 4.474198e-03
+     17 Linear |R| = 3.208449e-03
+     18 Linear |R| = 1.574197e-03
+     19 Linear |R| = 7.516817e-04
+     20 Linear |R| = 4.274301e-04
+     21 Linear |R| = 2.535053e-04
+ 6 Nonlinear |R| = 2.980760e+01
+      0 Linear |R| = 2.980760e+01
+      1 Linear |R| = 9.021390e+00
+      2 Linear |R| = 1.078966e+00
+      3 Linear |R| = 1.075013e+00
+      4 Linear |R| = 1.058259e+00
+      5 Linear |R| = 8.847644e-01
+      6 Linear |R| = 7.314017e-01
+      7 Linear |R| = 3.678906e-01
+      8 Linear |R| = 2.422162e-01
+      9 Linear |R| = 1.427980e-01
+     10 Linear |R| = 1.271306e-01
+     11 Linear |R| = 5.762722e-02
+     12 Linear |R| = 4.213704e-02
+     13 Linear |R| = 2.480166e-02
+     14 Linear |R| = 1.794682e-02
+     15 Linear |R| = 8.993503e-03
+     16 Linear |R| = 5.209441e-03
+     17 Linear |R| = 4.210137e-03
+     18 Linear |R| = 1.853538e-03
+     19 Linear |R| = 9.483895e-04
+     20 Linear |R| = 4.913307e-04
+     21 Linear |R| = 3.229443e-04
+     22 Linear |R| = 1.453931e-04
+ 7 Nonlinear |R| = 2.683309e+01
+      0 Linear |R| = 2.683309e+01
+      1 Linear |R| = 8.034534e+00
+      2 Linear |R| = 9.848673e-01
+      3 Linear |R| = 9.841924e-01
+      4 Linear |R| = 9.701203e-01
+      5 Linear |R| = 8.458124e-01
+      6 Linear |R| = 7.132569e-01
+      7 Linear |R| = 3.423348e-01
+      8 Linear |R| = 2.510522e-01
+      9 Linear |R| = 1.802719e-01
+     10 Linear |R| = 1.656635e-01
+     11 Linear |R| = 6.901730e-02
+     12 Linear |R| = 4.528401e-02
+     13 Linear |R| = 3.123646e-02
+     14 Linear |R| = 2.216343e-02
+     15 Linear |R| = 1.194610e-02
+     16 Linear |R| = 7.971775e-03
+     17 Linear |R| = 5.734664e-03
+     18 Linear |R| = 2.361262e-03
+     19 Linear |R| = 1.271448e-03
+     20 Linear |R| = 7.573091e-04
+     21 Linear |R| = 5.462662e-04
+     22 Linear |R| = 2.506565e-04
+ 8 Nonlinear |R| = 2.415542e+01
+      0 Linear |R| = 2.415542e+01
+      1 Linear |R| = 7.398962e+00
+      2 Linear |R| = 9.242379e-01
+      3 Linear |R| = 9.209476e-01
+      4 Linear |R| = 9.028684e-01
+      5 Linear |R| = 7.662459e-01
+      6 Linear |R| = 6.727102e-01
+      7 Linear |R| = 3.403425e-01
+      8 Linear |R| = 2.862029e-01
+      9 Linear |R| = 1.737135e-01
+     10 Linear |R| = 1.578147e-01
+     11 Linear |R| = 6.908756e-02
+     12 Linear |R| = 5.233784e-02
+     13 Linear |R| = 3.138149e-02
+     14 Linear |R| = 2.349911e-02
+     15 Linear |R| = 1.457102e-02
+     16 Linear |R| = 1.042597e-02
+     17 Linear |R| = 8.409706e-03
+     18 Linear |R| = 3.130824e-03
+     19 Linear |R| = 1.811069e-03
+     20 Linear |R| = 1.140502e-03
+     21 Linear |R| = 7.763375e-04
+     22 Linear |R| = 3.615102e-04
+     23 Linear |R| = 2.094000e-04
+ 9 Nonlinear |R| = 2.174483e+01
+      0 Linear |R| = 2.174483e+01
+      1 Linear |R| = 6.544677e+00
+      2 Linear |R| = 8.027117e-01
+      3 Linear |R| = 8.015718e-01
+      4 Linear |R| = 7.770423e-01
+      5 Linear |R| = 6.547577e-01
+      6 Linear |R| = 5.995422e-01
+      7 Linear |R| = 3.031793e-01
+      8 Linear |R| = 2.697887e-01
+      9 Linear |R| = 1.490325e-01
+     10 Linear |R| = 1.420400e-01
+     11 Linear |R| = 5.850796e-02
+     12 Linear |R| = 4.626920e-02
+     13 Linear |R| = 2.790987e-02
+     14 Linear |R| = 2.339501e-02
+     15 Linear |R| = 1.711617e-02
+     16 Linear |R| = 1.040142e-02
+     17 Linear |R| = 8.038302e-03
+     18 Linear |R| = 3.901352e-03
+     19 Linear |R| = 1.781677e-03
+     20 Linear |R| = 1.343786e-03
+     21 Linear |R| = 7.857542e-04
+     22 Linear |R| = 4.485252e-04
+     23 Linear |R| = 2.226672e-04
+     24 Linear |R| = 1.254923e-04
+10 Nonlinear |R| = 1.957464e+01
+      0 Linear |R| = 1.957464e+01
+      1 Linear |R| = 5.919336e+00
+      2 Linear |R| = 7.227948e-01
+      3 Linear |R| = 7.206070e-01
+      4 Linear |R| = 7.000096e-01
+      5 Linear |R| = 6.203554e-01
+      6 Linear |R| = 5.591017e-01

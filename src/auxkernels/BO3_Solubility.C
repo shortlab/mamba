@@ -26,6 +26,7 @@ InputParameters validParams<BO3_SolubilityAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("temperature", "The temperature of the CRUD in Kelvin");
+  //params.addParam<Real>("initial_BO3_mole_fraction", 3e-7, "This is minimum pore size in the CRUD, acquired from TEM foils");
   params.addRequiredCoupledVar("Conc_BO3", "The concentration of the borate ion in the CRUD (mole fraction)");
 //  params.addRequiredCoupledVar("Conc_HBO2", "The concentration of metaboric acid in the CRUD (mole fraction)");
   return params;
@@ -34,6 +35,7 @@ InputParameters validParams<BO3_SolubilityAux>()
 BO3_SolubilityAux::BO3_SolubilityAux(const std::string & name, InputParameters parameters)
   :AuxKernel(name, parameters),
   _temperature(coupledValue("temperature")),
+//  _init_BO3(getParam<Real>("initial_BO3_mole_fraction"))
   _Conc_BO3(coupledValue("Conc_BO3"))
 //  _Conc_HBO2(coupledValue("Conc_HBO2"))
 {}

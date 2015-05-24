@@ -42,7 +42,7 @@ protected:
 
 private:
 
-  const PostprocessorValue & _q_dot_multiapp;
+  Real & _q_dot_multiapp;
 };
 
 #endif //CRUDCLADNEUMANNBCMULTIAPP_H

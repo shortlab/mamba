@@ -1,0 +1,689 @@
+MacPWR.in is modified by Jennifer
+
+Simple PWR model- from J.Nuc.Matl article, 2007
+
+
+ * radical water reaction set used
+ * MacDonald's High temperature g-value set
+ * no surface reactions
+ * uses MacDonald's 304SS MPM
+
+
+ 
+ &FileName
+ OutFile  = 'PWR_aec_OH.out'
+ PlotFile = 'PWR_aec_OH.plo'
+ ECPFile = 'PWR_aec_ECP.out'
+ /
+
+ &Control
+ ECPOut = true
+ FlowRateTot = 18e6
+ HeatBalComp = 'SG INTAKE'
+ ConvComp    = 'REACTOR OUTLET'
+ ConvSpecies = 'H2','O2','H2O2'
+ ConcInMode = 0
+ ConcOutMode = 0
+ CalcInject = true
+ SpeciesInject = 'H2'
+ InjectComp = 'COLD LEG 2'
+ Inject = 0.0011
+ SameRxSet = true
+ SameGVal = true
+ NodeStart = 14
+ /
+ 
+
+ 
+*1234567890123456+123+123
+
+ $Component
+ CORE 1             1   2
+ CORE 2             2   3
+ CORE 3             3   4
+ UPPER CORE         4   5
+ REACTOR OUTLET     5   6
+ HOT LEG            6   7
+ SG INTAKE          7   8
+ SG TUBE 1          8   9
+ SG TUBE 2          9   10
+ SG TUBE 3          10  11
+ SG TUBE 4          11  12
+ SG OUTLET          12  13
+ COLD LEG 1         13  14
+ COLD LEG 2         14  15
+ REACTOR INLET      15  1
+ $End   
+
+***********8****************************************************************
+
+ $GValue
+ e-      3.43438        1.28700        0.17000        0.000549000    
+ H       1.56001        0.497800       0.29000        1.00000        
+ H+      3.43438        1.28700        0.17000        1.00000        
+ H2      0.639050       0.990600       1.40000        2.00000        
+ OH      5.73941        2.86800        0.39000        17.0000        
+ OH-     0.00000        0.00000        0.00000        17.0000        
+ H2O2    0.266000       0.404000       1.18000        34.0000        
+ H2O     0.00000        0.00000        0.00000        18.0000        
+ HO2     0.00000        0.0300000      0.17000        33.0000        
+ HO2-    0.00000        0.00000        0.00000        33.0000        
+ O2      0.00000        0.00000        0.00000        32.0000        
+ O2-     0.00000        0.00000        0.00000        32.0000        
+ O       0.00000        0.00000        0.00000        16.0000        
+ O-      0.00000        0.00000        0.00000        16.0000        
+ O3-     0.00000        0.00000        0.00000        16.0000        
+ $End of GValue
+
+
+ &RxControl
+ NSurfRx  = 0
+ /
+
+
+ $Reaction
+ R2  e-      e-              >H2      OH-     OH-             P -47.5300       49200.0        -1.03600e+07   0.00000        0.00000       
+ R3  H       H               >H2                              A 5.10000e+09    15.5000        0.00000        0.00000        0.00000       
+ R4  H       OH              >H2O2                            P 8.05400        2193.00        -739500.       6.87000e+07    0.00000       
+ R5  e-      H               >H2      OH-                     A 2.76000e+10    14.9000        0.00000        0.00000        0.00000       
+ R6  e-      OH              >OH-                             P 13.1200        -1023.00       76240.0        0.00000        0.00000       
+ R7  H       OH              >H2O                             A 1.10000e+10    9.10000        0.00000        0.00000        0.00000       
+ R8  e-      H2O2            >OH      OH-                     A 1.40000e+10    15.7000        0.00000        0.00000        0.00000       
+ R9  e-      O2              >O2-                             A 2.30000e+10    11.6000        0.00000        0.00000        0.00000       
+ R10 e-      O2-             >H2O2    OH-     OH-             A 1.30000e+10    13.0000        0.00000        0.00000        0.00000       
+ R11 e-      HO2             >HO2-                            A 1.30000e+10    13.0000        0.00000        0.00000        0.00000       
+ R12 H       H2O2            >OH      H2O                     A 3.60000e+07    21.1000        0.00000        0.00000        0.00000       
+ R13 H       O2              >HO2                             P 10.7000        284.000        -136900.       0.00000        0.00000       
+ R14 H       HO2             >H2O2                            A 0.00000        0.00000        0.00000        0.00000        0.00000       
+ A14 H       HO2             >OH      OH                      A 1.13000e+10    15.2000        0.00000        0.00000        0.00000       
+ R15 H       O2-             >HO2-                            A 1.13000e+10    15.2000        0.00000        0.00000        0.00000       
+ R16 OH      H2O2            >HO2     H2O                     A 2.90000e+07    13.8000        0.00000        0.00000        0.00000       
+ R17 OH      O2-             >O2      OH-                     A 1.10000e+10    10.9000        0.00000        0.00000        0.00000       
+ R18 OH      HO2             >O2      H2O                     A 8.80000e+09    6.60000        0.00000        0.00000        0.00000       
+ R19 HO2     HO2             >H2O2    O2                      A 840000.        20.1000        0.00000        0.00000        0.00000       
+ R20 O2-     HO2             >H2O2    O2      OH-             A 0.00000        0.00000        0.00000        0.00000        0.00000       
+ R21 O2-     O2-             >H2O2    O2      OH-     OH-     A 0.00000        0.00000        0.00000        0.00000        0.00000       
+ R22 H2O2                    >O       H2O                     A 0.00000        0.00000        0.00000        0.00000        0.00000       
+ A22 H2O2                    >OH      OH                      A 1.00000e-07    63.0000        0.00000        0.00000        0.00000       
+ f23                         >H+      OH-                     Q 20.9300        -12360.0       6.36400e+06    -1.47500e+09   1.23700e+11   
+ b23 H+      OH-             >H2O                             P 20.9300        -12360.0       6.36400e+06    -1.47500e+09   1.23700e+11   
+ f24 H2O2                    >H+      HO2-                    T 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ b24 H+      HO2-            >H2O2                            P 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ f25 H2O2    OH-             >HO2-    H2O                     P 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ b25 HO2-    H2O             >H2O2    OH-                     V 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ f26 OH                      >H+      O-                      U 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ b26 H+      O-              >OH                              P 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ f27 OH      OH-             >O-      H2O                     P 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ b27 O-      H2O             >OH      OH-                     R 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ f28 HO2                     >H+      O2-                     S 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ b28 H+      O2-             >HO2                             P 16.4100        -4888.00       1.62200e+06    -2.00400e+08   0.00000       
+ f29 HO2     OH-             >O2-     H2O                     P 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ b29 O2-     H2O             >HO2     OH-                     W 13.3400        -2220.00       733000.        -1.06500e+08   0.00000       
+ f30 H                       >H+      e-                      X 39.1300        -38880.0       2.05400e+07    -4.89900e+09   4.37600e+11   
+ b30 H+      e-              >H                               P 39.1300        -38880.0       2.05400e+07    -4.89900e+09   4.37600e+11   
+ f31 H       OH-             >e-      H2O                     P 22.9700        -19710.0       1.13700e+07    -2.99000e+09   2.80300e+11   
+ b31 e-      H2O             >H       OH-                     Y 22.9700        -19710.0       1.13700e+07    -2.99000e+09   2.80300e+11   
+ f32 H       H2O             >H2      OH                      P 9.40800        -2827.00       -379200.       0.00000        0.00000       
+ b32 H2      OH              >H       H2O                     P -11.5600       32550.0        -1.86200e+07   4.55400e+09    -4.13600e+11  
+ R33 OH      HO2-            >H2O     O2-                     A 8.10000e+09    11.9000        0.00000        0.00000        0.00000       
+ R34 O-      H2O2            >OH-     HO2                     A 0.00000        0.00000        0.00000        0.00000        0.00000       
+ R35 O-      HO2-            >OH-     O2-                     A 7.80000e+08    24.3000        0.00000        0.00000        0.00000       
+ R36 O-      H2              >H       O2-                     A 1.30000e+08    12.9000        0.00000        0.00000        0.00000       
+ f37 O-      O2              >O3-                             A 3.70000e+09    11.2000        0.00000        0.00000        0.00000       
+ b37 O3-                     >O-      O2                      A 2600.00        46.2000        0.00000        0.00000        0.00000       
+ $End of Reaction
+
+***********************************************************************
+ @CORE 1
+
+ &Position
+ XLength  = 85.4
+ /
+
+ &State
+ Diameter = 0.4
+ AreaIn   = 31188
+ FlowFrac = 1.0
+
+ /
+
+ &DoseShape
+ GammaInMode= 1
+ NeutInMode = 1
+ AlphaInMode = 1
+ GammaAvg = 286.E3                      
+ GammaCoef= 1.0,1.0
+ NeutAvg =  514.E3
+ NeutCoef=  1.0,1.0
+ AlphaAvg = 31.7e3
+ AlphaCoef = 1.0,1.0
+ /
+
+ &PowerShape 
+ PowerAvg =1.4e9
+ PowerInMode = 1
+ PowerData = 0.8,0.9,0.95
+ /
+
+ &InitialConc
+ /
+ 
+ 
+ &Flag
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData /
+
+
+
+
+
+
+
+ @End OF CORE 1
+******************************************************************
+ @CORE 2
+ &Position
+ XLength  = 256.2
+ /
+
+ &State
+ AreaIn   = 51059
+ Diameter = 0.4
+ FlowFrac = 1.0
+ /
+
+ &DoseShape
+ GammaInMode= 1
+ NeutInMode = 1
+ AlphaInMode = 1
+ GammaAvg = 286.E3                      
+ GammaCoef= 1.0,1.0
+ NeutAvg =  514.E3
+ NeutCoef=  1.0,1.0
+ AlphaAvg = 31.7e3
+ AlphaCoef = 1.0,1.0
+ / 
+
+ &PowerShape 
+ PowerAvg =1.4e9
+ PowerData = 0.95,1.0,0.95
+ /
+ 
+ &InitialConc /
+
+ &Flag
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+
+ @End OF CORE 2
+******************************************************************
+ @CORE 3
+
+ &Position
+ XLength  = 85.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ AreaIn   = 50300
+ Diameter = 0.4
+ /
+
+ &DoseShape
+ GammaInMode= 1
+ NeutInMode = 1
+ AlphaInMode = 1
+ GammaAvg = 286.E3                      
+ GammaCoef= 1.0,1.0
+ NeutAvg =  514.E3
+ NeutCoef=  1.0,1.0
+ AlphaAvg = 31.7e3
+ AlphaCoef = 1.0,1.0
+ /
+
+ &InitialConc /
+
+ &PowerShape 
+ PowerAvg =1.4e9
+ PowerData = 0.9,0.8,0.7
+ /
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData /
+
+
+
+
+ @End OF CORE 3
+******************************************************************
+ @UPPER CORE
+
+ &Position
+ XLength  = 31.7
+ /
+
+ &State
+ FlowFrac = 1.0
+ AreaIn   = 55325
+ Diameter = 1.11
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+
+ &InitialConc /
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData
+ /
+
+
+ @UPPER CORE
+******************************************************************
+ @REACTOR OUTLET
+
+ &Position
+ XLength  = 255
+ /
+
+ &State
+ FlowFrac = 1.0
+ AreaIn   = 69156
+ Diameter = 40.
+ /
+
+ &DoseShape
+ /
+ &PowerShape /
+
+
+ &InitialConc /
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData /
+
+
+
+ @REACTOR OUTLET
+******************************************************************
+ @HOT LEG
+
+ &Position
+ XLength  = 684.5
+ /
+
+ &State
+ FlowFrac = 1.0
+ AreaIn   = 17310.7
+ Diameter = 73.6
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+ &InitialConc 
+ /
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData
+ /
+
+
+
+ @End OF HOT LEG
+******************************************************************
+ @SG INTAKE
+
+ &Position
+ XLength  = 718.5
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 73.6
+ AreaIn   = 50295.5
+ /
+
+ &InitialConc 
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+
+
+ @End SG INTAKE
+******************************************************************
+ @SG TUBE 1
+
+ &Position
+ XLength  = 142.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 1.69
+ AreaIn   = 49268.
+ /
+
+ &InitialConc /
+
+ &DoseShape
+ /
+
+ &PowerShape 
+ PowerAvg =-1.e9
+ PowerData = 1.0,1.0,1.0
+ /
+
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+ @End SG TUBE 1
+******************************************************************
+ @SG TUBE 2
+
+ &Position
+ XLength  = 142.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 1.69
+ AreaIn   = 49268.
+ /
+
+ &InitialConc /
+
+ &DoseShape
+ /
+
+ &PowerShape 
+ PowerAvg =-1.e9
+ PowerData = 1.0,1.0,1.0
+ /
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+
+ @End SG TUBE 2
+******************************************************************
+ @SG TUBE 3
+
+ &Position
+ XLength  = 142.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 1.69
+ AreaIn   = 49268.
+ /
+
+ &InitialConc /
+
+ &DoseShape
+ /
+
+
+ &PowerShape 
+ PowerAvg =-0.9e9
+ PowerData = 1.0,1.0,1.0
+ /
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+ @End SG TUBE 3
+******************************************************************
+ @SG TUBE 4
+
+ &Position
+ XLength  = 142.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 1.69
+ AreaIn   = 49268.
+ /
+
+ &PowerShape 
+ PowerAvg =-0.9e9
+ PowerData = 1.0,1.0,1.0
+ /
+
+ &InitialConc /
+
+ &DoseShape
+ /
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+
+ &Sensitivity /
+ &LSODEData /
+
+
+ @End SG TUBE 4
+******************************************************************
+ @SG OUTLET
+
+ &Position
+ XLength  = 727.4
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 78.74
+ AreaIn   = 47367
+ /
+
+ &InitialConc
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+ @End SG OUTLET
+****************************************************************** 
+ @COLD LEG 1
+
+ &Position
+ XLength  = 741.1
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 78.74
+ AreaIn   = 19558
+/
+
+ &InitialConc /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+
+ @End COLD LEG 1
+******************************************************************
+ @COLD LEG 2
+
+ &Position
+ XLength  = 2117.7
+ /
+
+ &State
+ FlowFrac = 1.0
+ TempIn = 566.0
+ Diameter = 69.85
+ AreaIn   = 15418
+ Pressure = 15.2
+ /
+
+ &InitialConc
+  ConcInit = 	0.00E+00,0.00E+00,0.00E+00,1.10E-03,0.00E+00,
+		3.93E-05,0.00E+00,0.00E+00,0.00E+00,0.00E+00,
+		0.00E+00,0.00E+00,0.00E+00,0.00E+00,0.00E+00
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+
+ @End COLD LEG 2
+******************************************************************
+ @REACTOR INLET
+
+ &Position
+ XLength  = 1376.9
+ /
+
+ &State
+ FlowFrac = 1.0
+ Diameter = 52
+ AreaIn   = 44095
+ /
+
+ &InitialConc
+ /
+
+ &DoseShape
+ /
+
+ &PowerShape /
+
+
+ &Flag 
+ ECPModel = 'PSS304'
+ pHMode = 'BLiCalc'
+ Btot = 640
+ Litot = 1.9
+ /
+ &Sensitivity /
+ &LSODEData /
+
+
+ @END REACTOR INLET
+******************************************************************

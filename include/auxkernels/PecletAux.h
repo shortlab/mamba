@@ -42,14 +42,14 @@ protected:
    * material property from the Material class
    */
   
-  VariableValue & _porosity;
-  VariableValue & _tortuosity;
+  //VariableValue & _porosity;
+  //VariableValue & _tortuosity;
   VariableGradient & _grad_P;
   MaterialProperty<Real> & _k_crud;
   MaterialProperty<Real> & _permeability;
   MaterialProperty<Real> & _mu_h2o;
   MaterialProperty<Real> & _rho_h2o;
   MaterialProperty<Real> & _cp_h2o;
-  MaterialProperty<Real> & _d_for_PecletAux;
+  MaterialProperty<Real> & _t_crud;
 };
 #endif //PECLETAUX_H

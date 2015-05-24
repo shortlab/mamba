@@ -451,7 +451,7 @@
   petsc_options_value = 'hypre boomeramg'
 []
 
-[Output]
+[Outputs]
   # elemental_as_nodal = true
   # output_initial = true
   # xda = true

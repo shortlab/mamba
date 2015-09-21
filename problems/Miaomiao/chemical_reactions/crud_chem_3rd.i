@@ -694,6 +694,7 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = crud_chemical_3rd
   exodus = true
   interval=20

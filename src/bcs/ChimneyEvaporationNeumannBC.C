@@ -48,8 +48,8 @@ InputParameters validParams<ChimneyEvaporationNeumannBC>()
   return params;
 }
 
-ChimneyEvaporationNeumannBC::ChimneyEvaporationNeumannBC(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+ChimneyEvaporationNeumannBC::ChimneyEvaporationNeumannBC(const InputParameters & parameters)
+ :IntegratedBC(parameters),
    _k_cond(getMaterialProperty<Real>("k_cond")),
    _HBO2(coupledValue("HBO2")),
    _porosity(coupledValue("porosity")),

@@ -51,8 +51,8 @@ InputParameters validParams<CoupledTsatDirichletBC>()
   return params;
 }
 
-CoupledTsatDirichletBC::CoupledTsatDirichletBC(const std::string & name, InputParameters parameters)
- :NodalBC(name, parameters),
+CoupledTsatDirichletBC::CoupledTsatDirichletBC(const InputParameters & parameters)
+ :NodalBC(parameters),
   _Tsat_h2o(coupledValue("Tsat"))
 //  _HBO2(coupledValue("HBO2")),
 //  _C(coupledValue("BO3"))

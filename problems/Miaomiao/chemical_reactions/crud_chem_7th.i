@@ -541,9 +541,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = crud_chem_7th
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

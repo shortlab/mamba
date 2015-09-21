@@ -31,8 +31,7 @@ class ConductivityFieldAux : public AuxKernel
 {
 public:
   
-  ConductivityFieldAux(const std::string & name,
-            InputParameters parameters);
+  ConductivityFieldAux(const InputParameters & parameters);
   
 protected:
   virtual Real computeValue();

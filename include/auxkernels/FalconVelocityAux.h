@@ -36,7 +36,7 @@ public:
    * derived classes can be built using the same
    * constructor.
    */
-  FalconVelocityAux(const std::string & name, InputParameters parameters);
+  FalconVelocityAux(const InputParameters & parameters);
 
   virtual ~FalconVelocityAux() {}
   

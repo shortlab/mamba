@@ -83,11 +83,12 @@ template<>
 InputParameters validParams<MambaApp>()
 {
   InputParameters params = validParams<MooseApp>();
+  params.set<bool>("use_legacy_output_syntax") = false;
   return params;
 }
 
-MambaApp::MambaApp(const std::string & name, InputParameters parameters) :
-    MooseApp(name, parameters)
+MambaApp::MambaApp(InputParameters parameters) :
+    MooseApp(parameters)
 {
   srand(processor_id());
 

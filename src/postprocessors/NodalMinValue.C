@@ -24,8 +24,8 @@ InputParameters validParams<NodalMinValue>()
   return params;
 }
 
-NodalMinValue::NodalMinValue(const std::string & name, InputParameters parameters) :
-  NodalVariablePostprocessor(name, parameters),
+NodalMinValue::NodalMinValue(const InputParameters & parameters) :
+  NodalVariablePostprocessor(parameters),
   _value(std::numeric_limits<Real>::max())
 {}
 

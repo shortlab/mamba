@@ -11,7 +11,7 @@ InputParameters validParams<MambaApp>();
 class MambaApp : public MooseApp
 {
 public:
-  MambaApp(const std::string & name, InputParameters parameters);
+  MambaApp(InputParameters parameters);
   virtual ~MambaApp();
 
   static void registerApps();

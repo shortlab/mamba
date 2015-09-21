@@ -26,7 +26,7 @@ InputParameters validParams<VaporHeight>();
 class VaporHeight : public GeneralPostprocessor
 {
 public:
-  VaporHeight(const std::string & name, InputParameters parameters);
+  VaporHeight(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}

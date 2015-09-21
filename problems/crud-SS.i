@@ -432,9 +432,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = 3D_CRUD_flake_SS
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

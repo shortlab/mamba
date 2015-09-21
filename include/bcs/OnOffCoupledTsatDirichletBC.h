@@ -14,7 +14,7 @@ InputParameters validParams<OnOffCoupledTsatDirichletBC>();
 class OnOffCoupledTsatDirichletBC : public CoupledTsatDirichletBC
 {
 public:
-  OnOffCoupledTsatDirichletBC(const std::string & name, InputParameters parameters);
+  OnOffCoupledTsatDirichletBC(const InputParameters & parameters);
   virtual ~OnOffCoupledTsatDirichletBC();
 
   virtual bool shouldApply();

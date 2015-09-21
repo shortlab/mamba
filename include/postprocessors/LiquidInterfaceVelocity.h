@@ -26,7 +26,7 @@ InputParameters validParams<LiquidInterfaceVelocity>();
 class LiquidInterfaceVelocity : public GeneralPostprocessor
 {
 public:
-  LiquidInterfaceVelocity(const std::string & name, InputParameters parameters);
+  LiquidInterfaceVelocity(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}

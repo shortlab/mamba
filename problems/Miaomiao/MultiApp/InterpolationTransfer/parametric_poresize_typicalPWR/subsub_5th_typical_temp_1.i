@@ -547,9 +547,9 @@ pore_size_max_baseline = 0.0000008
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = subsub_5th_typical
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

@@ -33,8 +33,8 @@ InputParameters validParams<PostprocessorFunction>()
   return params;
 }
 
-PostprocessorFunction::PostprocessorFunction(const std::string & name, InputParameters parameters) :
-    Function(name, parameters),
+PostprocessorFunction::PostprocessorFunction(const InputParameters & parameters) :
+    Function(parameters),
 //    _thickness(getMaterialProperty<Real>("crud_thickness")),
     _thickness(getParam<Real>("CRUDThickness")),
 //    _q_dot_clad(getMaterialProperty<Real>("CladHeatFlux")),

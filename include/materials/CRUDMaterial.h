@@ -26,8 +26,7 @@ InputParameters validParams<CRUDMaterial>();
 class CRUDMaterial : public Material
 {
 public:
-  CRUDMaterial(const std::string & name,
-                  InputParameters parameters);
+  CRUDMaterial(const InputParameters & parameters);
 
 protected:
 //  virtual void initQpStatefulProperties();

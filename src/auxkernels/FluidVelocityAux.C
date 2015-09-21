@@ -42,8 +42,8 @@ InputParameters validParams<FluidVelocityAux>()
   return params;
 }
 
-FluidVelocityAux::FluidVelocityAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+FluidVelocityAux::FluidVelocityAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _permeability(getMaterialProperty<Real>("permeability")),
   _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
   _porosity(coupledValue("porosity")),

@@ -30,9 +30,8 @@ InputParameters validParams<AdvectionForHeat>()
   return params;
 }
 
-AdvectionForHeat::AdvectionForHeat(const std::string & name,
-                                                     InputParameters parameters)
-    :Kernel(name,parameters),
+AdvectionForHeat::AdvectionForHeat(const InputParameters & parameters)
+    :Kernel(parameters),
      _porosity(coupledValue("porosity")),
      _tortuosity(coupledValue("tortuosity")),
      _grad_P(coupledGradient("pressure")),

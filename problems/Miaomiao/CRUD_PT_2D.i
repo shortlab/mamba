@@ -515,9 +515,6 @@ ls
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
 
-
-  print_linear_residuals = true
-
   petsc_options = '-snes_mf_operator'
   l_max_its = 5
   nl_max_its = 5
@@ -542,10 +539,9 @@ ls
 
 [Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out_2D
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

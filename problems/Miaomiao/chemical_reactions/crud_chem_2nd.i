@@ -658,10 +658,8 @@
 
 [Outputs]
   file_base = crud_chemical_2nd
-#  interval =  1
-#  exodus =  true
+#  #  exodus =  true
 #  nemesis = true
-  output_initial = true
   exodus = true
   [./console]
     type = Console

@@ -9,9 +9,8 @@ InputParameters validParams<InterfaceVaporPressureAux>()
   return params;
 }
 
-InterfaceVaporPressureAux::InterfaceVaporPressureAux(const std::string & name,
-                     InputParameters parameters)
-    :AuxKernel(name,parameters),
+InterfaceVaporPressureAux::InterfaceVaporPressureAux(const InputParameters & parameters)
+    :AuxKernel(parameters),
      _pc(coupledValue("CapillaryPressure")),
      _pl(coupledValue("LiquidPressure"))
 {}

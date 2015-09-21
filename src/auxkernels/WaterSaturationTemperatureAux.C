@@ -33,8 +33,8 @@ InputParameters validParams<WaterSaturationTemperatureAux>()
   return params;
 }
 
-WaterSaturationTemperatureAux::WaterSaturationTemperatureAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+WaterSaturationTemperatureAux::WaterSaturationTemperatureAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _p(coupledValue("pressure"))
 {
   int n = coupledComponents("concentration");

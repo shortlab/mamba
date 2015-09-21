@@ -31,8 +31,7 @@ class PressureDarcy : public Diffusion
 {
 public:
 
-  PressureDarcy(const std::string & name,
-                   InputParameters parameters);
+  PressureDarcy(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

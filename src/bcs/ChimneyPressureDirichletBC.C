@@ -11,8 +11,8 @@ InputParameters validParams<ChimneyPressureDirichletBC>()
   return params;
 }
 
-ChimneyPressureDirichletBC::ChimneyPressureDirichletBC(const std::string & name, InputParameters parameters) :
-    NodalBC(name, parameters),
+ChimneyPressureDirichletBC::ChimneyPressureDirichletBC(const InputParameters & parameters) :
+    NodalBC(parameters),
     //_func(getFunction("function")),
     _pp(getPostprocessorValue("PP"))
 {

@@ -530,9 +530,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = subsub_5th
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

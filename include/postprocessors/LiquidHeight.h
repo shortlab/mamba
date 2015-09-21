@@ -26,7 +26,7 @@ InputParameters validParams<LiquidHeight>();
 class LiquidHeight : public GeneralPostprocessor
 {
 public:
-  LiquidHeight(const std::string & name, InputParameters parameters);
+  LiquidHeight(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}

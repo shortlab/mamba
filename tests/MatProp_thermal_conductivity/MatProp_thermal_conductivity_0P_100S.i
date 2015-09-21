@@ -243,8 +243,8 @@ active = 'ThermalDiffusion'
 []
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = out_0P_100S
-  interval = 1
   exodus = true
   perf_log = true
 []

@@ -911,9 +911,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = 5th_typicalPWR_0.0shift
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

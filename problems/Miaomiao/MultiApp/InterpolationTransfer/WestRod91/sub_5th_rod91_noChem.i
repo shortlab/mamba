@@ -647,9 +647,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = sub_5th_rod91_noChem
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

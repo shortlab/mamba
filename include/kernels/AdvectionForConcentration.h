@@ -31,8 +31,7 @@ class AdvectionForConcentration : public Kernel
 {
 public:
   
-  AdvectionForConcentration(const std::string & name,
-                            InputParameters parameters);
+  AdvectionForConcentration(const InputParameters & parameters);
   
 protected:
   virtual Real computeQpResidual();

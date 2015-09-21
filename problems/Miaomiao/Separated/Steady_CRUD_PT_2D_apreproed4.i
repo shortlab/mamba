@@ -517,10 +517,8 @@ $ Aprepro (Revision: 2.23) Tue Dec 31 11:01:41 2013
 
 [Outputs]
   elemental_as_nodal = true
-  output_initial = true
   file_base = out_2D_steady4
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

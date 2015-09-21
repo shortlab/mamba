@@ -40,8 +40,8 @@ InputParameters validParams<CRUDChimneyConcentrationMixedBC>()
   return params;
 }
 
-CRUDChimneyConcentrationMixedBC::CRUDChimneyConcentrationMixedBC(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+CRUDChimneyConcentrationMixedBC::CRUDChimneyConcentrationMixedBC(const InputParameters & parameters)
+ :IntegratedBC(parameters),
   _permeability(getMaterialProperty<Real>("permeability")),
   _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
   _grad_P(coupledGradient("pressure")),

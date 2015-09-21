@@ -470,9 +470,6 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
 
-
-  print_linear_residuals = true
-
 #  petsc_options = '-snes_mf_operator'
   l_max_its = 30
   l_tol = 1e-5
@@ -496,10 +493,9 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
 
 [Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out_2D_{crud_thickness_microns}
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

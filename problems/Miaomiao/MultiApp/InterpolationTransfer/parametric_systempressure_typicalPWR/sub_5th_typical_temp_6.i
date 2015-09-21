@@ -1013,9 +1013,9 @@ value = 15800.0 ####
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = sub_5th_typical
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

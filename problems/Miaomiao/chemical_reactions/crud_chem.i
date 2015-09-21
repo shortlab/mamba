@@ -620,6 +620,7 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = crud_chemical
   exodus = true
   [./console]

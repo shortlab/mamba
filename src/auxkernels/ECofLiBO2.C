@@ -23,8 +23,8 @@ InputParameters validParams<ECofLiBO2>()
   return params;
 }
 
-ECofLiBO2::ECofLiBO2(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+ECofLiBO2::ECofLiBO2(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _temperature(coupledValue("temperature"))
 {}
 

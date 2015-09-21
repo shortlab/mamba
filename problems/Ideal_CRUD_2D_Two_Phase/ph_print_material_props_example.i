@@ -343,7 +343,6 @@
 
 [Output]
   file_base = out_ph_print_material_props_example
-  output_initial = true
   interval = 1
   exodus = true
 []

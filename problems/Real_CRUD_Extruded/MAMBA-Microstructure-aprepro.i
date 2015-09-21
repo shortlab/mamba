@@ -503,10 +503,9 @@ active = 'ThermalDiffusion PressureDarcy AdvectionForConcentration_BO3 Diffusion
 [Outputs]
   linear_residuals = true
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out-Microstructure-Fine
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

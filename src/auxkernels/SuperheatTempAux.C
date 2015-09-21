@@ -33,8 +33,8 @@ InputParameters validParams<SuperheatTempAux>()
   return params;
 }
 
-SuperheatTempAux::SuperheatTempAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+SuperheatTempAux::SuperheatTempAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
    _T(coupledValue("temperature")),
    _T_sat(coupledValue("t_sat"))
 

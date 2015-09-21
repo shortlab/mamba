@@ -25,7 +25,7 @@ InputParameters validParams<VelocityExit>();
 class VelocityExit : public GeneralPostprocessor
 {
 public:
-  VelocityExit(const std::string & name, InputParameters parameters);
+  VelocityExit(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}

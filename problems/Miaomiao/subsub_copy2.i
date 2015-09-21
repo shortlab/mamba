@@ -511,10 +511,8 @@
 
 [Outputs]
   elemental_as_nodal = true
-  output_initial = true
 #  file_base = Steady_PT_Vapor
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

@@ -23,9 +23,8 @@ InputParameters validParams<BoricAcidSinks>()
 }
 
 
-BoricAcidSinks::BoricAcidSinks(const std::string & name,
-                                   InputParameters parameters)
-  :Kernel(name,parameters),
+BoricAcidSinks::BoricAcidSinks(const InputParameters & parameters)
+  :Kernel(parameters),
    _Conc_HBO2(coupledValue("Conc_HBO2"))
 {}
 

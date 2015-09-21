@@ -13,7 +13,7 @@ class CoeffTimeDerivative : public TimeDerivative
 {
 public:
 
-  CoeffTimeDerivative(const std::string & name, InputParameters parameters);
+  CoeffTimeDerivative(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

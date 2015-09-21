@@ -37,8 +37,8 @@ InputParameters validParams<VelocityExit>()
   return params;
 }
 
-VelocityExit::VelocityExit(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+VelocityExit::VelocityExit(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
 //    _thickness(getMaterialProperty<Real>("crud_thickness")),
     _thickness(getParam<Real>("CRUDThickness")),
     _HypoTurningPoint(getParam<Real>("HypoTurningPoint")),

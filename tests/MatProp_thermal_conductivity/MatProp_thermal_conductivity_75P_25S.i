@@ -257,10 +257,9 @@ active = 'ThermalDiffusion'
 
 [Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out_75P_25S
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

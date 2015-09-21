@@ -96,8 +96,8 @@
 []
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = growth_test
-  interval = 1
   exodus = true
   perf_log = true
 []

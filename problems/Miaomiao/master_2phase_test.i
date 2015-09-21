@@ -261,6 +261,7 @@
 []
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = master_test2
   exodus = true
   [./console]

@@ -773,9 +773,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = crud_chem_4th_50shift
   exodus = true
-  interval=1
   [./console]
     type = Console
     perf_log = true

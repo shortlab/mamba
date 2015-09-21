@@ -37,7 +37,7 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ChimneyVaporVelocity(const std::string & name, InputParameters parameters);
+  ChimneyVaporVelocity(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

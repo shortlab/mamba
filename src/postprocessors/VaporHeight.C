@@ -28,8 +28,8 @@ InputParameters validParams<VaporHeight>()
   return params;
 }
 
-VaporHeight::VaporHeight(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+VaporHeight::VaporHeight(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
     _integral(getPostprocessorValue("integral_all")),
     _area(getPostprocessorValue("area")),
     _thickness(getParam<Real>("thickness"))

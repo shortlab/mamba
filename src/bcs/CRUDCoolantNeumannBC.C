@@ -31,8 +31,8 @@ InputParameters validParams<CRUDCoolantNeumannBC>()
   return params;
 }
 
-CRUDCoolantNeumannBC::CRUDCoolantNeumannBC(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+CRUDCoolantNeumannBC::CRUDCoolantNeumannBC(const InputParameters & parameters)
+ :IntegratedBC(parameters),
   _T_coolant(getParam<Real>("T_coolant")),
   _h_convection_coolant(getParam<Real>("h_convection_coolant"))
 {}

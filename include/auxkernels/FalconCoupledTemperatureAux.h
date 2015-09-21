@@ -36,7 +36,7 @@ public:
      * Factory constructor, takes parameters so that all derived classes can be built using the same
      * constructor.
      */
-    FalconCoupledTemperatureAux(const std::string & name, InputParameters parameters);
+    FalconCoupledTemperatureAux(const InputParameters & parameters);
     
     virtual ~FalconCoupledTemperatureAux() {};
     

@@ -366,9 +366,8 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
 
 [Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out_2D_50
-  interval = 1
   [./console]
     type = Console
     perf_log = true

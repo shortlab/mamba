@@ -891,9 +891,9 @@
 #[]
 
 [Outputs]
+  execute_on = 'timestep_end'
   file_base = ROD116_singlephase_noAdaptivity
   exodus = true
-  interval=1
   csv = true
   [./console]
     type = Console

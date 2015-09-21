@@ -78,9 +78,8 @@ InputParameters validParams<CRUDMaterial>()
   return params;
 }
 
-CRUDMaterial::CRUDMaterial(const std::string & name,
-                           InputParameters parameters)
-    :Material(name, parameters),
+CRUDMaterial::CRUDMaterial(const InputParameters & parameters)
+    :Material(parameters),
 
      // Get parameters from the input file
      _dimensionality(getParam<Real>("dimensionality")),

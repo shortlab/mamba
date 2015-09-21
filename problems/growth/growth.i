@@ -453,10 +453,9 @@
 
 [Outputs]
   # elemental_as_nodal = true
-  # output_initial = true
+  #
   # xda = true
   file_base = out_2D_50
-  interval = 1
   exodus = true
   perf_log = true
 []

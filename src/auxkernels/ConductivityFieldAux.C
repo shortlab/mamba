@@ -28,9 +28,8 @@ InputParameters validParams<ConductivityFieldAux>()
   return params;
 }
 
-ConductivityFieldAux::ConductivityFieldAux(const std::string & name,
-                     InputParameters parameters)
-    :AuxKernel(name,parameters),
+ConductivityFieldAux::ConductivityFieldAux(const InputParameters & parameters)
+    :AuxKernel(parameters),
      _porosity(coupledValue("porosity")),
     // _tortuosity(coupledValue("tortuosity")),
     // _grad_P(coupledGradient("pressure")),

@@ -31,8 +31,7 @@ class InterfaceVaporPressureAux : public AuxKernel
 {
 public:
   
-  InterfaceVaporPressureAux(const std::string & name,
-            InputParameters parameters);
+  InterfaceVaporPressureAux(const InputParameters & parameters);
   
 protected:
   virtual Real computeValue();

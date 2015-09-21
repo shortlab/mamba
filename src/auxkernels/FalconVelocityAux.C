@@ -22,8 +22,8 @@ InputParameters validParams<FalconVelocityAux>()
      return params;
 }
 
-FalconVelocityAux::FalconVelocityAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+FalconVelocityAux::FalconVelocityAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
    _darcy_flux_water(getMaterialProperty<RealGradient>("darcy_flux_water")),
    _darcy_flux_steam(getMaterialProperty<RealGradient>("darcy_flux_steam")),
    _i(getParam<int>("component"))

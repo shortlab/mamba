@@ -31,8 +31,7 @@ class ThermalDiffusion : public Diffusion
 {
 public:
 
-  ThermalDiffusion(const std::string & name,
-                   InputParameters parameters);
+  ThermalDiffusion(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

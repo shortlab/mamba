@@ -516,7 +516,6 @@
 
 [Outputs]
  elemental_as_nodal = true
-  output_initial = true
   file_base = master_copy_interface1.0
   exodus = true
   [./console]

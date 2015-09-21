@@ -28,7 +28,7 @@ InputParameters validParams<NodalMaxValueFileIO>();
 class NodalMaxValueFileIO : public NodalVariablePostprocessor
 {
 public:
-  NodalMaxValueFileIO(const std::string & name, InputParameters parameters);
+  NodalMaxValueFileIO(const InputParameters & parameters);
 
   virtual void initialize();
   virtual void execute();

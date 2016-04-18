@@ -31,8 +31,9 @@ InputParameters validParams<PecletAux>()
   return params;
 }
 
-PecletAux::PecletAux(const InputParameters & parameters)
-    :AuxKernel(parameters),
+PecletAux::PecletAux(const std::string & name,
+                     InputParameters parameters)
+    :AuxKernel(name,parameters),
     // _porosity(coupledValue("porosity")),
     // _tortuosity(coupledValue("tortuosity")),
      _grad_P(coupledGradient("pressure")),

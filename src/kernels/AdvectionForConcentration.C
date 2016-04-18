@@ -31,8 +31,9 @@ InputParameters validParams<AdvectionForConcentration>()
   return params;
 }
 
-AdvectionForConcentration::AdvectionForConcentration(const InputParameters & parameters)
-    :Kernel(parameters),
+AdvectionForConcentration::AdvectionForConcentration(const std::string & name,
+                                                     InputParameters parameters)
+    :Kernel(name,parameters),
      _grad_P(coupledGradient("pressure")),
      _permeability(getMaterialProperty<Real>("permeability")),
      _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),

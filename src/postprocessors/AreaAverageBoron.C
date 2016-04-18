@@ -28,8 +28,8 @@ InputParameters validParams<AreaAverageBoron>()
   return params;
 }
 
-AreaAverageBoron::AreaAverageBoron(const InputParameters & parameters) :
-    GeneralPostprocessor(parameters),
+AreaAverageBoron::AreaAverageBoron(const std::string & name, InputParameters parameters) :
+    GeneralPostprocessor(name, parameters),
     _total_boron(getPostprocessorValue(getParam<PostprocessorName>("total_boron"))),
     _area(getPostprocessorValue(getParam<PostprocessorName>("area"))),
     _in_meters(getParam<bool>("in_meters"))

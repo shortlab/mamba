@@ -55,8 +55,8 @@ InputParameters validParams<ConditionLeftTemp>()
   return params;
 }
 
-ConditionLeftTemp::ConditionLeftTemp(const InputParameters & parameters)
- :NodalBC(parameters),
+ConditionLeftTemp::ConditionLeftTemp(const std::string & name, InputParameters parameters)
+ :NodalBC(name, parameters),
    //_coupledvar(coupledValue("anotherVar")),
    _coef1(getParam<Real>("coef1")),
     _HypoTurningPoint(getParam<Real>("HypoTurningPoint")),

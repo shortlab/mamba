@@ -10,8 +10,8 @@ InputParameters validParams<ChimneyEnthalpyFlow>()
   return params;
 }
 
-ChimneyEnthalpyFlow::ChimneyEnthalpyFlow(const InputParameters & parameters)
- :IntegratedBC(parameters),
+ChimneyEnthalpyFlow::ChimneyEnthalpyFlow(const std::string & name, InputParameters parameters)
+ :IntegratedBC(name, parameters),
    _rho_g(getMaterialProperty<Real>("WaterDensity")),
    _h_g(getMaterialProperty<Real>("VaporEnthalpy")),
    _kappa(getMaterialProperty<Real>("permeability")),

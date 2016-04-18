@@ -25,8 +25,8 @@ InputParameters validParams<ElementMaxValue>()
   return params;
 }
 
-ElementMaxValue::ElementMaxValue(const InputParameters & parameters) :
-    ElementIntegralVariablePostprocessor(parameters),
+ElementMaxValue::ElementMaxValue(const std::string & name, InputParameters parameters) :
+    ElementIntegralVariablePostprocessor(name, parameters),
     _value(-std::numeric_limits<Real>::max())
 {
 }

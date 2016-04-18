@@ -27,8 +27,9 @@ InputParameters validParams<CapillaryPressureAux>()
   return params;
 }
 
-CapillaryPressureAux::CapillaryPressureAux(const InputParameters & parameters)
-    :AuxKernel(parameters),
+CapillaryPressureAux::CapillaryPressureAux(const std::string & name,
+                     InputParameters parameters)
+    :AuxKernel(name,parameters),
     // _porosity(coupledValue("porosity")),
     // _tortuosity(coupledValue("tortuosity")),
     // _grad_P(coupledGradient("pressure")),

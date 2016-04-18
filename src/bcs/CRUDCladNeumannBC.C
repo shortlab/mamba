@@ -22,12 +22,11 @@ template<>
 InputParameters validParams<CRUDCladNeumannBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
-
   return params;
 }
 
-CRUDCladNeumannBC::CRUDCladNeumannBC(const InputParameters & parameters)
- :IntegratedBC(parameters),
+CRUDCladNeumannBC::CRUDCladNeumannBC(const std::string & name, InputParameters parameters)
+ :IntegratedBC(name, parameters),
   _q_dot(getMaterialProperty<Real>("CladHeatFlux"))
 {}
 

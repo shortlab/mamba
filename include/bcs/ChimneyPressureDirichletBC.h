@@ -29,7 +29,7 @@ public:
   /**
    * Factory constructor, takes parameters so that all derived classes can be built using the same constructor.
    */
-  ChimneyPressureDirichletBC(const InputParameters & parameters);
+  ChimneyPressureDirichletBC( const std::string & name, InputParameters parameters);
 
   virtual ~ChimneyPressureDirichletBC() {}
 

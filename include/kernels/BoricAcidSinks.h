@@ -31,7 +31,8 @@ class BoricAcidSinks : public Kernel
 {
 public:
 
-  BoricAcidSinks(const InputParameters & parameters);
+  BoricAcidSinks(const std::string & name,
+                   InputParameters parameters);
 
 protected:
   virtual Real computeQpResidual();

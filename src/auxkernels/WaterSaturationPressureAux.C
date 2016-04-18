@@ -34,8 +34,8 @@ params.addRequiredCoupledVar("temperature", "The ionic concentration in the CRUD
   return params;
 }
 
-WaterSaturationPressureAux::WaterSaturationPressureAux(const InputParameters & parameters)
-  :AuxKernel(parameters),
+WaterSaturationPressureAux::WaterSaturationPressureAux(const std::string & name, InputParameters parameters)
+  :AuxKernel(name, parameters),
    _capillary(coupledValue("capillary")),
    _rho_h2o(getMaterialProperty<Real>("WaterDensity")),
    _crud_temperature(coupledValue("temperature"))

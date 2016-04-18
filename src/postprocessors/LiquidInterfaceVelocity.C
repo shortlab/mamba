@@ -29,8 +29,8 @@ InputParameters validParams<LiquidInterfaceVelocity>()
   return params;
 }
 
-LiquidInterfaceVelocity::LiquidInterfaceVelocity(const InputParameters & parameters) :
-    GeneralPostprocessor(parameters),
+LiquidInterfaceVelocity::LiquidInterfaceVelocity(const std::string & name, InputParameters parameters) :
+    GeneralPostprocessor(name, parameters),
     _MinTemp(getPostprocessorValue("MinTemp")),
     _MaxTemp(getPostprocessorValue("MaxTemp")),
     _Hv(getPostprocessorValue("VaporHeight")),

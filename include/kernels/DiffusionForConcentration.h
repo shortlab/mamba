@@ -31,7 +31,8 @@ class DiffusionForConcentration : public Diffusion
 {
 public:
 
-  DiffusionForConcentration(const InputParameters & parameters);
+  DiffusionForConcentration(const std::string & name,
+                   InputParameters parameters);
 
 protected:
   virtual Real computeQpResidual();

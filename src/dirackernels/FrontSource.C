@@ -25,8 +25,8 @@ InputParameters validParams<FrontSource>()
   return params;
 }
 
-FrontSource::FrontSource(const InputParameters & parameters) :
-    DiracKernel(parameters),
+FrontSource::FrontSource(const std::string & name, InputParameters parameters) :
+    DiracKernel(name, parameters),
     _value(getParam<Real>("value")),
     _front_tracker(getUserObject<TrackDiracFront>("front_uo"))
 //    _pressurejump(coupledValue("PressureJump"))

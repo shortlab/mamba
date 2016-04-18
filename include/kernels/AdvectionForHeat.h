@@ -31,7 +31,8 @@ class AdvectionForHeat : public Kernel
 {
 public:
   
-  AdvectionForHeat(const InputParameters & parameters);
+  AdvectionForHeat(const std::string & name,
+                            InputParameters parameters);
   
 protected:
   virtual Real computeQpResidual();

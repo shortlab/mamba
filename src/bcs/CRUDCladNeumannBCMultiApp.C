@@ -27,8 +27,8 @@ InputParameters validParams<CRUDCladNeumannBCMultiApp>()
   return params;
 }
 
-CRUDCladNeumannBCMultiApp::CRUDCladNeumannBCMultiApp(const InputParameters & parameters)
- :IntegratedBC(parameters),
+CRUDCladNeumannBCMultiApp::CRUDCladNeumannBCMultiApp(const std::string & name, InputParameters parameters)
+ :IntegratedBC(name, parameters),
   _q_dot_multiapp(getPostprocessorValue("multi_app_q_dot"))
 {}
 

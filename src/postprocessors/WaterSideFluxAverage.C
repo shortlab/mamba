@@ -21,8 +21,8 @@ InputParameters validParams<WaterSideFluxAverage>()
   return params;
 }
 
-WaterSideFluxAverage::WaterSideFluxAverage(const InputParameters & parameters) :
-    IntegratedSideFlux(parameters),
+WaterSideFluxAverage::WaterSideFluxAverage(const std::string & name, InputParameters parameters) :
+    IntegratedSideFlux(name, parameters),
     _volume(0)
 {}
 

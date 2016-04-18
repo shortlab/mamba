@@ -24,8 +24,9 @@ InputParameters validParams<PressureDarcy>()
 }
 
 
-PressureDarcy::PressureDarcy(const InputParameters & parameters)
-  :Diffusion(parameters),
+PressureDarcy::PressureDarcy(const std::string & name,
+                                   InputParameters parameters)
+  :Diffusion(name,parameters),
    _permeability(getMaterialProperty<Real>("permeability")),
    _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
    _porosity(coupledValue("porosity"))

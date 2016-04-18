@@ -31,8 +31,9 @@ InputParameters validParams<PhaseAux>()
   return params;
 }
 
-PhaseAux::PhaseAux(const InputParameters & parameters)
-    :AuxKernel(parameters),
+PhaseAux::PhaseAux(const std::string & name,
+                     InputParameters parameters)
+    :AuxKernel(name,parameters),
      _psat(coupledValue("psat")),
      _P(coupledValue("pressure")),
     // _tortuosity(coupledValue("tortuosity")),

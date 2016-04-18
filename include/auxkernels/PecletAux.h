@@ -31,7 +31,8 @@ class PecletAux : public AuxKernel
 {
 public:
   
-  PecletAux(const InputParameters & parameters);
+  PecletAux(const std::string & name,
+            InputParameters parameters);
   
 protected:
   virtual Real computeValue();

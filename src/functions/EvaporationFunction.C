@@ -31,8 +31,8 @@ InputParameters validParams<EvaporationFunction>()
  
 }
 
-EvaporationFunction::EvaporationFunction(const InputParameters & parameters) :
-      Function(parameters),
+EvaporationFunction::EvaporationFunction(const std::string & name, InputParameters parameters) :
+      Function(name, parameters),
 /*
    _k_cond(getMaterialProperty<Real>("k_cond")),
    _HBO2(coupledValue("HBO2")),

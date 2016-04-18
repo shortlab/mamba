@@ -26,7 +26,7 @@ InputParameters validParams<WaterSideFluxAverage>();
 class WaterSideFluxAverage : public IntegratedSideFlux
 {
 public:
-  WaterSideFluxAverage(const InputParameters & parameters);
+  WaterSideFluxAverage(const std::string & name, InputParameters parameters);
   virtual ~WaterSideFluxAverage(){}
 
   virtual void initialize();

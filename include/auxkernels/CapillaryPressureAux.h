@@ -31,7 +31,8 @@ class CapillaryPressureAux : public AuxKernel
 {
 public:
   
-  CapillaryPressureAux(const InputParameters & parameters);
+  CapillaryPressureAux(const std::string & name,
+            InputParameters parameters);
   
 protected:
   virtual Real computeValue();

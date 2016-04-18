@@ -25,7 +25,7 @@ InputParameters validParams<EvaporationFunction>();
 class EvaporationFunction : public Function
 {
   public:
-      EvaporationFunction(const InputParameters & parameters);
+      EvaporationFunction(const std::string & name, InputParameters parameters);
 
         virtual Real value(Real t, const Point & p);
 private:

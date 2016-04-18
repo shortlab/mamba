@@ -28,7 +28,7 @@ InputParameters validParams<NodalMinValue>();
 class NodalMinValue : public NodalVariablePostprocessor
 {
 public:
-  NodalMinValue(const InputParameters & parameters);
+  NodalMinValue(const std::string & name, InputParameters parameters);
 
   virtual void initialize();
   virtual void execute();

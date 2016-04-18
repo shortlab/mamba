@@ -9,8 +9,8 @@ InputParameters validParams<CoeffTimeDerivative>()
   return params;
 }
 
-CoeffTimeDerivative::CoeffTimeDerivative(const InputParameters & parameters)
-  :TimeDerivative(parameters),
+CoeffTimeDerivative::CoeffTimeDerivative(const std::string & name, InputParameters parameters)
+  :TimeDerivative(name,parameters),
   _time_coefficient(getMaterialProperty<Real>("porosity"))
 {
 }

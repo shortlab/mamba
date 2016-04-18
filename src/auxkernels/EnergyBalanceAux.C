@@ -32,8 +32,8 @@ InputParameters validParams<EnergyBalanceAux>()
   return params;
 }
 
-EnergyBalanceAux::EnergyBalanceAux(const InputParameters & parameters) :
-    AuxKernel(parameters),
+EnergyBalanceAux::EnergyBalanceAux(const std::string & name, InputParameters parameters) :
+    AuxKernel(name, parameters),
     _G(getPostprocessorValue("SuctionMassFlux")),
     _T_avg(getPostprocessorValue("CoolantCrudTempAvg")),
     _h_liquid(getPostprocessorValue("LiquidHeight")),

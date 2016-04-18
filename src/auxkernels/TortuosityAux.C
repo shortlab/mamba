@@ -35,8 +35,8 @@ InputParameters validParams<TortuosityAux>()
   return params;
 }
 
-TortuosityAux::TortuosityAux(const InputParameters & parameters)
-  :AuxKernel(parameters),
+TortuosityAux::TortuosityAux(const std::string & name, InputParameters parameters)
+  :AuxKernel(name, parameters),
    _porosity(coupledValue("porosity"))
 
 {}

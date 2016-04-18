@@ -25,7 +25,7 @@ InputParameters validParams<PPCombinationFunc>();
 class PPCombinationFunc : public Function
 {
 public:
-  PPCombinationFunc(const InputParameters & parameters);
+  PPCombinationFunc(const std::string & name, InputParameters parameters);
 
   virtual Real value(Real t, const Point & p);
   

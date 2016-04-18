@@ -23,8 +23,8 @@ InputParameters validParams<HeatConductionAux>()
   return params;
 }
 
-HeatConductionAux::HeatConductionAux(const InputParameters & parameters)
-  :AuxKernel(parameters),
+HeatConductionAux::HeatConductionAux(const std::string & name, InputParameters parameters)
+  :AuxKernel(name, parameters),
   _k_cond(getMaterialProperty<Real>("k_cond")),
 //  _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
 //  _porosity(coupledValue("porosity")),

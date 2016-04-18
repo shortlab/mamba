@@ -31,8 +31,8 @@ InputParameters validParams<Precipitation_HBO2Aux>()
   return params;
 }
 
-Precipitation_HBO2Aux::Precipitation_HBO2Aux(const InputParameters & parameters)
-  :AuxKernel(parameters),
+Precipitation_HBO2Aux::Precipitation_HBO2Aux(const std::string & name, InputParameters parameters)
+  :AuxKernel(name, parameters),
   _temperature(coupledValue("temperature")),
   _BO3_Solubility(coupledValue("BO3_Solubility")),
   _Conc_BO3(coupledValue("Conc_BO3"))

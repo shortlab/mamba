@@ -33,7 +33,7 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  EnergyBalanceAux(const InputParameters & parameters);
+  EnergyBalanceAux(const std::string & name, InputParameters parameters);
 
 protected:
   virtual Real computeValue();

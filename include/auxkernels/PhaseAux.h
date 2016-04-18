@@ -31,7 +31,8 @@ class PhaseAux : public AuxKernel
 {
 public:
   
-  PhaseAux(const InputParameters & parameters);
+  PhaseAux(const std::string & name,
+            InputParameters parameters);
   
 protected:
   virtual Real computeValue();

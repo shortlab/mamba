@@ -22,8 +22,8 @@ InputParameters validParams<OnOffChimneyEvaporationNeumannBC>()
   return params;
 }
 
-OnOffChimneyEvaporationNeumannBC::OnOffChimneyEvaporationNeumannBC(const InputParameters & parameters) :
-    ChimneyEvaporationNeumannBC(parameters),
+OnOffChimneyEvaporationNeumannBC::OnOffChimneyEvaporationNeumannBC(const std::string & name, InputParameters parameters) :
+    ChimneyEvaporationNeumannBC(name, parameters),
 _var2(coupledValue("var2"))
 {
 }

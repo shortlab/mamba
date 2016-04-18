@@ -15,8 +15,8 @@ InputParameters validParams<PorosityAux>()
   return params;
 }
 
-PorosityAux::PorosityAux(const InputParameters & parameters)
-  :AuxKernel(parameters),
+PorosityAux::PorosityAux(const std::string & name, InputParameters parameters)
+  :AuxKernel(name, parameters),
    _input_initial_porosity(getParam<Real>("init_porosity")),
    _molecular_weight(getParam<std::vector<Real> >("molecular_weight")),
    _mineral_density(getParam<std::vector<Real> >("density")),

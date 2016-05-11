@@ -32,12 +32,12 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ECofLiBO2(const std::string & name, InputParameters parameters);
+  ECofLiBO2(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  VariableValue & _temperature;
+  const VariableValue & _temperature;
 //  VariableValue & _Conc_HBO2;
 };
 

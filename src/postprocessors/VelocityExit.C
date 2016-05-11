@@ -37,8 +37,8 @@ InputParameters validParams<VelocityExit>()
   return params;
 }
 
-VelocityExit::VelocityExit(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+VelocityExit::VelocityExit(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
 //    _thickness(getMaterialProperty<Real>("crud_thickness")),
     _thickness(getParam<Real>("CRUDThickness")),
     _HypoTurningPoint(getParam<Real>("HypoTurningPoint")),
@@ -63,7 +63,7 @@ VelocityExit::VelocityExit(const std::string & name, InputParameters parameters)
 Real
 VelocityExit::getValue()
 {
-// All unit need changing into mm  
+// All unit need changing into mm
 //  double upsideBC_area = _pp2;
   double _porosity=0.5;
   double thickness=_thickness;
@@ -74,7 +74,7 @@ VelocityExit::getValue()
  turningpoint=(_turningpoint>0.010? _turningpoint:0.010);
   double upsideBC_area =libMesh::pi*
 (std::pow(_chimney_outer_radius, 2) - std::pow(_chimney_inner_radius, 2));
-  double m_dot = (upsideBC_area * _q_dot_in * _porosity 
+  double m_dot = (upsideBC_area * _q_dot_in * _porosity
                  - _h_convection_coolant * _pp1 * upsideBC_area * _porosity
                  + _h_convection_coolant * _T_coolant * upsideBC_area * _porosity)/ _hfgAt15_5MPa;//taking porosity into account.
  // std::cout<< m_dot << std::endl;

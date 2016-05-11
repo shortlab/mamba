@@ -30,25 +30,24 @@ InputParameters validParams<AdvectionForHeat>();
 class AdvectionForHeat : public Kernel
 {
 public:
-  
-  AdvectionForHeat(const std::string & name,
-                            InputParameters parameters);
-  
+
+  AdvectionForHeat(const InputParameters & parameters);
+
 protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
-  VariableValue & _porosity;
-  VariableValue & _tortuosity;
-  VariableGradient & _grad_P;
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  MaterialProperty<Real> & _rho_h2o;
-  MaterialProperty<Real> & _cp_h2o;
+
+  const VariableValue & _porosity;
+  const VariableValue & _tortuosity;
+  const VariableGradient & _grad_P;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const MaterialProperty<Real> & _rho_h2o;
+  const MaterialProperty<Real> & _cp_h2o;
 };
 #endif //ADVECTIONFORHEAT_H

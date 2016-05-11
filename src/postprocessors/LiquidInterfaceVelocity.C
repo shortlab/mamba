@@ -19,7 +19,7 @@ template<>
 InputParameters validParams<LiquidInterfaceVelocity>()
 {
   InputParameters params = validParams<GeneralPostprocessor>();
-  
+
   params.addParam<PostprocessorName>("MinTemp", "The minimum temperature in liquid part");
   params.addParam<PostprocessorName>("MaxTemp", "The maximum temperature in liquid part");
   params.addParam<PostprocessorName>("VaporHeight", "The maximum temperature in liquid part");
@@ -29,8 +29,8 @@ InputParameters validParams<LiquidInterfaceVelocity>()
   return params;
 }
 
-LiquidInterfaceVelocity::LiquidInterfaceVelocity(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+LiquidInterfaceVelocity::LiquidInterfaceVelocity(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
     _MinTemp(getPostprocessorValue("MinTemp")),
     _MaxTemp(getPostprocessorValue("MaxTemp")),
     _Hv(getPostprocessorValue("VaporHeight")),

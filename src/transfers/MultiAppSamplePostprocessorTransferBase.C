@@ -17,6 +17,8 @@
 // Moose
 #include "MooseTypes.h"
 #include "FEProblem.h"
+#include "MultiApp.h"
+#include "MooseMesh.h"
 
 // libMesh
 #include "libmesh/meshfree_interpolation.h"
@@ -32,8 +34,8 @@ InputParameters validParams<MultiAppSamplePostprocessorTransferBase>()
   return params;
 }
 
-MultiAppSamplePostprocessorTransferBase::MultiAppSamplePostprocessorTransferBase(const std::string & name, InputParameters parameters) :
-    MultiAppTransfer(name, parameters),
+MultiAppSamplePostprocessorTransferBase::MultiAppSamplePostprocessorTransferBase(const InputParameters & parameters) :
+    MultiAppTransfer(parameters),
     _postprocessor_name(getParam<PostprocessorName>("postprocessor")),
     _from_var_name(getParam<VariableName>("source_variable")),
     _position_offset(getParam<std::vector<Point> >("position_offset"))
@@ -48,14 +50,14 @@ MultiAppSamplePostprocessorTransferBase::execute()
     case TO_MULTIAPP:
     {
 
-      FEProblem & from_problem = *_multi_app->problem();
+      FEProblem & from_problem = _multi_app->problem();
       MooseVariable & from_var = from_problem.getVariable(0, _from_var_name);
       SystemBase & from_system_base = from_var.sys();
       SubProblem & from_sub_problem = from_system_base.subproblem();
 
       MooseMesh & from_mesh = from_problem.mesh();
 
-      AutoPtr<PointLocatorBase> pl = from_mesh.getMesh().sub_point_locator();
+      UniquePtr<PointLocatorBase> pl = from_mesh.getMesh().sub_point_locator();
 
       for (unsigned int i=0; i<_multi_app->numGlobalApps(); i++)
       {
@@ -83,7 +85,7 @@ MultiAppSamplePostprocessorTransferBase::execute()
         }
 
         if (_multi_app->hasLocalApp(i))
-          _multi_app->appProblem(i)->getPostprocessorValue(_postprocessor_name) = value;
+          _multi_app->appProblem(i).getPostprocessorValue(_postprocessor_name) = value;
 
       }
 

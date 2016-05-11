@@ -28,13 +28,13 @@ InputParameters validParams<OnOffChimneyEvaporationNeumannBC>();
 class OnOffChimneyEvaporationNeumannBC : public ChimneyEvaporationNeumannBC
 {
 public:
-  OnOffChimneyEvaporationNeumannBC(const std::string & name, InputParameters parameters);
+  OnOffChimneyEvaporationNeumannBC(const InputParameters & parameters);
   virtual ~OnOffChimneyEvaporationNeumannBC();
 
   virtual bool shouldApply();
 
 protected:
-   VariableValue & _var2;
+   const VariableValue & _var2;
 };
 
 #endif /* OnOffChimneyEvaporationNeumannBC_H */

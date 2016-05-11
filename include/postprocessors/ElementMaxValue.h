@@ -29,7 +29,7 @@ InputParameters validParams<ElementMaxValue>();
 class ElementMaxValue : public ElementIntegralVariablePostprocessor
 {
 public:
-  ElementMaxValue(const std::string & name, InputParameters parameters);
+  ElementMaxValue(const InputParameters & parameters);
 
   virtual void initialize();
   virtual Real computeValue();

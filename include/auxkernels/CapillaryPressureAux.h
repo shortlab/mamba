@@ -30,23 +30,22 @@ InputParameters validParams<CapillaryPressureAux>();
 class CapillaryPressureAux : public AuxKernel
 {
 public:
-  
-  CapillaryPressureAux(const std::string & name,
-            InputParameters parameters);
-  
+
+  CapillaryPressureAux(const InputParameters & parameters);
+
 protected:
   virtual Real computeValue();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
+
   //VariableValue & _porosity;
   //VariableValue & _tortuosity;
   //VariableGradient & _grad_P;
-  MaterialProperty<Real> & _surfacetension;
-  MaterialProperty<Real> & _pore_size_min;
+  const MaterialProperty<Real> & _surfacetension;
+  const MaterialProperty<Real> & _pore_size_min;
 
 };
 #endif //CAPILLARYPRESSUREAUX_H

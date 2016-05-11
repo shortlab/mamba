@@ -32,8 +32,8 @@ InputParameters validParams<BO3_SolubilityAux>()
   return params;
 }
 
-BO3_SolubilityAux::BO3_SolubilityAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+BO3_SolubilityAux::BO3_SolubilityAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _temperature(coupledValue("temperature")),
 //  _init_BO3(getParam<Real>("initial_BO3_mole_fraction"))
   _Conc_BO3(coupledValue("Conc_BO3"))

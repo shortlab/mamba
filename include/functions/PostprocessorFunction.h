@@ -25,10 +25,10 @@ InputParameters validParams<PostprocessorFunction>();
 class PostprocessorFunction : public Function
 {
 public:
-  PostprocessorFunction(const std::string & name, InputParameters parameters);
+  PostprocessorFunction(const InputParameters & parameters);
 
   virtual Real value(Real t, const Point & p);
-  
+
 protected:
 //For thickness and CladHeatFlux, I need constant, not point value
 //  MaterialProperty<Real> & _thickness;
@@ -45,8 +45,8 @@ protected:
   Real _h_convection_coolant;
   Real _mu_h2o_chimney;
 //  MaterialProperty<Real> & _mu_h2o;
-  PostprocessorValue & _pp1;
-  PostprocessorValue & _pp2;
+  const PostprocessorValue & _pp1;
+  const PostprocessorValue & _pp2;
 };
 
 #endif //POSTPROCESSORFUNCTION_H

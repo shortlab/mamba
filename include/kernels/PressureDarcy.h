@@ -31,8 +31,7 @@ class PressureDarcy : public Diffusion
 {
 public:
 
-  PressureDarcy(const std::string & name,
-                   InputParameters parameters);
+  PressureDarcy(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -42,9 +41,9 @@ protected:
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  VariableValue & _porosity;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const VariableValue & _porosity;
 //  VariableValue & _HBO2;
 };
 #endif //PRESSUREDARCY_H

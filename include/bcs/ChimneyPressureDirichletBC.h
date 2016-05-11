@@ -29,7 +29,7 @@ public:
   /**
    * Factory constructor, takes parameters so that all derived classes can be built using the same constructor.
    */
-  ChimneyPressureDirichletBC( const std::string & name, InputParameters parameters);
+  ChimneyPressureDirichletBC(const InputParameters & parameters);
 
   virtual ~ChimneyPressureDirichletBC() {}
 
@@ -40,7 +40,7 @@ protected:
 private:
 //  Function & _func;
 
-  PostprocessorValue & _pp;
+  const PostprocessorValue & _pp;
 };
 
 #endif

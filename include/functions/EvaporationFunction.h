@@ -25,7 +25,7 @@ InputParameters validParams<EvaporationFunction>();
 class EvaporationFunction : public Function
 {
   public:
-      EvaporationFunction(const std::string & name, InputParameters parameters);
+      EvaporationFunction(const InputParameters & parameters);
 
         virtual Real value(Real t, const Point & p);
 private:
@@ -36,11 +36,11 @@ private:
   MaterialProperty<Real> & _h_fg_h2o;
   VariableGradient & _grad_T;
 */
-  PostprocessorValue & _pp;
+  const PostprocessorValue & _pp;
 //  Real _turningpoint;
   Real _HypoTurningPoint;
   Real _UsingHypo;
-  PostprocessorValue & _turningpoint;
+  const PostprocessorValue & _turningpoint;
 };
 
 #endif //EvaporationFunction_H

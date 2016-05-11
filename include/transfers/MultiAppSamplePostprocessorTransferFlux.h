@@ -30,7 +30,7 @@ class MultiAppSamplePostprocessorTransferFlux :
   public MultiAppSamplePostprocessorTransferBase
 {
 public:
-  MultiAppSamplePostprocessorTransferFlux(const std::string & name, InputParameters parameters);
+  MultiAppSamplePostprocessorTransferFlux(const InputParameters & parameters);
   virtual ~MultiAppSamplePostprocessorTransferFlux() {}
 
   virtual void execute();
@@ -40,7 +40,7 @@ protected:
 
   // The normal to use with the gradient:
   std::vector<Point> _normal;
-  
+
   // Hard-coded material property:
   Real _mat_prop;
 };

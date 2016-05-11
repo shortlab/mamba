@@ -31,9 +31,8 @@ InputParameters validParams<PecletAux>()
   return params;
 }
 
-PecletAux::PecletAux(const std::string & name,
-                     InputParameters parameters)
-    :AuxKernel(name,parameters),
+PecletAux::PecletAux(const InputParameters & parameters)
+    :AuxKernel(parameters),
     // _porosity(coupledValue("porosity")),
     // _tortuosity(coupledValue("tortuosity")),
      _grad_P(coupledGradient("pressure")),
@@ -48,14 +47,14 @@ PecletAux::PecletAux(const std::string & name,
 Real
 PecletAux::computeValue()
 {
-  
+
   // The Peclet number is (L*rho*Cp*v/k)
-  
+
   return _rho_h2o[_qp]
     * _cp_h2o[_qp]
     * _t_crud[_qp]
     * (_permeability[_qp] / _mu_h2o[_qp] )  // Here we're using the superficial velocity
     * sqrt(pow(_grad_P[_qp](0),2)+pow(_grad_P[_qp](1),2)+pow(_grad_P[_qp](2),2)) / _k_crud[_qp];
 //    * (std::abs(_grad_P[_qp](0)) + std::abs(_grad_P[_qp](1)) + std::abs(_grad_P[_qp](2)))
-    
+
 }

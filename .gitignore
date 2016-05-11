@@ -65,6 +65,7 @@ traceout*.txt
 *.vtk
 *.vtu
 .depend
+tests/corrosion/temp_print_trace.83oxum
 
 # Allow .e files in gold directories (7 levels)
 !/gold/*.e
@@ -109,6 +110,9 @@ traceout*.txt
 
 peacock_run_tmp.i
 yaml_dump*
+
+# Generated header file
+Mamba-devRevision.h
 
 # test garbagge
 *.FAILED.txt
@@ -157,3 +161,4 @@ peacock_*.e
 *.cpa-*
 *.cpr-*
 
+lib

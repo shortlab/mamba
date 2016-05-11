@@ -37,18 +37,18 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ChimneyVaporVelocity(const std::string & name, InputParameters parameters);
+  ChimneyVaporVelocity(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  MaterialProperty<Real> & _r_inner;
-  MaterialProperty<Real> & _r_outer;
-  PostprocessorValue & _h;
-  PostprocessorValue & _m_dot;
-  MaterialProperty<Real> & _rho_h2o;
+  const MaterialProperty<Real> & _r_inner;
+  const MaterialProperty<Real> & _r_outer;
+  const PostprocessorValue & _h;
+  const PostprocessorValue & _m_dot;
+  const MaterialProperty<Real> & _rho_h2o;
 };
 
 #endif //ChimneyVaporVelocity_H

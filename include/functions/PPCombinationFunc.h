@@ -25,13 +25,13 @@ InputParameters validParams<PPCombinationFunc>();
 class PPCombinationFunc : public Function
 {
 public:
-  PPCombinationFunc(const std::string & name, InputParameters parameters);
+  PPCombinationFunc(const InputParameters & parameters);
 
   virtual Real value(Real t, const Point & p);
-  
+
 protected:
-  PostprocessorValue & _pp1;
-  PostprocessorValue & _pp2;
+  const PostprocessorValue & _pp1;
+  const PostprocessorValue & _pp2;
   Real _coef1;
   Real _coef2;
   Real _const;

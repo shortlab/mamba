@@ -19,7 +19,7 @@ template<>
 InputParameters validParams<VaporHeight>()
 {
   InputParameters params = validParams<GeneralPostprocessor>();
-  
+
   params.addRequiredParam<PostprocessorName>("integral_all", "The name of the PP that is computing the total amount of boron deposited.");
   params.addRequiredParam<PostprocessorName>("area", "The name of the PP that is computing the surface area.");
 
@@ -28,8 +28,8 @@ InputParameters validParams<VaporHeight>()
   return params;
 }
 
-VaporHeight::VaporHeight(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+VaporHeight::VaporHeight(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
     _integral(getPostprocessorValue("integral_all")),
     _area(getPostprocessorValue("area")),
     _thickness(getParam<Real>("thickness"))
@@ -40,7 +40,7 @@ Real
 VaporHeight::getValue()
 {
    //if(_in_meters)
-  //  area*=(0.001*0.001);* 
-  
+  //  area*=(0.001*0.001);*
+
   return _integral / (_area+1e-8)* _thickness;
 }

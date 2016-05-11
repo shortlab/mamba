@@ -35,13 +35,13 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  SuperheatTempAux(const std::string & name, InputParameters parameters);
+  SuperheatTempAux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  VariableValue & _T;
-  VariableValue & _T_sat;
+  const VariableValue & _T;
+  const VariableValue & _T_sat;
 
 };
 

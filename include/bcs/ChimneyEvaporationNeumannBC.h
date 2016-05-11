@@ -35,20 +35,20 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ChimneyEvaporationNeumannBC(const std::string & name, InputParameters parameters);
+  ChimneyEvaporationNeumannBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  MaterialProperty<Real> & _k_cond;
-  VariableValue & _HBO2;
-  VariableValue & _porosity;
-  MaterialProperty<Real> & _rho_h2o;
-  MaterialProperty<Real> & _h_fg_h2o;
-  VariableGradient & _grad_T;
-  VariableValue & _vaporheatcond;
+  const MaterialProperty<Real> & _k_cond;
+  const VariableValue & _HBO2;
+  const VariableValue & _porosity;
+  const MaterialProperty<Real> & _rho_h2o;
+  const MaterialProperty<Real> & _h_fg_h2o;
+  const VariableGradient & _grad_T;
+  const VariableValue & _vaporheatcond;
 };
 
 #endif //CHIMNEYEVAPORATIONNEUMANNBC_H

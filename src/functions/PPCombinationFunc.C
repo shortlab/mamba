@@ -26,8 +26,8 @@ InputParameters validParams<PPCombinationFunc>()
   return params;
 }
 
-PPCombinationFunc::PPCombinationFunc(const std::string & name, InputParameters parameters) :
-    Function(name, parameters),
+PPCombinationFunc::PPCombinationFunc(const InputParameters & parameters) :
+    Function(parameters),
     _pp1(getPostprocessorValue("pp1")),
     _pp2(getPostprocessorValue("pp2")),
    _coef1(getParam<Real>("coef1")),

@@ -26,8 +26,7 @@ InputParameters validParams<CRUDMaterial>();
 class CRUDMaterial : public Material
 {
 public:
-  CRUDMaterial(const std::string & name,
-                  InputParameters parameters);
+  CRUDMaterial(const InputParameters &  parameters);
 
 protected:
 //  virtual void initQpStatefulProperties();
@@ -54,15 +53,15 @@ private:
   Real _D_OH_298K;
   Real _scaling_factor;
   Real _thickness;
-  
+
   // Assumed constant thermal conductivities of solid phases
   Real _k_HBO2_baseline;
   Real _k_Li2B4O7_baseline;
-  Real _k_Ni2FeBO5_baseline;  
+  Real _k_Ni2FeBO5_baseline;
 
   // Series character of the thermal conductance network
   Real _k_series_character;
-  
+
   // Volume fractions of solid phases
   Real _vf_Ni_baseline;
   Real _vf_NiO_baseline;
@@ -71,13 +70,13 @@ private:
   Real _vf_ZrO2_baseline;
   Real _vf_HBO2_baseline;
   Real _vf_Li2B4O7_baseline;
-  Real _vf_Ni2FeBO5_baseline;  
+  Real _vf_Ni2FeBO5_baseline;
 
 
   // Debugging flags
   Real _debug_materials;
   Real _case;
-  
+
   /**
    * This is the member reference that will hold the
    * computed values from this material class.
@@ -113,14 +112,14 @@ private:
   MaterialProperty<Real> & _conductivity;
   MaterialProperty<Real> & _crud_porosity;
 
-  VariableValue & _tortuosity;
-  VariableValue & _T;
-  VariableValue & _P;
+  const VariableValue & _tortuosity;
+  const VariableValue & _T;
+  const VariableValue & _P;
  // VariableValue & _C;
-  VariableValue & _porosity;
-  VariableValue & _phase;
-  VariableValue & _psat;
-  VariableValue & _Tsat;
+  const VariableValue & _porosity;
+  const VariableValue & _phase;
+  const VariableValue & _psat;
+  const VariableValue & _Tsat;
  // VariableValue & _HBO2;
 
 };

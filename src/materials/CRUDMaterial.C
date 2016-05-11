@@ -78,9 +78,8 @@ InputParameters validParams<CRUDMaterial>()
   return params;
 }
 
-CRUDMaterial::CRUDMaterial(const std::string & name,
-                           InputParameters parameters)
-    :Material(name, parameters),
+CRUDMaterial::CRUDMaterial(const InputParameters & parameters)
+    :Material(parameters),
 
      // Get parameters from the input file
      _dimensionality(getParam<Real>("dimensionality")),
@@ -225,7 +224,7 @@ CRUDMaterial::computeQpProperties()
   double T_diff=T_c - _T[_qp];
   if (T_diff<0)
     T_diff=0;
-  _surfacetension[_qp] = BB * std::pow((T_diff)/T_c, mu) * 
+  _surfacetension[_qp] = BB * std::pow((T_diff)/T_c, mu) *
                          (1 + bb * (T_diff) / T_c);
 
   //_phase[_qp] = 1.0 / (exp((_P[_qp] - _psat[_qp])/_deltaP)+1);
@@ -260,7 +259,7 @@ CRUDMaterial::computeQpProperties()
       4028.0
     + (128.8 / (1 - (_T[_qp] / 650)))
     + (4.674 / (std::pow((1 - (_T[_qp] / 650)), 2)));
-  
+
 
   _k_liquid[_qp] =
       0.686
@@ -286,13 +285,13 @@ CRUDMaterial::computeQpProperties()
     + (Ptemp / _T[_qp]) * (-8.594e-1- 2.378e-7* Ptemp + 1.062e-3 * _T[_qp] + 1.686e-4* Ptemp / _T[_qp])
     - 277.2 * std::pow(_T[_qp],2) / Ptemp;
 
-  _k_liquid[_qp] = 
+  _k_liquid[_qp] =
       -7.21e-3 + Ptemp * (8.309e-8 + 2.818e-15 * Ptemp)
      + _T[_qp] * (6.74e-5 + 3.895e-8 * _T[_qp])
      + _T[_qp] * Ptemp * (-2.854e-10-4.067e-18*Ptemp+2.417e-13 * _T[_qp]);
-     
+
  //   _phase[_qp] = 1;
-  
+
   }
 
 
@@ -331,7 +330,7 @@ CRUDMaterial::computeQpProperties()
     + (Ptemp / _T[_qp]) * (-8.594e-1- 2.378e-7* Ptemp + 1.062e-3 * _T[_qp] + 1.686e-4* Ptemp / _T[_qp])
     - 277.2 * std::pow(_T[_qp],2) / Ptemp;
 
-  double _k_liquid_v = 
+  double _k_liquid_v =
       -7.21e-3 + Ptemp * (8.309e-8 + 2.818e-15 * Ptemp)
      + _T[_qp] * (6.74e-5 + 3.895e-8 * _T[_qp])
      + _T[_qp] * Ptemp * (-2.854e-10-4.067e-18*Ptemp+2.417e-13 * _T[_qp]);
@@ -350,7 +349,7 @@ CRUDMaterial::computeQpProperties()
 
 //Begin to calculate vapor enthalpy(REF:Steam and Gas Tables with Computer Equations)
 double B11=2.04121E3;
-double B12=-4.040021E1; 
+double B12=-4.040021E1;
 double B13=-4.8095E-1;
 double B21=1.610693;
 double B22=5.472051E-2;
@@ -462,7 +461,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
 
   // Then use the parallel part from Shi et al., 2008
 
-/*  
+/*
   Real _k_parallel =
     (
       (
@@ -483,7 +482,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
     + ((1 - _porosity[_qp]) * _k_solid[_qp]);//*/
 
   Real _k_parallel =
-      (2-Df) * _porosity[_qp] 
+      (2-Df) * _porosity[_qp]
     * pow(_pore_size_max[_qp], Dt-1)
     * (1 - pow((_pore_size_min[_qp] / _pore_size_max[_qp]),(Dt-Df+1)))
     * _k_liquid[_qp]
@@ -501,7 +500,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
   // no addition scaling is required.
 
 /**************************************************************/
-  
+
   // The following material model calculates the fractalline permeability
   // of the CRUD from Df, Dt, e, and l_max. It doesn't need to be scaled,
   // since the _pore_size_max has already been scaled. That puts it in the right units.
@@ -513,10 +512,10 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
       ((pow((libMesh::pi * Df), minusDt) * std::pow((4 * (2 - Df)), plusDt)) / (128 * (3 + Dt - Df)))
     * std::pow((_porosity[_qp] / (1 - _porosity[_qp])), plusDt)
     * std::pow(_pore_size_max[_qp], 2);
-  
+
 /***********************************************************/
-  
-  
+
+
   _q_dot_clad[_qp] = _q_dot_in;	// No scaling factor needed: W/m^2 = (kg*m/s^2)*(m/s)*(1/m^2) = kg/s^3
 
   // These are aqueous diffusivities, all scaled with temperature.
@@ -530,7 +529,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
   _D_Li[_qp] =
       (_D_Li_298K / _tortuosity[_qp])
     * _mu_298K * _T[_qp] / (_mu_h2o[_qp] * 298.15);
-  
+
   _D_H[_qp] =
       (_D_H_298K / _tortuosity[_qp])
     * _mu_298K * _T[_qp] / (_mu_h2o[_qp] * 298.15);
@@ -542,9 +541,9 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
 // *******************************************************/
 // The following is equilibrium constant (lgKw) for reactions:
 // H20--->>H+  + OH-
-  _lgKw_H2O[_qp] = -4.098 -3245.2/ _T[_qp] + 
+  _lgKw_H2O[_qp] = -4.098 -3245.2/ _T[_qp] +
      2.2362e5 / std::pow(_T[_qp],2)-3.984e7 / std::pow(_T[_qp],3)
-     + (13.957 -1262.3/_T[_qp]+8.5641e5/std::pow(_T[_qp],2)) * 
+     + (13.957 -1262.3/_T[_qp]+8.5641e5/std::pow(_T[_qp],2)) *
      log10(_rho_h2o[_qp] * 1e6);//based on molality
 
 // B(OH)3 + OH- --->> B(OH)4-
@@ -556,8 +555,8 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
 
 // LiBO2(s) + H2O + H+ --->> Li+ + B(OH)3
   _lgKw_LiBO2[_qp] = 5.249217 + 1185.683 / _T[_qp];
-     
-         
+
+
 // *******************************************************/
 
   //conductivity of solution
@@ -568,7 +567,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
 
   if (_debug_materials == 1)
   {
-    std::cout << "T = " << _T[_qp] << std::endl;   
+    std::cout << "T = " << _T[_qp] << std::endl;
     std::cout << "Psat = " << _psat[_qp] << std::endl;
     std::cout << "D_BO3_298K = " << _D_BO3_298K << std::endl;
     std::cout << "D_Li_298K = " << _D_Li_298K << std::endl;
@@ -582,7 +581,7 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
     std::cout << "k_series = " << _k_series << std::endl;
     std::cout << "k_parallel = " << _k_parallel << std::endl;
     std::cout << "k_series_character = " << _k_series_character << std::endl;
-    std::cout << "k = " << _k_cond[_qp] << std::endl; 
+    std::cout << "k = " << _k_cond[_qp] << std::endl;
     std::cout << "Df = " << Df << std::endl;
     std::cout << "e = " << _porosity[_qp] << std::endl;
     std::cout << "tau = " << _tortuosity[_qp] << std::endl;
@@ -602,5 +601,5 @@ double A3=B41+B42*TS+B43*pow(TS,2)+B44*pow(TS,3)+B45*pow(TS,4);
 // *******************************************************
 
   // End the function
-  
+
 }

@@ -28,9 +28,8 @@ InputParameters validParams<ConductivityFieldAux>()
   return params;
 }
 
-ConductivityFieldAux::ConductivityFieldAux(const std::string & name,
-                     InputParameters parameters)
-    :AuxKernel(name,parameters),
+ConductivityFieldAux::ConductivityFieldAux(const InputParameters & parameters)
+    :AuxKernel(parameters),
      _porosity(coupledValue("porosity")),
     // _tortuosity(coupledValue("tortuosity")),
     // _grad_P(coupledGradient("pressure")),
@@ -42,11 +41,11 @@ ConductivityFieldAux::ConductivityFieldAux(const std::string & name,
 Real
 ConductivityFieldAux::computeValue()
 {
-  
 
-  
+
+
   return  _permeability[_qp]
     / _porosity[_qp]/_mu_h2o[_qp];
 
-    
+
 }

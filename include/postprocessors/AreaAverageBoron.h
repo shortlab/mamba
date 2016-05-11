@@ -26,7 +26,7 @@ InputParameters validParams<AreaAverageBoron>();
 class AreaAverageBoron : public GeneralPostprocessor
 {
 public:
-  AreaAverageBoron(const std::string & name, InputParameters parameters);
+  AreaAverageBoron(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}
@@ -37,8 +37,8 @@ public:
   virtual Real getValue();
 
 protected:
-  PostprocessorValue & _total_boron;
-  PostprocessorValue & _area;
+  const PostprocessorValue & _total_boron;
+  const PostprocessorValue & _area;
 
   bool _in_meters;
 };

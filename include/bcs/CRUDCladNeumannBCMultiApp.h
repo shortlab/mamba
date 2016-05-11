@@ -35,14 +35,14 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  CRUDCladNeumannBCMultiApp(const std::string & name, InputParameters parameters);
+  CRUDCladNeumannBCMultiApp(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  PostprocessorValue & _q_dot_multiapp;
+  const PostprocessorValue & _q_dot_multiapp;
 };
 
 #endif //CRUDCLADNEUMANNBCMULTIAPP_H

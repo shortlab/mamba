@@ -32,14 +32,14 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  Precipitation_HBO2Aux(const std::string & name, InputParameters parameters);
+  Precipitation_HBO2Aux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  VariableValue & _temperature;
-  VariableValue & _BO3_Solubility;
-  VariableValue & _Conc_BO3;
+  const VariableValue & _temperature;
+  const VariableValue & _BO3_Solubility;
+  const VariableValue & _Conc_BO3;
 
 };
 

@@ -33,8 +33,8 @@ InputParameters validParams<WaterSaturationTemperatureAux>()
   return params;
 }
 
-WaterSaturationTemperatureAux::WaterSaturationTemperatureAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+WaterSaturationTemperatureAux::WaterSaturationTemperatureAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _p(coupledValue("pressure"))
 {
   int n = coupledComponents("concentration");
@@ -55,7 +55,7 @@ WaterSaturationTemperatureAux::computeValue()
       m_c += (*_vals[i])[_qp];
     a_w = m_w/(m_w+m_c);
   }
-  
+
   Real A=-0.387592e3;
   Real B=-0.125875e5;
   Real C=-0.152578e2;

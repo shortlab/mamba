@@ -13,7 +13,7 @@
 /****************************************************************/
 
 #include "ECofLiBO2.h"
-//This auxkernel is to calculate the equilibrium constant of 
+//This auxkernel is to calculate the equilibrium constant of
 //LiBO_2(s)+H_2O+H^+\rightleftharpoons Li^++B(OH)_3
 template<>
 InputParameters validParams<ECofLiBO2>()
@@ -23,8 +23,8 @@ InputParameters validParams<ECofLiBO2>()
   return params;
 }
 
-ECofLiBO2::ECofLiBO2(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+ECofLiBO2::ECofLiBO2(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _temperature(coupledValue("temperature"))
 {}
 

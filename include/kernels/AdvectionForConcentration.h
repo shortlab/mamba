@@ -30,22 +30,21 @@ InputParameters validParams<AdvectionForConcentration>();
 class AdvectionForConcentration : public Kernel
 {
 public:
-  
-  AdvectionForConcentration(const std::string & name,
-                            InputParameters parameters);
-  
+
+  AdvectionForConcentration(const InputParameters & parameters);
+
 protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
-  VariableGradient & _grad_P;
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  VariableValue & _porosity;
+
+  const VariableGradient & _grad_P;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const VariableValue & _porosity;
 };
 #endif //ADVECTIONFORCONCENTRATION_H

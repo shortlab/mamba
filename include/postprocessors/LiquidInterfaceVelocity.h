@@ -26,7 +26,7 @@ InputParameters validParams<LiquidInterfaceVelocity>();
 class LiquidInterfaceVelocity : public GeneralPostprocessor
 {
 public:
-  LiquidInterfaceVelocity(const std::string & name, InputParameters parameters);
+  LiquidInterfaceVelocity(const InputParameters & parameters);
 
   virtual void initialize() {}
   virtual void execute() {}
@@ -37,9 +37,9 @@ public:
   virtual Real getValue();
 
 protected:
-  PostprocessorValue & _MinTemp;
-  PostprocessorValue & _MaxTemp;
-  PostprocessorValue & _Hv;  
+  const PostprocessorValue & _MinTemp;
+  const PostprocessorValue & _MaxTemp;
+  const PostprocessorValue & _Hv;
   Real _r_inner;
   Real _r_outer;
 };

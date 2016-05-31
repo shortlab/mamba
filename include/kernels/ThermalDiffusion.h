@@ -31,8 +31,7 @@ class ThermalDiffusion : public Diffusion
 {
 public:
 
-  ThermalDiffusion(const std::string & name,
-                   InputParameters parameters);
+  ThermalDiffusion(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -42,6 +41,6 @@ protected:
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  MaterialProperty<Real> & _k_cond;
+  const MaterialProperty<Real> & _k_cond;
 };
 #endif //THERMALDIFFUSION_H

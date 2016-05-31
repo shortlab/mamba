@@ -24,9 +24,8 @@ InputParameters validParams<PressureDarcy>()
 }
 
 
-PressureDarcy::PressureDarcy(const std::string & name,
-                                   InputParameters parameters)
-  :Diffusion(name,parameters),
+PressureDarcy::PressureDarcy(const InputParameters & parameters)
+  :Diffusion(parameters),
    _permeability(getMaterialProperty<Real>("permeability")),
    _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
    _porosity(coupledValue("porosity"))
@@ -44,7 +43,7 @@ PressureDarcy::computeQpResidual()
 Real
 PressureDarcy::computeQpJacobian()
 {
-    return (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp])) 
+    return (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp]))
            * Diffusion::computeQpJacobian();
 
 //    return (1 - _HBO2[_qp]) * (_permeability[_qp] / _mu_h2o[_qp]) * Diffusion::computeQpJacobian();

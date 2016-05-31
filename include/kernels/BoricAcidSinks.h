@@ -31,8 +31,7 @@ class BoricAcidSinks : public Kernel
 {
 public:
 
-  BoricAcidSinks(const std::string & name,
-                   InputParameters parameters);
+  BoricAcidSinks(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -43,7 +42,7 @@ protected:
    * material property from the Material class
    */
 
-  VariableValue & _Conc_HBO2;
+  const VariableValue & _Conc_HBO2;
 
 };
 #endif //BORICACIDSINKS_H

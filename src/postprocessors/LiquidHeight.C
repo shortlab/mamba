@@ -19,7 +19,7 @@ template<>
 InputParameters validParams<LiquidHeight>()
 {
   InputParameters params = validParams<GeneralPostprocessor>();
-  
+
   params.addRequiredParam<PostprocessorName>("minuend", "The name of the PP that is computing the total amount of boron deposited.");
 
   params.addRequiredParam<Real>("thickness", "unit:mm");
@@ -27,8 +27,8 @@ InputParameters validParams<LiquidHeight>()
   return params;
 }
 
-LiquidHeight::LiquidHeight(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+LiquidHeight::LiquidHeight(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
     _minuend(getPostprocessorValue("minuend")),
     _thickness(getParam<Real>("thickness"))
     //_in_meters(getParam<bool>("in_meters"))
@@ -38,7 +38,7 @@ Real
 LiquidHeight::getValue()
 {
    //if(_in_meters)
-  //  area*=(0.001*0.001);* 
-  
+  //  area*=(0.001*0.001);*
+
   return  (_thickness-_minuend);
 }

@@ -1,4 +1,4 @@
-//This file is used to apply boundary condition at vapor region chimney. Energy conservation 
+//This file is used to apply boundary condition at vapor region chimney. Energy conservation
 
 #include "ChimneyEnthalpyFlow.h"
 
@@ -10,8 +10,8 @@ InputParameters validParams<ChimneyEnthalpyFlow>()
   return params;
 }
 
-ChimneyEnthalpyFlow::ChimneyEnthalpyFlow(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+ChimneyEnthalpyFlow::ChimneyEnthalpyFlow(const InputParameters & parameters)
+    :IntegratedBC(parameters),
    _rho_g(getMaterialProperty<Real>("WaterDensity")),
    _h_g(getMaterialProperty<Real>("VaporEnthalpy")),
    _kappa(getMaterialProperty<Real>("permeability")),
@@ -23,7 +23,7 @@ Real
 ChimneyEnthalpyFlow::computeQpResidual()
 {
 
-    Real residual = -_test[_i][_qp] * 
+    Real residual = -_test[_i][_qp] *
          _rho_g[_qp] * _h_g[_qp] * _kappa[_qp] / _mu_g[_qp]
          * _grad_P[_qp] * _normals[_qp];
 

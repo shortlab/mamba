@@ -30,21 +30,20 @@ InputParameters validParams<PhaseAux>();
 class PhaseAux : public AuxKernel
 {
 public:
-  
-  PhaseAux(const std::string & name,
-            InputParameters parameters);
-  
+
+  PhaseAux(const InputParameters & parameters);
+
 protected:
   virtual Real computeValue();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
 private:
 
-  VariableValue & _psat;
-  VariableValue & _P;
+  const VariableValue & _psat;
+  const VariableValue & _P;
   Real _deltaP;
   Real _shift;
 

@@ -33,8 +33,8 @@ InputParameters validParams<MultiAppSamplePostprocessorTransferFlux>()
   return params;
 }
 
-MultiAppSamplePostprocessorTransferFlux::MultiAppSamplePostprocessorTransferFlux(const std::string & name, InputParameters parameters) :
-    MultiAppSamplePostprocessorTransferBase(name, parameters),
+MultiAppSamplePostprocessorTransferFlux::MultiAppSamplePostprocessorTransferFlux(const InputParameters & parameters) :
+    MultiAppSamplePostprocessorTransferBase(parameters),
 
     _normal(getParam<std::vector<Point> >("normal")),
     _mat_prop(getParam<Real>("mat_prop"))

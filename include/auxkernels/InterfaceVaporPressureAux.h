@@ -30,20 +30,19 @@ InputParameters validParams<InterfaceVaporPressureAux>();
 class InterfaceVaporPressureAux : public AuxKernel
 {
 public:
-  
-  InterfaceVaporPressureAux(const std::string & name,
-            InputParameters parameters);
-  
+
+  InterfaceVaporPressureAux(const InputParameters & parameters);
+
 protected:
   virtual Real computeValue();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
-  VariableValue & _pc;
-  VariableValue & _pl;
+
+  const VariableValue & _pc;
+  const VariableValue & _pl;
 
 
 };

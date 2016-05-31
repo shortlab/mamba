@@ -35,23 +35,23 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  CRUDChimneyConcentrationMixedBC(const std::string & name, InputParameters parameters);
+  CRUDChimneyConcentrationMixedBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  VariableGradient & _grad_P;
-  VariableValue & _porosity;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const VariableGradient & _grad_P;
+  const VariableValue & _porosity;
 
 // This is an abstracted way to get different diffusivities into this kernel
 
   std::string _prop_name;
 
-  MaterialProperty<Real> & _D_species;
+  const MaterialProperty<Real> & _D_species;
 };
 
 #endif //CRUDCHIMNEYCONCENTRATIONMIXEDBC_H

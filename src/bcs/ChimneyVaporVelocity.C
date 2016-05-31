@@ -13,8 +13,8 @@ InputParameters validParams<ChimneyVaporVelocity>()
   return params;
 }
 
-ChimneyVaporVelocity::ChimneyVaporVelocity(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+ChimneyVaporVelocity::ChimneyVaporVelocity(const InputParameters & parameters)
+ :IntegratedBC(parameters),
    _r_inner(getMaterialProperty<Real>("CellInnerRadius")),
    _r_outer(getMaterialProperty<Real>("CellOuterRadius")),
    _h(getPostprocessorValue("MeshHeight")),

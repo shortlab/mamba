@@ -35,18 +35,18 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ChimneyEnthalpyFlow(const std::string & name, InputParameters parameters);
+  ChimneyEnthalpyFlow(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  MaterialProperty<Real> & _rho_g;
-  MaterialProperty<Real> & _h_g;
-  MaterialProperty<Real> & _kappa;
-  MaterialProperty<Real> & _mu_g;
-  VariableGradient & _grad_P;
+  const MaterialProperty<Real> & _rho_g;
+  const MaterialProperty<Real> & _h_g;
+  const MaterialProperty<Real> & _kappa;
+  const MaterialProperty<Real> & _mu_g;
+  const VariableGradient & _grad_P;
 };
 
 #endif //ChimneyEnthalpyFlow_H

@@ -30,23 +30,22 @@ InputParameters validParams<ConductivityFieldAux>();
 class ConductivityFieldAux : public AuxKernel
 {
 public:
-  
-  ConductivityFieldAux(const std::string & name,
-            InputParameters parameters);
-  
+
+  ConductivityFieldAux(const InputParameters & parameters);
+
 protected:
   virtual Real computeValue();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
-  VariableValue & _porosity;
+
+  const VariableValue & _porosity;
   //VariableValue & _tortuosity;
   //VariableGradient & _grad_P;
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
 
 };
 #endif //ConductivityFieldAux_H

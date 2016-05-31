@@ -28,11 +28,11 @@ InputParameters validParams<EvaporationFunction>()
   //params.addParam<Real>("TurningPoint","The turning point y coordinate of different BC");//unit:millimeter
   params.addRequiredParam<PostprocessorName>("TurningPoint", "insection of vapor and liquid");
   return params;
- 
+
 }
 
-EvaporationFunction::EvaporationFunction(const std::string & name, InputParameters parameters) :
-      Function(name, parameters),
+EvaporationFunction::EvaporationFunction(const InputParameters & parameters) :
+      Function(parameters),
 /*
    _k_cond(getMaterialProperty<Real>("k_cond")),
    _HBO2(coupledValue("HBO2")),

@@ -42,8 +42,8 @@ InputParameters validParams<FluidMassFluxAux>()
   return params;
 }
 
-FluidMassFluxAux::FluidMassFluxAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+FluidMassFluxAux::FluidMassFluxAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _permeability(getMaterialProperty<Real>("permeability")),
   _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
   _rho_h2o(getMaterialProperty<Real>("WaterDensity")),

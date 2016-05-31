@@ -33,22 +33,22 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  EnergyBalanceAux(const std::string & name, InputParameters parameters);
+  EnergyBalanceAux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  PostprocessorValue & _G;
-  PostprocessorValue & _T_avg;
-  PostprocessorValue & _h_liquid;
-  MaterialProperty<Real> & _r_inner;
-  MaterialProperty<Real> & _r_outer;
-  MaterialProperty<Real> & _h_fg_h2o;
-  MaterialProperty<Real> & _c_pv;
-  MaterialProperty<Real> & _c_pl;
-  MaterialProperty<Real> & _h_convection;
-  MaterialProperty<Real> & _q_dot;
-  VariableValue & _T_sat;
+  const PostprocessorValue & _G;
+  const PostprocessorValue & _T_avg;
+  const PostprocessorValue & _h_liquid;
+  const MaterialProperty<Real> & _r_inner;
+  const MaterialProperty<Real> & _r_outer;
+  const MaterialProperty<Real> & _h_fg_h2o;
+  const MaterialProperty<Real> & _c_pv;
+  const MaterialProperty<Real> & _c_pl;
+  const MaterialProperty<Real> & _h_convection;
+  const MaterialProperty<Real> & _q_dot;
+  const VariableValue & _T_sat;
   Real _T_coolant;
   Real _coef1;
   Real _coef2;

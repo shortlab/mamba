@@ -5,13 +5,12 @@ InputParameters validParams<InterfaceVaporPressureAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("CapillaryPressure", "Capillary pressure field");
-  params.addRequiredCoupledVar("LiquidPressure", "pressure field for liquid part");  
+  params.addRequiredCoupledVar("LiquidPressure", "pressure field for liquid part");
   return params;
 }
 
-InterfaceVaporPressureAux::InterfaceVaporPressureAux(const std::string & name,
-                     InputParameters parameters)
-    :AuxKernel(name,parameters),
+InterfaceVaporPressureAux::InterfaceVaporPressureAux(const InputParameters & parameters)
+    :AuxKernel(parameters),
      _pc(coupledValue("CapillaryPressure")),
      _pl(coupledValue("LiquidPressure"))
 {}
@@ -19,10 +18,10 @@ InterfaceVaporPressureAux::InterfaceVaporPressureAux(const std::string & name,
 Real
 InterfaceVaporPressureAux::computeValue()
 {
-  
 
-  
+
+
   return _pc[_qp] + _pl[_qp];
 
-    
+
 }

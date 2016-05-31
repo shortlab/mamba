@@ -35,14 +35,14 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  WaterSaturationPressureAux(const std::string & name, InputParameters parameters);
+  WaterSaturationPressureAux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
-  VariableValue & _capillary;
-  MaterialProperty<Real> & _rho_h2o;
-  VariableValue & _crud_temperature;
-  std::vector<VariableValue *> _vals;
+  const VariableValue & _capillary;
+  const MaterialProperty<Real> & _rho_h2o;
+  const VariableValue & _crud_temperature;
+  std::vector<const VariableValue *> _vals;
 
 };
 

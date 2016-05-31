@@ -31,14 +31,14 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  CoupledTsatDirichletBC(const std::string & name, InputParameters parameters);
+  CoupledTsatDirichletBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
 private:
 
-  VariableValue & _Tsat_h2o;
+  const VariableValue & _Tsat_h2o;
 //  VariableValue & _HBO2;
 //  VariableValue & _C;
 };

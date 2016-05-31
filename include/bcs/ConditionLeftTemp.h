@@ -31,7 +31,7 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  ConditionLeftTemp(const std::string & name, InputParameters parameters);
+  ConditionLeftTemp(const InputParameters & parameters);
   virtual ~ConditionLeftTemp(){}
 protected:
   virtual Real computeQpResidual();
@@ -43,7 +43,7 @@ private:
   Real _HypoTurningPoint;
   Real _UsingHypo;
   Real _const;
-  PostprocessorValue & _turningpoint;
+  const PostprocessorValue & _turningpoint;
  // Real _turningpoint;
 };
 

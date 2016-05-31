@@ -24,7 +24,7 @@ class FalconVelocityAux;
 template<>
 InputParameters validParams<FalconVelocityAux>();
 
-/** 
+/**
  * Coupled auxiliary value
  */
 class FalconVelocityAux : public AuxKernel
@@ -39,12 +39,12 @@ public:
   FalconVelocityAux(const InputParameters & parameters);
 
   virtual ~FalconVelocityAux() {}
-  
+
 protected:
   virtual Real computeValue();
 
-  MaterialProperty<RealGradient> & _darcy_flux_water;
-  MaterialProperty<RealGradient> & _darcy_flux_steam;
+  const MaterialProperty<RealGradient> & _darcy_flux_water;
+  const MaterialProperty<RealGradient> & _darcy_flux_steam;
   int _i;
 
 };

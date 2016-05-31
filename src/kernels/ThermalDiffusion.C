@@ -22,9 +22,8 @@ InputParameters validParams<ThermalDiffusion>()
 }
 
 
-ThermalDiffusion::ThermalDiffusion(const std::string & name,
-                                   InputParameters parameters)
-  :Diffusion(name,parameters),
+ThermalDiffusion::ThermalDiffusion(const InputParameters & parameters)
+  :Diffusion(parameters),
    _k_cond(getMaterialProperty<Real>("k_cond"))
 {}
 

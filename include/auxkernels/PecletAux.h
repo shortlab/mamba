@@ -30,26 +30,25 @@ InputParameters validParams<PecletAux>();
 class PecletAux : public AuxKernel
 {
 public:
-  
-  PecletAux(const std::string & name,
-            InputParameters parameters);
-  
+
+  PecletAux(const InputParameters & parameters);
+
 protected:
   virtual Real computeValue();
-  
+
   /**
    * This MooseArray will hold the reference we need to our
    * material property from the Material class
    */
-  
+
   //VariableValue & _porosity;
   //VariableValue & _tortuosity;
-  VariableGradient & _grad_P;
-  MaterialProperty<Real> & _k_crud;
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  MaterialProperty<Real> & _rho_h2o;
-  MaterialProperty<Real> & _cp_h2o;
-  MaterialProperty<Real> & _t_crud;
+  const VariableGradient & _grad_P;
+  const MaterialProperty<Real> & _k_crud;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const MaterialProperty<Real> & _rho_h2o;
+  const MaterialProperty<Real> & _cp_h2o;
+  const MaterialProperty<Real> & _t_crud;
 };
 #endif //PECLETAUX_H

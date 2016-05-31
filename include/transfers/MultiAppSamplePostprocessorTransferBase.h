@@ -31,7 +31,7 @@ class MultiAppSamplePostprocessorTransferBase :
   public MultiAppTransfer
 {
 public:
-  MultiAppSamplePostprocessorTransferBase(const std::string & name, InputParameters parameters);
+  MultiAppSamplePostprocessorTransferBase(const InputParameters & parameters);
   virtual ~MultiAppSamplePostprocessorTransferBase() {}
 
   virtual void execute();

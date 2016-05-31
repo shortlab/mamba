@@ -11,8 +11,8 @@ InputParameters validParams<ChimneyPressureDirichletBC>()
   return params;
 }
 
-ChimneyPressureDirichletBC::ChimneyPressureDirichletBC(const std::string & name, InputParameters parameters) :
-    NodalBC(name, parameters),
+ChimneyPressureDirichletBC::ChimneyPressureDirichletBC(const InputParameters & parameters) :
+    NodalBC(parameters),
     //_func(getFunction("function")),
     _pp(getPostprocessorValue("PP"))
 {
@@ -25,4 +25,3 @@ ChimneyPressureDirichletBC::computeQpResidual()
   Real r=_u[_qp]-(15500000*0.001+4*2.3e-8*_pp/25e-3/2e-3/2e-3*(25*0.001*0.001*25-y*y));
   return r;
 }
-

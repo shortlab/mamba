@@ -33,8 +33,8 @@ InputParameters validParams<PostprocessorFunction>()
   return params;
 }
 
-PostprocessorFunction::PostprocessorFunction(const std::string & name, InputParameters parameters) :
-    Function(name, parameters),
+PostprocessorFunction::PostprocessorFunction(const InputParameters & parameters) :
+    Function(parameters),
 //    _thickness(getMaterialProperty<Real>("crud_thickness")),
     _thickness(getParam<Real>("CRUDThickness")),
 //    _q_dot_clad(getMaterialProperty<Real>("CladHeatFlux")),
@@ -55,24 +55,24 @@ PostprocessorFunction::PostprocessorFunction(const std::string & name, InputPara
 Real
 PostprocessorFunction::value(Real /*t*/, const Point & p)
 {
-// All unit need changing into mm  
+// All unit need changing into mm
   double upsideBC_area = _pp2;
-  double m_dot = (upsideBC_area * _q_dot_in 
-                 - _h_convection_coolant * _pp1 
+  double m_dot = (upsideBC_area * _q_dot_in
+                 - _h_convection_coolant * _pp1
                  + _h_convection_coolant * _T_coolant * _pp2)
                  / _hfgAt15_5MPa;
-  double vo = m_dot / _rho_gAt15_5MPa 
+  double vo = m_dot / _rho_gAt15_5MPa
               / (libMesh::pi * std::pow(_chimney_inner_radius, 2)) ;
-  double Pressure = _coolant_pressure + 16 * vo * _mu_h2o_chimney * 
-            (std::pow(_thickness, 2) - std::pow(p(1), 2)) / 
+  double Pressure = _coolant_pressure + 16 * vo * _mu_h2o_chimney *
+            (std::pow(_thickness, 2) - std::pow(p(1), 2)) /
             std::pow(2 * _chimney_inner_radius, 2) / _thickness;
 //p(2)==z
-  double alpha = 16 * vo * _mu_h2o_chimney / 
+  double alpha = 16 * vo * _mu_h2o_chimney /
             std::pow(2 * _chimney_inner_radius, 2) / _thickness;
   double C = _coolant_pressure + alpha * std::pow(_thickness, 2);
-  std::cout << "alpha= " << alpha << std::endl;   
-  std::cout << "C= " << C << std::endl;   
-  std::cout << "p(1) = " << p(1) << std::endl;  
-  std::cout << "P = " << Pressure << std::endl; 
+  std::cout << "alpha= " << alpha << std::endl;
+  std::cout << "C= " << C << std::endl;
+  std::cout << "p(1) = " << p(1) << std::endl;
+  std::cout << "P = " << Pressure << std::endl;
   return Pressure;
 }

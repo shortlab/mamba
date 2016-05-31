@@ -23,8 +23,8 @@ InputParameters validParams<OnOffCoupledTsatDirichletBC>()
   return params;
 }
 
-OnOffCoupledTsatDirichletBC::OnOffCoupledTsatDirichletBC(const std::string & name, InputParameters parameters) :
-    CoupledTsatDirichletBC(name, parameters),
+OnOffCoupledTsatDirichletBC::OnOffCoupledTsatDirichletBC(const InputParameters & parameters) :
+    CoupledTsatDirichletBC(parameters),
 _var2(coupledValue("var2"))
 {
 }

@@ -1,0 +1,219 @@
+c  radical.blk
+C  VERSION 1.6b22
+c  This module declares all common variables and constants shared by all
+c  subroutines in radical.
+c  Modified for RP88 to fit word boundaries.
+c  930520jc Pascal case convention (upper case only for the first letter
+c  of a word) has been used throughout the code.
+
+c  Version: 1.6        Monday, September 13, 1993 11:34:35 PM
+
+c  Author and Contact: John H. Chun
+c                      Nuclear Reactor Laboratory
+c                      Massachusetts Institute of Technology
+c                      138 Albany St Rm NW13-239
+c                      Cambridge, MA 02139-4296
+c                      (617) 253-5368 / 7300 fax
+c                      e-mail: johnchun@athena.mit.edu
+
+c  Alternate Contact:  Prof. Ronald G. Ballinger
+c                      Dept. of Nuclear Engineering and
+c                      Materials Science and Engineering
+c                      Massachusetts Institute of Technology
+c                      77 Mass Ave Rm 24-215
+c                      Cambridge, MA 02139
+c                      (617) 253-5118 / 258-7437 fax
+c                      e-mail: hvymet@mit.edu
+
+c  All variables are in double precision.  This means 8 bytes
+c  for real numbers and 4 bytes for integers.
+c  All common block sizes have been kept below 64kb for compatibility
+c  with some compilers.
+
+c  The following parameters are used to set the size of arrays.
+c  Some of these parameters may be changed to accomodate a bigger job.
+
+c     implicit real*8 (a-h, o-z, A-H, O-Z), integer*4 (i-n,I-N)
+      implicit real*8 (a-h, o-z), integer*4 (i-n)
+
+      real*8 MolWt,MolWtH,MolWtO,MolWtH2O,Jacobian,mH,mOH
+      real*8 NeutAvg,NeutCoef,Neutron, Inject,AlphaCoef,LiTot
+      real*8 LimCurrCH2O2,LimCurrCO2,LimCurrCH2,LimCurrAH2         
+      real*4 Time1,Time2
+      integer*4 CompNode,SensStep,AdjITask,AdjITol,AdjMF,AdjIWork,
+     +          ResIWork,AdjIOpt,ResIOpt,ResITask,ResITol,ResMF
+      integer*4 ConcInMode,ConcOutMode
+      integer*4 FlowModel,ThermoModel,VoidInMode,QualInMode,PowerInMode,
+     +          GammaInMode,NeutInMode,AlphaInMode
+      logical*4 PlotOut,SensComp,SensLoop,CalcConc,SurfLoop,
+     +          Debug,CycleOut,CyclePlot,BatchMode,BatchDone,
+     +          HeatBalance,WaterImplicit,CalcInject,ECPOut,WriteECP,
+     +          SameRxSet,SameGVal
+      logical*4 SurfComp,WriteRx,WritePara,Boiling,RadHeat
+      character*80 TitleLine,InFile,OutFile,PlotFile,InjectFile, 
+     +             BatchFile,nullMsg,ECPFile
+cy      character*16 CompName,HeatBalComp,ConvComp,InjectComp
+      character*30 CompName,HeatBalComp,ConvComp,InjectComp !change by Yasu
+      character*10 ConcInUnit,ConcOutUnit,ECPModel,pHMode
+      character*8 SpeciesName,SensSpecies,ConvSpecies,SpeciesInject
+      character*3 RxName,Surface
+      character*1 Bel,FF,Tab,RCMode
+
+c  IRX=reaction array, ISP=species array,
+c  INR=reactant array in reaction, INP=product array in reaction,
+c  ICO=component array, INO=node array,
+c  IST=interpolate data points array,
+c  IRE=array of the number of response parameters,
+c  ICY=array of the number of cycles
+c  IDE=array of debug flags
+c  IPO=array of the order of polynomal coefficients
+c  IIF=input file number, IOF=output file number, IPF=plot file number
+c  LRW=LIW=lsode work array calculated as given in lsode writeup.
+
+      parameter (IRX=200,ISP=50,ICO=50,INO=50,IST=100,IRE=IRX+4*ISP,
+     +           ICY=1000,IDE=50,IPO=50,LRW=22+(9+ISP)*ISP,LIW=20+ISP)
+      parameter (INR=3,INP=4)         !rx matrix indexes
+      parameter (IBF=4,IIF=5,IOF=6,IPF=7,IHF=8,IEF=2)   !i/o device numbers
+      parameter (BatchFile='radical.bat')
+      parameter (Pi=3.141592654d0)
+      parameter (GasConst=8.3144d-3)  !kJ/mol-K
+      parameter (MolWtH=1.00797d0,MolWtO=15.9994d0,
+     +           MolWtH2O=2.d0*MolWtH+MolWtO)
+c      parameter (Bel=7,FF=12,Tab=9)  !ascii bel,form feed, tab character
+      parameter (Bel=char(7),FF=char(12),Tab=char(9))  !change by Yasu
+
+      parameter (molLiter=0,ppb=1)   !ConcInMode and ConcOutMode
+      parameter (polynomial=0,dataPoints=1) !PowerInMode,VoidInMode,QualInMode
+      parameter (SinglePhaseFlow=1,Chexal=2,BankoffVoid=3,BankoffQual=4) !FlowModel
+      parameter (PowerIn=0,TinTout=1)  !ThermoModel
+
+c  Unit conversion constants
+
+c  These constants convert numbers in the metric system used for
+c  RADICAL internal calculations to the British units used in some
+c  subroutines, especially for thermal-hydraulic data.
+c  All unit conversion constants are preceded by lower case 'uc'
+c  followed by descriptive physical names.  All conversions are made
+c  as follows:
+
+c     British quantity = Metric quantity * ucUnitConversion
+c     Metric quantity  = British quantitiy / ucUnitConversion
+
+c  where ucUnitConversion is any of the unit conversion constants.
+c  There are some exceptions, however, such as ucGValue where the
+c  conversion is made within metric system.
+c  RADICAL internal calculations are done in metric units.  Although
+c  conversion to SI is straight forward, some deviations, such as
+c  using cm, not m, must be noted.
+
+      parameter (ucGValue=1.038d-9)
+      parameter (ZeroC=273.15d0)  !Zero of the Celsius scale
+      parameter (ucPressure=1.4504d2)    !MPa to psia
+      parameter (ucEnthalpy=0.42996d0)   !J/g to Btu/lbm
+      parameter (ucDensity=2.2046d-3/3.532d-5)  !g/cc to lbm/ft3
+      parameter (ucLength=0.03281d0)     !cm to ft
+
+c  loop common blocks - user input
+
+      common /gFileName/ InFile,OutFile,PlotFile,ECPFile
+      common /gSize/ NSurfRx,NCycle
+      common /gChemName/ SpeciesName(0:ISP),RxName(IRX)
+      common /gNodeIn/ NodeStart,CompName(ICO),HeatBalComp
+      common /gLoopState/ TempRef,FlowRateTot,PowerFactor,
+     +                    DoseFactor,GammaFactor
+
+      common /gChemRx/ RCInit(IRX),RC(IRX,5),RCMode(IRX)
+      common /gGValue/ GGamma(ISP),GNeut(ISP),MolWt(0:ISP),
+     +		 	GAlpha(ISP)
+      common /gCycleIn/ CycleOut(ICY),CyclePlot(ICY)
+      common /gLoopFlagIn/ PlotOut,SensLoop,Debug(IDE),CalcConc,
+     +                     HeatBalance,ConcInMode,ConcOutMode,
+     +                     WaterImplicit,SurfLoop,ECPOut,
+     +                     SameRxSet,SameGVal
+      common /gConvIn/ ConvMin,ConvComp,ConvSpecies(ISP)
+      common /gHWCIn/ Inject(IPO),CalcInject,InjectFile,InjectComp,
+     +                SpeciesInject
+
+c  loop common blocks - internally used
+
+      common /gTitle/ TitleLine
+      common /gNumbers/ NSpecies,NSp,NRx,NComp,IH2O,I2H2O
+      common /gCounter/ Iter,MaxIter,NStep,NFunc,NJacob,nullMsg
+      common /gNodeInfo/ NodeInfo(INO,2,ICO),NodeCount(INO,2),
+     +            CompNode(ICO,2)
+      common /gRxSet/ RateConst(IRX),EA(IRX),
+     +            IR(IRX,INR),IP(IRX,INP),Koef(IRX,0:ISP)
+      common /gGValue1/ GConvert
+      common /gEnthLoop/ EnthDif,EnthNode(INO),EnthFinal(ICO),
+     +                   EnthNodeStart
+      common /gCycle/ ICycle,MaxNode
+      common /gLoopFlag/ IGFlag,BatchMode,BatchDone
+      common /gConcUnit/ ConcInUnit,ConcOutUnit
+      common /gTime/ Time1,Time2
+
+      common /gConv/ NConv,LastCycle
+      common /gHWC/ iHWC
+
+c  component common blocks - user input
+
+      common /cPosition/ XIn,XStep,XLength,XBoil,XBoilOffset,
+     +            PlotStep      !keep XStep,XLength in that order
+      common /cCompState/ TempIn,TempOut,
+     +            VelInlet,Diameter,Pressure,DensLiq,DensGas,
+     +            FlowRate,FlowFrac,Surface
+      common /cCompState1/ PowerAvg,Area,CarryUnder,CarryOver,
+     +            QualMin,Diffusion,Viscosity,FlowOrient,
+     +            AreaIn,AreaOut
+      common /cRadiation/ GammaCoef(0:IPO),NeutCoef(0:IPO),
+     +            GammaAvg,NeutAvg,GammaInMode,NeutInMode,
+     +	          AlphaCoef(0:IPO),AlphaAvg,AlphaInMode
+	 
+c	  common /cVoidCoef/ VoidCoef(0:IPO), VoidInMode	    ! m
+
+	  common /cpowermin/ PowerData(0:IPO), PowerInMode	! m
+      common /cECP/ BTot,LiTot,pH,ECPModel,pHMode,loops,
+     +              EoCorr,EoH2,EoO2,EoH2O2,ExCurrentH2,
+     +              ExCurrentO2,ExCurrentH2O2,LimCurrCH2O2,
+     +              LimCurrCO2,LimCurrCH2,LimCurrAH2,mH,mOH
+      common /cCompFlag/ SurfComp,SensComp,WriteRx,WritePara,
+     +            FlowModel,ThermoModel,RadHeat
+      common /cSensIn/ SensStep,SensSpecies(ISP)
+      common /cConc/ ConcInit(ISP)
+      common /cLSODEData/ RTol,ATol,ConcRWork(7),IWork(LIW),
+     +            IState,MF,IOpt,ITask,ITol
+      common /cAdjLSODEData/ AdjRTol,AdjATol,AdjRWork(7),AdjIWork(7),
+     +            AdjITask,AdjIOpt,AdjITol,AdjMF
+      common /cResLSODEData/ ResRTol,ResATol,ResRWork(7),ResIWork(7),
+     +            ResITask,ResIOpt,ResITol,ResMF
+
+c  component common blocks - internally used
+
+      common /cPosi/ XOut
+      common /cBankoff/ FlowPara
+      common /cCompState2/ Temp,VelLiq,VelGas, ECP,VelRCE
+      common /cEnth/ Power,EnthLiq,EnthGas,Enthalpy,DensLiqSat,
+     +            Enth(0:IPO),EnthStep,EnthLength,SumEnthalpy,
+     +            TempSat,SumFlowRate
+      common /cChemConc/ Conc(0:ISP),ConcFinal(ICO,ISP),
+     +            ConcNode(INO,ISP)
+      common /cRad/ MaxOrdGamma,MaxOrdNeut,Gamma,Neutron,
+     +			Alpha,MaxOrdAlpha
+      common /cVoidQuality/ Void,Quality,MaxOrdVoid,Boiling
+      common /cDerivative/ dVFdx,dVLdx,dVGdx,dQdx,dAdx
+      common /cComponent/ CompFlowL(ICO),CompFlowG(ICO),
+     +            SumFlowRateL,SumFlowRateG,IComp
+      common /cResponse/ ResConc(IRE),NResStep,NResFunc,NResJacob
+      common /cAdjoint/ AdjConc(ISP),AdjET,Jacobian(ISP,ISP)
+      common /cSensitivity/ NSens,ISens, NResBatch
+
+      common /gCurve/ ConcCurve(IST+1,ISP),AdjCurve(IST+1,ISP)
+c	  common /aa/ powerdata, qualcoef
+
+c     dimension PowerData(0:IPO),QualCoef(0:IPO)
+      dimension Voidcoef(0:IPO), QualCoef(0:IPO)     ! m
+   
+      equivalence  (VoidInMode,QualInMode,PowerInMode)
+	  equivalence  (MaxOrdVoid,MaxOrdQual,NPowerData)
+      equivalence  (VoidCoef(0),QualCoef(0),PowerData(0))
+     
+      equivalence (EnthIn,Enth(0))

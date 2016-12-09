@@ -42,8 +42,8 @@ InputParameters validParams<FluidVelocityAux>()
   return params;
 }
 
-FluidVelocityAux::FluidVelocityAux(const std::string & name, InputParameters parameters)
-  :AuxKernel(name, parameters),
+FluidVelocityAux::FluidVelocityAux(const InputParameters & parameters)
+  :AuxKernel(parameters),
   _permeability(getMaterialProperty<Real>("permeability")),
   _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
   _porosity(coupledValue("porosity")),
@@ -55,7 +55,7 @@ Real
 FluidVelocityAux::computeValue()
 {
 //  if (_porosity[_qp] > 0.05)
-  return -_permeability[_qp] * (_grad_P[_qp](0) + _grad_P[_qp](1) + _grad_P[_qp](2)) / (_mu_h2o[_qp] * _porosity[_qp]);
+  return -_permeability[_qp] * (_grad_P[_qp](0)) / (_mu_h2o[_qp] * _porosity[_qp]);
 //  else
 //    return 0;
 }

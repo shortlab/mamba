@@ -32,13 +32,13 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  BO3_SolubilityAux(const std::string & name, InputParameters parameters);
+  BO3_SolubilityAux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  VariableValue & _temperature;
-  VariableValue & _Conc_BO3;
+  const VariableValue & _temperature;
+  const VariableValue & _Conc_BO3;
 //  VariableValue & _Conc_HBO2;
 };
 

@@ -1,0 +1,59 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+for value in $(seq -s ' ' 1.0e6 1.0e5 1.0001e6);
+do
+echo heat flux $value
+rm *.csv
+echo crud_chem_5th.i starts
+~/Projects/mamba-dev/mamba-dev-opt -i crud_chem_5th.i Mesh/ymax=0.025 Postprocessors/vapor_height/thickness=0.0250 Postprocessors/liquid_height/thickness=0.0250 Materials/material_CRUD/CladHeatFluxIn=$value Materials/material_CRUD/CRUDThickness=0.0250 BCs/temperature_up/T_coolant=600 BCs/temperature_up/h_convection_coolant=19000.0 Materials/material_CRUD/ConvectionCoefficient=19000.0
+cp crud_chem_5th.csv crud_chem_5th.txt
+
+python MyScript_liquidheight.py > temp.txt
+liquidheight=$(cat $SCRIPT_DIR/temp.txt)
+rm temp.txt
+rm *.csv
+
+echo "sub_5th_1.i starts"
+~/Projects/mamba-dev/mamba-dev-opt -i sub_5th.i Mesh/ymax=$liquidheight Postprocessors/vapor_height/thickness=$liquidheight Materials/material_CRUD/CladHeatFluxIn=$value Materials/material_CRUD/CRUDThickness=0.0250 BCs/temperature_up/T_coolant=600 BCs/temperature_up/h_convection_coolant=19000.0 Materials/material_CRUD/ConvectionCoefficient=19000.0 Outputs/file_base=sub_5th_1
+cp sub_5th_1.csv sub_5th_1_$value.txt
+
+python MyScript_iteration.py > temp1.txt
+liquidheight_new=$(sed -n '1p' temp1.txt)
+difference=$(sed -n '2p' temp1.txt)
+VaporAvgTemp=$(sed -n '4p' temp1.txt)
+rm temp1.txt
+rm *.csv
+
+count=2
+while [ $difference -eq 1 ] && [ $count -lt 3 ]
+do
+echo "sub_5th_${count} starts"
+~/Projects/mamba-dev/mamba-dev-opt -i sub_5th.i Mesh/ymax=$liquidheight_new Postprocessors/vapor_height/thickness=$liquidheight_new  Materials/material_CRUD/CladHeatFluxIn=$value Materials/material_CRUD/CRUDThickness=0.0250 BCs/temperature_up/T_coolant=600 BCs/temperature_up/h_convection_coolant=19000.0 Materials/material_CRUD/ConvectionCoefficient=19000.0 Outputs/file_base=sub_5th_${count}
+cp sub_5th_${count}.csv sub_5th_${count}_$value.txt
+
+python MyScript_iteration.py > temp2.txt
+liquidheight_new=$(sed -n '1p' temp2.txt)
+difference=$(sed -n '2p' temp2.txt)
+VaporAvgTemp=$(sed -n '4p' temp2.txt)
+count=$(($count+1))
+python MyScript_vaporheight.py > temp3.txt
+rm temp2.txt
+rm *.csv
+done
+
+echo $liquidheight_new >> liquidheight.txt
+echo "subsub_5th.i starts"
+
+vaporheight=$(cat $SCRIPT_DIR/temp3.txt)
+half_vaporheight=$(bc -l <<< "$vaporheight/2")
+rm temp3.txt
+~/Projects/mamba-dev/mamba-dev-opt -i subsub_5th.i Mesh/ymax=$vaporheight Functions/functiontemperature/x='$half_vaporheight $vaporheight' Functions/functiontemperature/y='$VaporAvgTemp 618.00' Postprocessors/vapor_height/thickness=$vaporheight Materials/material_CRUD/CladHeatFluxIn=$value Materials/material_CRUD/CRUDThickness=0.0250
+cp subsub_5th.csv subsub_5th_$value.txt
+
+python MyScript_Peak_Temp.py > temp4.txt
+Peak_Temp=$(cat $SCRIPT_DIR/temp4.txt)
+rm temp4.txt
+echo $value $vaporheight $Peak_Temp >> vaporheight.txt
+rm *.csv
+done
+

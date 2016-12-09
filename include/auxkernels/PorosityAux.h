@@ -1,17 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
-
 #ifndef POROSITYAUX_H
 #define POROSITYAUX_H
 
@@ -35,14 +21,24 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  PorosityAux(const std::string & name, InputParameters parameters);
+  PorosityAux(const InputParameters & parameters);
+
+  virtual ~PorosityAux() {}
 
 protected:
   virtual Real computeValue();
 
-  Real _porosity_skeletal;
-//  VariableValue & _HBO2;
+  Real _input_initial_porosity;
+//  Real _input_initial_mineral;
+//  Real _molecular_weight;
+//  Real _mineral_density;
 
+  std::vector<Real> _molecular_weight;
+  std::vector<Real> _mineral_density;
+  std::vector<Real> _input_initial_mineral;
+
+//  Real & _coupled_val1;
+  std::vector<const VariableValue *>  _vals;
 };
 
 #endif //POROSITYAUX_H

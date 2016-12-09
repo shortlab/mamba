@@ -46,16 +46,16 @@ InputParameters validParams<CoupledTsatDirichletBC>()
   InputParameters params = validParams<NodalBC>();
 
   params.addRequiredCoupledVar("Tsat", "The water saturation temperature in the CRUD for temperature chimney BC calculation");
-  params.addRequiredCoupledVar("HBO2", "The HBO2 in the CRUD for temperature chimney BC calculation");
-  params.addRequiredCoupledVar("BO3", "The BO3 in the CRUD for temperature chimney BC calculation");
+//  params.addRequiredCoupledVar("HBO2", "The HBO2 in the CRUD for temperature chimney BC calculation");
+//  params.addRequiredCoupledVar("BO3", "The BO3 in the CRUD for temperature chimney BC calculation");
   return params;
 }
 
-CoupledTsatDirichletBC::CoupledTsatDirichletBC(const std::string & name, InputParameters parameters)
- :NodalBC(name, parameters),
-  _Tsat_h2o(coupledValue("Tsat")),
-  _HBO2(coupledValue("HBO2")),
-  _C(coupledValue("BO3"))
+CoupledTsatDirichletBC::CoupledTsatDirichletBC(const InputParameters & parameters)
+ :NodalBC(parameters),
+  _Tsat_h2o(coupledValue("Tsat"))
+//  _HBO2(coupledValue("HBO2")),
+//  _C(coupledValue("BO3"))
 {}
 
 Real

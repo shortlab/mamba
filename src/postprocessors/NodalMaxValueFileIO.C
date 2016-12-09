@@ -27,8 +27,8 @@ InputParameters validParams<NodalMaxValueFileIO>()
   return params;
 }
 
-NodalMaxValueFileIO::NodalMaxValueFileIO(const std::string & name, InputParameters parameters) :
-  NodalVariablePostprocessor(name, parameters)
+NodalMaxValueFileIO::NodalMaxValueFileIO(const InputParameters & parameters) :
+  NodalVariablePostprocessor(parameters)
 {}
 
 void

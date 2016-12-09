@@ -1,0 +1,9 @@
+#!/bin/bash
+
+    #PBS -l walltime=72:00:00
+    #PBS -l nice=19
+    #PBS -q default
+    #PBS -l nodes=2:ppn=16
+
+
+~/projects/mamba-dev/mamba-dev-opt -i /home/mmjin/projects/mamba-dev/problems/Miaomiao/MultiApp/NearestNodeTransfer/sub_5th_noTransfer.i

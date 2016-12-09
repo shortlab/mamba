@@ -1,0 +1,5 @@
+There is something wrong with the solving process: always not converge.
+
+I also tried to set the chemicals concentration to a very low value, still got the same problem.
+
+Thus, I decide to neglect this case which contains no chemicals and focus on other five instances.

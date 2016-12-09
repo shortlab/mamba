@@ -43,16 +43,20 @@ InputParameters validParams<ChimneyEvaporationNeumannBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("temperature", "The temperature of the fluid in the CRUD for chimney BC calculation");
   params.addRequiredCoupledVar("HBO2", "The HBO2 in the CRUD for chimney BC calculation");
+  params.addRequiredCoupledVar("porosity", "the porosity of CRUD");
+  params.addCoupledVar("VaporHeatCond",0, "heat from vapor part");
   return params;
 }
 
-ChimneyEvaporationNeumannBC::ChimneyEvaporationNeumannBC(const std::string & name, InputParameters parameters)
- :IntegratedBC(name, parameters),
+ChimneyEvaporationNeumannBC::ChimneyEvaporationNeumannBC(const InputParameters & parameters)
+ :IntegratedBC(parameters),
    _k_cond(getMaterialProperty<Real>("k_cond")),
    _HBO2(coupledValue("HBO2")),
+   _porosity(coupledValue("porosity")),
    _rho_h2o(getMaterialProperty<Real>("WaterDensity")),
    _h_fg_h2o(getMaterialProperty<Real>("WaterVaporizationEnthalpy")),
-  _grad_T(coupledGradient("temperature"))
+  _grad_T(coupledGradient("temperature")),
+  _vaporheatcond(coupledValue("VaporHeatCond"))
 {}
 
 Real
@@ -61,21 +65,16 @@ ChimneyEvaporationNeumannBC::computeQpResidual()
 // The (1 - _HBO2[_qp]) multiplier effectively kills the heat flux out the chimney (and therefore stops fluid flow)
 // at any locations that precipitation has occurred.
 
-    Real wPrecip = -_test[_i][_qp] * (_k_cond[_qp] * (1 - _HBO2[_qp])) / (_rho_h2o[_qp] * _h_fg_h2o[_qp]) * (_grad_T[_qp] * _normals[_qp]);
+   double vaporheatcond = (_t_step<=1  || _vaporheatcond[_qp]<8.0e5)? 8.0e5: _vaporheatcond[_qp];
+
+
+    Real wPrecip = -_test[_i][_qp] * (_k_cond[_qp] * (1 - _HBO2[_qp])) / (_rho_h2o[_qp] * _h_fg_h2o[_qp] * _porosity[_qp]) * (_grad_T[_qp] * _normals[_qp]);
 
 // This one doesn't stop flow for precipitation
 
     Real woPrecip = -_test[_i][_qp]
-     * (_k_cond[_qp])
-     / (_rho_h2o[_qp] * _h_fg_h2o[_qp])
-     * (_grad_T[_qp] * _normals[_qp]);
-
-    if (wPrecip != woPrecip)
-    {
-//	std::cout << "BCwPrecip = " << wPrecip << std::endl;
-//	std::cout << "BCwoPrecip = " << woPrecip << std::endl;
-    }
-
+     / (_rho_h2o[_qp] * _h_fg_h2o[_qp]* _porosity[_qp])
+     * ((-vaporheatcond + _grad_T[_qp] * _k_cond[_qp]* _normals[_qp]));
     return woPrecip;
 
 // QUESTION TO ASK: in the case of precipitation, could I force a zero gradient by setting

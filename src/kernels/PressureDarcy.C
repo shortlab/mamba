@@ -19,40 +19,32 @@ InputParameters validParams<PressureDarcy>()
 {
   InputParameters params = validParams<Diffusion>();
   params.addRequiredCoupledVar("porosity", "The porosity of the CRUD for the pressure field calculation");
-  params.addRequiredCoupledVar("HBO2", "The HBO2 in the CRUD for the pressure field calculation");
+//  params.addRequiredCoupledVar("HBO2", "The HBO2 in the CRUD for the pressure field calculation");
   return params;
 }
 
 
-PressureDarcy::PressureDarcy(const std::string & name,
-                                   InputParameters parameters)
-  :Diffusion(name,parameters),
+PressureDarcy::PressureDarcy(const InputParameters & parameters)
+  :Diffusion(parameters),
    _permeability(getMaterialProperty<Real>("permeability")),
    _mu_h2o(getMaterialProperty<Real>("WaterViscosity")),
-   _porosity(coupledValue("porosity")),
-   _HBO2(coupledValue("HBO2"))
+   _porosity(coupledValue("porosity"))
+//   _HBO2(coupledValue("HBO2"))
 {}
 
 Real
 PressureDarcy::computeQpResidual()
 {
-    Real PwoPrecip = (_permeability[_qp] / _mu_h2o[_qp]) * Diffusion::computeQpResidual();
-    Real PwPrecip  = (1 - _HBO2[_qp]) * (_permeability[_qp] / _mu_h2o[_qp]) * Diffusion::computeQpResidual();
-//    Real PwPrecip  = 0.9 * (_permeability[_qp] / _mu_h2o[_qp]) * Diffusion::computeQpResidual();
+    return (_permeability[_qp] / _mu_h2o[_qp] / _porosity[_qp])
+           * Diffusion::computeQpResidual();
 
-    if (PwPrecip != PwoPrecip)
-    {
-//	    std::cout << "PwPrecip = " << PwPrecip << std::endl;
-//	    std::cout << "PwoPrecip = " << PwoPrecip << std::endl;
-    }
-
-    return PwoPrecip;
 }
 
 Real
 PressureDarcy::computeQpJacobian()
 {
-    return (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp])) * Diffusion::computeQpJacobian();
+    return (_permeability[_qp] / (_mu_h2o[_qp] * _porosity[_qp]))
+           * Diffusion::computeQpJacobian();
 
 //    return (1 - _HBO2[_qp]) * (_permeability[_qp] / _mu_h2o[_qp]) * Diffusion::computeQpJacobian();
 }

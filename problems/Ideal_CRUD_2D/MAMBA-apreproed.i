@@ -1,21 +1,3 @@
-$ Aprepro (Revision: 2.23) Mon Sep 23 17:36:36 2013
-#50
-#2
-#2000000000
-#0.0012
-#600
-#0.5
-#1000000
-#12000
-
-#15.5
-#0
-#0.15
-#0.1
-#0.75
-#0
-#0.001
-
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -52,6 +34,19 @@ $ Aprepro (Revision: 2.23) Mon Sep 23 17:36:36 2013
 []
 
 [AuxVariables]
+  [./Phase]
+# elemental if defined as following
+    order = FIRST
+    family = LAGRANGE
+    initial_condition=0
+  [../]
+
+  [./nodal_Psat_h2o]
+    order = FIRST
+    family = LAGRANGE
+    initial_condition = 15500.
+  [../]
+
   [./nodal_porosity]
     order = CONSTANT
     family = MONOMIAL
@@ -73,56 +68,6 @@ $ Aprepro (Revision: 2.23) Mon Sep 23 17:36:36 2013
   [./nodal_superheat]
     order = FIRST
     family = LAGRANGE
-  [../]
-
-  [./DiffusivityOfMonoborateAux]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./DiffusivityOfLithium]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./k_liquid]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./k_solid]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./k_CRUD_eff]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./WaterDensity]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./WaterViscosity]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./WaterVaporizationEnthalpy]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./WaterHeatCapacity]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-
-  [./permeability]
-    order = CONSTANT
-    family = MONOMIAL
   [../]
 
   [./FluidVelocity]
@@ -162,6 +107,7 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
     variable = crud_temperature
     pressure = crud_pressure
     porosity = nodal_porosity
+    tortuosity = nodal_tortuosity
   [../]
 
   [./PressureDarcy]
@@ -194,6 +140,22 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
 []
 
 [AuxKernels]
+  [./phase]
+    type = PhaseAux
+    variable = Phase
+    psat = nodal_Psat_h2o
+    pressure = crud_pressure
+    deltaP = 1.
+    Shift=0.0
+  [../]
+
+  [./Psat_h2o]
+    type = WaterSaturationPressureAux
+    variable = nodal_Psat_h2o
+    temperature = crud_temperature
+    initial_condition = 15500
+  [../]
+
   [./porosity]
     # This auxilliary kernel takes in various species densities & volume fractions, along with a skeletal porosity, and outputs a total porosity
     type = PorosityAux
@@ -209,14 +171,6 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
     porosity = nodal_porosity
   [../]
 
-  [./permeability]
-    type = MaterialRealAux
-    variable = permeability
-    property = permeability
-    factor = 1e-06
-    offset = 0
-  [../]
-
   [./Tsat_h2o]
     type = WaterSaturationTemperatureAux
     variable = nodal_Tsat_h2o
@@ -229,87 +183,6 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
     variable = nodal_superheat
     temperature = crud_temperature
     t_sat = nodal_Tsat_h2o
-  [../]
-
-  [./D_BO3]
-    # This auxilliary kernel outputs the aqueous diffusivity of the monoborate ion
-    type = MaterialRealAux
-    variable = DiffusivityOfMonoborateAux
-    property = DiffusivityOfMonoborate
-    factor = 1e-06
-    offset = 0
-  [../]
-
-  [./D_Li]
-    # This auxilliary kernel outputs the aqueous diffusivity of the lithium ion
-    type = MaterialRealAux
-    variable = DiffusivityOfLithium
-    property = DiffusivityOfLithium
-    factor = 1e-06
-    offset = 0
-  [../]
-
-  [./k_CRUD_eff]
-    type = MaterialRealAux
-    variable = k_CRUD_eff
-    property = k_cond
-    factor = 0.001
-    offset = 0
-  [../]
-
-  [./k_liquid]
-    type = MaterialRealAux
-    variable = k_liquid
-    property = k_liquid
-    factor = 0.001
-    offset = 0
-  [../]
-
-  [./k_solid]
-    type = MaterialRealAux
-    variable = k_solid
-    property = k_solid
-    factor = 0.001
-    offset = 0
-  [../]
-
-  [./rho_h2o]
-    type = MaterialRealAux
-    variable = WaterDensity
-    property = WaterDensity
-    factor = 1000000000
-    offset = 0
-  [../]
-
-  [./mu_h2o]
-    type = MaterialRealAux
-    variable = WaterViscosity
-    property = WaterViscosity
-    factor = 1000
-    offset = 0
-  [../]
-
-  [./h_fg_h2o]
-    type = MaterialRealAux
-    variable = WaterVaporizationEnthalpy
-    property = WaterVaporizationEnthalpy
-    factor = 1e-06
-    offset = 0
-  [../]
-
-  [./cp_h2o]
-    type = MaterialRealAux
-    variable = WaterHeatCapacity
-    property = WaterHeatCapacity
-    factor = 1e-06
-    offset = 0
-  [../]
-
-  [./FluidVelocity_h2o]
-    type = FluidVelocityAux
-    variable = FluidVelocity
-    pressure = crud_pressure
-    porosity = nodal_porosity
   [../]
 
   [./PecletNumber_h2o]
@@ -373,7 +246,7 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
     type = DirichletBC
     variable = crud_pressure
     boundary = 2
-    value = 0.0155
+    value = 15000
   [../]
 
   [./coolant_crud_concentration_BO3]
@@ -398,6 +271,7 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
   [./material_CRUD]
     type = CRUDMaterial
     block = 0
+    outputs = exodus
 
 # Give the material properties in SI, then apply whatever scaling factor you want.
 
@@ -414,6 +288,7 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
 # Scale everything to millimeters
     ScalingFactor = 0.001
     debug_materials = 0
+    case = 0
     crud_thickness = 0.05
 
 # Densities in kg/m^3
@@ -449,6 +324,9 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
     concentration = crud_concentration_BO3
     porosity = nodal_porosity
     HBO2 = crud_concentration_HBO2
+
+    phase = Phase
+    psat = nodal_Psat_h2o
   [../]
 []
 
@@ -458,29 +336,20 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
 
 [Postprocessors]
   [./Peak_Clad_Temp_(K)]
-    type = NodalMaxValueFileIO
+    type = NodalMaxValue
     variable = crud_temperature
   [../]
 []
 
 [Executioner]
   type = Steady
-#  type = Transient
-#  dt = 1e-4
 
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
-
-
-  print_linear_residuals = true
-
-#  petsc_options = '-snes_mf_operator'
   l_max_its = 30
   l_tol = 1e-5
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-#  petsc_options_iname = '-pc_type'
-#  petsc_options_value = 'lu'
 
   [./Adaptivity]
     steps = 2
@@ -495,13 +364,16 @@ active = 'ThermalDiffusion ThermalAdvection PressureDarcy AdvectionForConcentrat
   [../]
 []
 
-[Output]
+[Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out_2D_50
-  interval = 1
+  [./console]
+    type = Console
+    perf_log = true
+    linear_residuals = true
+  [../]
 #  xda = true
   exodus = true
-  perf_log = true
 []
 

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+    #PBS -l walltime=72:00:00
+    #PBS -l nice=19
+    #PBS -q default
+    #PBS -l nodes=1:ppn=16
+
+
+~/projects/mamba-dev/mamba-dev-opt -i /home/mmjin/projects/mamba-dev/problems/Miaomiao/chemical_reactions/crud_chem_5th.i Materials/material_CRUD/CladHeatFluxIn=1000000.0 Executioner/TimeStepper/dt=1e-2 Outputs/file_base=6th_1e6_0shift

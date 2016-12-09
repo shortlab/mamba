@@ -31,8 +31,7 @@ class DiffusionForConcentration : public Diffusion
 {
 public:
 
-  DiffusionForConcentration(const std::string & name,
-                   InputParameters parameters);
+  DiffusionForConcentration(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -46,7 +45,7 @@ protected:
 // This is an abstracted way to get different diffusivities into this kernel
 
   std::string _prop_name;
-  MaterialProperty<Real> & _D_species;
+  const MaterialProperty<Real> & _D_species;
 
 };
 #endif //DIFFUSIONFORCONCENTRATION_H

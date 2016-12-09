@@ -477,9 +477,6 @@ active = 'ThermalDiffusion PressureDarcy AdvectionForConcentration_BO3 Diffusion
   solve_type = 'PJFNK'
 
 
-  print_linear_residuals = true
-
-
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
 
@@ -508,12 +505,11 @@ active = 'ThermalDiffusion PressureDarcy AdvectionForConcentration_BO3 Diffusion
   [../]
 []
 
-[Output]
+[Outputs]
 #  elemental_as_nodal = true
-#  output_initial = true
+#
   file_base = out
-  interval = 1
-#  xda = true
+  #  xda = true
   exodus = true
   perf_log = true
 []

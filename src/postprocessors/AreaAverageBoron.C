@@ -19,7 +19,7 @@ template<>
 InputParameters validParams<AreaAverageBoron>()
 {
   InputParameters params = validParams<GeneralPostprocessor>();
-  
+
   params.addRequiredParam<PostprocessorName>("total_boron", "The name of the PP that is computing the total amount of boron deposited.");
   params.addRequiredParam<PostprocessorName>("area", "The name of the PP that is computing the surface area.");
 
@@ -28,8 +28,8 @@ InputParameters validParams<AreaAverageBoron>()
   return params;
 }
 
-AreaAverageBoron::AreaAverageBoron(const std::string & name, InputParameters parameters) :
-    GeneralPostprocessor(name, parameters),
+AreaAverageBoron::AreaAverageBoron(const InputParameters & parameters) :
+    GeneralPostprocessor(parameters),
     _total_boron(getPostprocessorValue(getParam<PostprocessorName>("total_boron"))),
     _area(getPostprocessorValue(getParam<PostprocessorName>("area"))),
     _in_meters(getParam<bool>("in_meters"))
@@ -42,6 +42,6 @@ AreaAverageBoron::getValue()
 
   if(_in_meters)
     area*=(0.001*0.001);
-  
+
   return _total_boron / area;
 }

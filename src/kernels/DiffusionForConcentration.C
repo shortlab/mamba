@@ -23,9 +23,8 @@ InputParameters validParams<DiffusionForConcentration>()
 }
 
 
-DiffusionForConcentration::DiffusionForConcentration(const std::string & name,
-                                   InputParameters parameters)
-  :Diffusion(name,parameters),
+DiffusionForConcentration::DiffusionForConcentration(const InputParameters & parameters)
+  :Diffusion(parameters),
    _prop_name(getParam<std::string>("diffusivity")),
    _D_species(getMaterialProperty<Real>(_prop_name))
 {}

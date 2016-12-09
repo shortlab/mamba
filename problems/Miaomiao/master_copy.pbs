@@ -1,0 +1,24 @@
+#!/bin/sh
+#######################################
+# Specify nodes, processors per node,
+# and maximum running time
+#######################################
+
+#PBS -l nodes=1:ppn=12
+#PBS -l walltime=36:00:00
+#PBS -k eo
+
+#######################################
+# Enter directory and set PATH
+#######################################
+
+cd $PBS_O_WORKDIR
+PATH=$PBS_O_PATH
+
+#######################################
+# Run MPI job and kill MPD when done
+#######################################
+
+module load moose-dev-gnu
+mpiexec -rmk pbs ~/trunk/mamba/mamba-opt -i ~/trunk/mamba/Inputfiles/master_copy.i
+

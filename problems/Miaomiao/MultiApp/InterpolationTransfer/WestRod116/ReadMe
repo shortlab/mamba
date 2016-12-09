@@ -1,0 +1,20 @@
+There are different attemptions to find the vapor thickness in sub_5th_rod116.i:
+
+6.4 microns --> 7.0 microns --> 7.5 microns --> 7.8 microns --> 8.2 microns
+failed      --> failed      --> failed	    --> failed      --> done!
+
+
+
+For singlephase scenario, I calculated under no Adaptivity condition. Just so I know, with Adaptivity, the result could be very different, and the calculation costs much more time.
+
+
+Without adaptivity, I tried to change the mesh size of the domain. Strange thing happened: 
+nx = 25
+ny = 50 
+dt = 1e-1 
+
+nx = 40
+ny = 80
+dt = 1e-1
+
+These two give me quite different result. (The former is much quicker than the latter).

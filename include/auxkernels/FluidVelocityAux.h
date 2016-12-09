@@ -35,15 +35,15 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  FluidVelocityAux(const std::string & name, InputParameters parameters);
+  FluidVelocityAux(const InputParameters & parameters);
 
 protected:
   virtual Real computeValue();
 
-  MaterialProperty<Real> & _permeability;
-  MaterialProperty<Real> & _mu_h2o;
-  VariableValue & _porosity;
-  VariableGradient & _grad_P;
+  const MaterialProperty<Real> & _permeability;
+  const MaterialProperty<Real> & _mu_h2o;
+  const VariableValue & _porosity;
+  const VariableGradient & _grad_P;
 
 };
 

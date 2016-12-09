@@ -24,8 +24,8 @@ InputParameters validParams<NodalMinValue>()
   return params;
 }
 
-NodalMinValue::NodalMinValue(const std::string & name, InputParameters parameters) :
-  NodalVariablePostprocessor(name, parameters),
+NodalMinValue::NodalMinValue(const InputParameters & parameters) :
+  NodalVariablePostprocessor(parameters),
   _value(std::numeric_limits<Real>::max())
 {}
 
@@ -54,4 +54,3 @@ NodalMinValue::threadJoin(const UserObject & y)
   const NodalMinValue & pps = static_cast<const NodalMinValue &>(y);
   _value = std::min(_value, pps._value);
 }
-

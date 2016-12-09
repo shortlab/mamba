@@ -3,29 +3,36 @@
 ###############################################################################
 #
 # Optional Environment variables
-# MOOSE_DIR        - Root directory of the MOOSE project 
-# HERD_TRUNK_DIR   - Location of the HERD repository (or parent directory)
-# FRAMEWORK_DIR    - Location of the MOOSE framework
+# MOOSE_DIR        - Root directory of the MOOSE project
 #
 ###############################################################################
-MOOSE_DIR          ?= $(shell dirname `pwd`)/moose
-HERD_TRUNK_DIR     ?= $(shell dirname `pwd`)
-FRAMEWORK_DIR      ?= $(MOOSE_DIR)/framework
-###############################################################################
-CURRENT_DIR        := $(shell pwd)
+# Use the MOOSE submodule if it exists and MOOSE_DIR is not set
+MOOSE_SUBMODULE    := $(CURDIR)/moose
+ifneq ($(wildcard $(MOOSE_SUBMODULE)/framework/Makefile),)
+  MOOSE_DIR        ?= $(MOOSE_SUBMODULE)
+else
+  MOOSE_DIR        ?= $(shell dirname `pwd`)/moose
+endif
 
 # framework
+FRAMEWORK_DIR      := $(MOOSE_DIR)/framework
 include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
 
 ################################## MODULES ####################################
-ALL_MODULES := yes
+CHEMICAL_REACTIONS        := yes
+CONTACT                   := yes
+HEAT_CONDUCTION           := yes
+LINEAR_ELASTICITY         := yes
+TENSOR_MECHANICS          := yes
+MISC                      := yes
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
 # dep apps
-APPLICATION_DIR    := $(CURRENT_DIR)
-APPLICATION_NAME   := mamba
+APPLICATION_DIR    := $(CURDIR)
+APPLICATION_NAME   := mamba-dev
+APP_REV_HEADER     := $(CURDIR)/include/base/Mamba-devRevision.h
 BUILD_EXEC         := yes
 DEP_APPS           := $(shell $(FRAMEWORK_DIR)/scripts/find_dep_apps.py $(APPLICATION_NAME))
 include            $(FRAMEWORK_DIR)/app.mk

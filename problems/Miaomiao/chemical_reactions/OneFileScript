@@ -1,0 +1,16 @@
+#!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo heatflux_W/m^2  Peak_Temp_Clad_K >> heatfluxVSpeaktemp.txt
+for value in $(seq -s ' ' 1630918.14901291 2.5e5 1735024.9097855);
+do
+echo heat flux $value
+echo crud_chem_5th.i starts
+ ~/Projects/mamba-dev/mamba-dev-opt -i crud_chem_5th.i AuxKernels/aux_porosity/init_porosity=0.5 Materials/material_CRUD/CladHeatFluxIn=$value Outputs/file_base=crud_chem_0.5_4.5209e4_${value}_608_25 BCs/temperature_up/T_coolant=608.15 BCs/temperature_up/h_convection_coolant=45209.0 BCs/pressure_up/value=15616.62527
+cp crud_chem_0.5_4.5209e4_${value}_608_25.csv crud_chem_0.5_4.5209e4_${value}_608_25_trying.csv
+python MyScript_PeakTemp.py > temp.txt
+PeakTemp=$(cat $SCRIPT_DIR/temp.txt)
+rm temp.txt
+rm *_trying.csv
+echo $value $PeakTemp >> heatfluxVSpeaktemp.txt
+done
+

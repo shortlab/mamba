@@ -14,6 +14,7 @@
 #include "AdvectionForConcentration.h"
 #include "DiffusionForConcentration.h"
 #include "BoricAcidSinks.h"
+#include "ExampleTimeDerivative.h"
 //#include "WaterSaturationTemperature.h"
 
 // Next come the auxilliary kernels
@@ -29,6 +30,8 @@
 // Next come the materials
 
 #include "CRUDMaterial.h"
+#include "Knife.h"
+#include "Clay.h"
 
 // Next come the boundary conditions
 
@@ -92,6 +95,7 @@ MambaApp::registerObjects(Factory & factory)
 
   registerKernel(ThermalDiffusion);
   registerKernel(AdvectionForHeat);
+  registerKernel(ExampleTimeDerivative);
 
   // Next come the auxilliary kernels
 
@@ -108,6 +112,8 @@ MambaApp::registerObjects(Factory & factory)
   // Register our new CRUD material class so we can use it.
 
   registerMaterial(CRUDMaterial);
+  registerMaterial(Knife);
+  registerMaterial(Clay);
 
   // Next come the boundary conditions
 
